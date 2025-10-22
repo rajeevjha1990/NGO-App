@@ -1,0 +1,102 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+    <ion-title>Register Now</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding login-page">
+  <ion-card *ngIf="!showOtpInput">
+    <ion-card-header>
+      <ion-card-title>
+        <div class="ion-text-center ion-margin-bottom">
+          <img src="assets/logo.png" alt="Company Logo" style="width: 100px;" />
+        </div>
+        <h2 class="ion-text-center ion-margin-bottom" style="font-size: 2rem;">Sign up form</h2>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Name" [(ngModel)]="formData.consumer_name" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Email Id (Optional)" [(ngModel)]="formData.email" fill="outline"
+              type="email">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Mobile Number" [(ngModel)]="formData.mobile_no" fill="outline"
+              type="number">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Password" [(ngModel)]="formData.password" fill="outline"
+              type="password">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Referral code" [(ngModel)]="formData.referal" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin-top">
+          <ion-col size="12">
+            <ion-item lines="none">
+              <ion-checkbox slot="start" [(ngModel)]="agreedToTerms"></ion-checkbox>
+              <ion-label>
+                I agree to the
+                <a routerLink="/termcondition"> Terms & Condition </a> and
+                <a routerLink="/privacypolicy"> Privacy Policy</a>.
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-button (click)="newRegistration()" expand="block" type="submit" class="ion-margin-top"
+              [disabled]="!agreedToTerms">
+              Sign Up
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="ion-text-center ion-margin-top">
+        Already have an account?
+        <a routerLink="/login">Log In</a>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="showOtpInput">
+    <ion-card-header>
+      <ion-card-title>
+        <h2 class="ion-text-center ion-margin-bottom" style="font-size: 2rem;">Verify Your Account</h2>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-input-otp [length]="4" [(ngModel)]="otpCode"></ion-input-otp>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="ion-text-center ion-margin-top">
+            <!-- Show OTP from server here -->
+            <small *ngIf="otpData.otp">Your OTP is: <strong>{{ otpData.otp }}</strong></small>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button (click)="verifyOtp()" expand="block" class="ion-margin-top">Verify OTP</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

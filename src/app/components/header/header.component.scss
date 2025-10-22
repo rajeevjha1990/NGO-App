@@ -1,0 +1,94 @@
+/* Main toolbar design */
+.custom-header {
+    --background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 14px;
+    min-height: 64px;
+    flex-wrap: nowrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu + Logo (slot="start") */
+.custom-header ion-buttons[slot="start"] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-header ion-buttons[slot="start"] img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    max-width: 120px;
+}
+
+/* Right side buttons (slot="end") */
+.custom-header ion-buttons[slot="end"] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Avatar */
+.custom-header ion-avatar {
+    height: 32px !important;
+    width: 32px !important;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* Button styling */
+ion-button::part(native) {
+    color: #000;
+    background-color: gainsboro;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+/* === RESPONSIVE FIXES === */
+
+/* Small devices (≤ 600px) */
+@media (max-width: 600px) {
+    .custom-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        min-height: auto;
+    }
+
+    .custom-header ion-buttons[slot="start"] img {
+        height: 36px;
+    }
+
+    ion-button::part(native) {
+        font-size: 14px;
+    }
+}
+
+/* Tablets (601px – 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .custom-header {
+        padding: 8px 16px;
+    }
+
+    .custom-header ion-buttons[slot="start"] img {
+        height: 42px;
+    }
+}
+
+/* Desktop (≥ 1025px) */
+@media (min-width: 1025px) {
+    .custom-header {
+        padding: 10px 20px;
+    }
+
+    .custom-header ion-buttons[slot="start"] img {
+        height: 48px;
+    }
+
+    ion-button::part(native) {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,160 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Personal Information</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card class="ion-margin-bottom">
+    <ion-card-content>
+      <ion-label>
+        Profile Completion: {{ profileCompletion }}%
+      </ion-label>
+      <ion-progress-bar value="{{ profileCompletion / 100 }}"></ion-progress-bar>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{ getTabTitle(currentTab) }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <!-- PERSONAL INFO TAB -->
+        <div *ngIf="currentTab === 'personal'">
+          <form #personalForm="ngForm" (ngSubmit)="submitSection('personal', personalForm)">
+            <ion-row>
+              <!-- Gender -->
+              <ion-col size="12">
+                <ion-label class="ion-margin-bottom"><strong>Gender</strong></ion-label>
+                <ion-radio-group [(ngModel)]="formData.gender" name="gender" required>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-item lines="none">
+                        <ion-label>Male</ion-label>
+                        <ion-radio slot="start" value="male"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-item lines="none">
+                        <ion-label>Female</ion-label>
+                        <ion-radio slot="start" value="female"></ion-radio>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-radio-group>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input fill="outline" label="Full Name" labelPlacement="floating"
+                  [(ngModel)]="formData.consumer_name" name="consumer_name" required></ion-input>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input type="date" fill="outline" label="Date of Birth" labelPlacement="floating"
+                  [(ngModel)]="formData.dob" name="dob" required></ion-input>
+              </ion-col>
+              <ion-col size="12">
+                <ion-button expand="block" type="submit" class="ion-margin-top">Save Personal </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
+
+        <!-- CONTACT INFO TAB -->
+        <div *ngIf="currentTab === 'contact'">
+          <form #contactForm="ngForm" (ngSubmit)="submitSection('contact', contactForm)">
+            <ion-row>
+              <ion-col size="12">
+                <ion-input readonly type="tel" fill="outline" label="Mobile Number" labelPlacement="floating"
+                  [(ngModel)]="formData.mobile_no" name="mobile_no" required></ion-input>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input type="email" fill="outline" label="Email ID" labelPlacement="floating"
+                  [(ngModel)]="formData.email" name="email" required></ion-input>
+              </ion-col>
+
+              <ion-col size="12">
+                <ion-button expand="block" type="submit" class="ion-margin-top">Update Contact </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
+
+        <!-- DOCUMENT INFO TAB -->
+        <div *ngIf="currentTab === 'kyc'">
+          <form #kycForm="ngForm" (ngSubmit)="submitSection('kyc', kycForm)">
+            <ion-row>
+              <ion-col size="12">
+                <ion-input type="text" fill="outline" label="Aadhaar Number" labelPlacement="floating"
+                  [(ngModel)]="formData.aadhaar_no" name="aadhaar_no" required></ion-input>
+              </ion-col>
+
+              <ion-col size="12">
+                <ion-input type="text" fill="outline" label="PAN Card Number" labelPlacement="floating"
+                  [(ngModel)]="formData.pancard" name="pancard" required></ion-input>
+              </ion-col>
+
+              <ion-col size="12">
+                <ion-button expand="block" type="submit" class="ion-margin-top">Update KYC</ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
+
+        <!-- Address INFO TAB -->
+        <div *ngIf="currentTab === 'address'">
+          <form #addressForm="ngForm" (ngSubmit)="submitSection('address', addressForm)">
+            <ion-row>
+              <ion-col size="12">
+                <ion-input type="text" [(ngModel)]="formData.state" name="state" labelPlacement="floating" label="State"
+                  fill="outline" (click)="StateList()">
+                </ion-input>
+              </ion-col>
+
+              <ion-col size="12">
+                <ion-input type="text" [(ngModel)]="formData.city" name="city" labelPlacement="floating" label="City"
+                  fill="outline" (click)="CityList()" readonly required>
+                </ion-input>
+              </ion-col>
+
+
+              <ion-col size="12">
+                <ion-input type="text" fill="outline" label="Pin Code" labelPlacement="floating"
+                  [(ngModel)]="formData.pincode" name="pincode" required></ion-input>
+              </ion-col>
+              <ion-col size="12">
+                <ion-input type="text" fill="outline" label="Address" labelPlacement="floating"
+                  [(ngModel)]="formData.address" name="address" required></ion-input>
+              </ion-col>
+              <ion-col size="12">
+                <ion-button expand="block" type="submit" class="ion-margin-top">Update Location </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="currentTab" class="custom-segment">
+      <ion-segment-button value="personal">
+        <ion-icon [ngClass]="{ 'selected-tab': currentTab === 'personal' }" name="person-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button value="contact">
+        <ion-icon [ngClass]="{ 'selected-tab': currentTab === 'contact' }" name="call-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button value="kyc">
+        <ion-icon [ngClass]="{ 'selected-tab': currentTab === 'kyc' }" name="document-text-outline"></ion-icon>
+      </ion-segment-button>
+
+      <ion-segment-button value="address">
+        <ion-icon [ngClass]="{ 'selected-tab': currentTab === 'address' }" name="pin"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

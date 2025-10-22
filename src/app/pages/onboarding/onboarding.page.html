@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="intro-slides" fullscreen>
+  <div class="ads-swiper swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let ad of slides">
+        <ion-card class="ad-card">
+          <img [src]="ad.image" alt="Ad" />
+          <ion-card-header>
+            <ion-card-title>{{ ad.title }}</ion-card-title>
+            <ion-card-subtitle>{{ ad.subtitle }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button *ngIf="!user.loggedIn" expand="block" routerLink="/login">Get Start</ion-button>
+    <ion-button *ngIf="user.loggedIn" expand="block" routerLink="/home">Get Start</ion-button>
+
+  </ion-toolbar>
+</ion-footer>

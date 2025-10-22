@@ -1,0 +1,12 @@
+ion-segment {
+    --background: #fff;
+
+    ion-icon {
+        color: #999;
+        font-size: 22px;
+    }
+
+    .selected-tab {
+        color: #44b7b2 !important;
+    }
+}
