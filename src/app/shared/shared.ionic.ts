@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import {
     IonButton,
@@ -49,7 +50,7 @@ import {
     IonChip,
     IonProgressBar,
     IonMenuToggle,
-    IonItemDivider
+    IonItemDivider,
 } from '@ionic/angular/standalone';
 
 export const SHARED_IONIC_MODULES = [
@@ -104,5 +105,6 @@ export const SHARED_IONIC_MODULES = [
     IonChip,
     IonProgressBar,
     IonMenuToggle,
-    IonItemDivider
+    IonItemDivider,
+    RouterLink
 ];

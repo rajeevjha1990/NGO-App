@@ -5,7 +5,7 @@ import { } from '@ionic/angular/standalone';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { PubService } from 'src/app/services/pub/pub.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { User } from 'src/app/data-types/user';
+import { User } from 'src/app/data-types/volenteer';
 import { StatefilterPage } from '../statefilter/statefilter.page';
 import { ModalController } from '@ionic/angular';
 import { CityfilterPage } from '../cityfilter/cityfilter.page';
@@ -41,7 +41,7 @@ export class PersonalInfoPage implements OnInit {
       if (u && u.loggedIn) {
         this.formData.mobile_no = u.mobile_no;
         this.formData.email = u.email;
-        this.formData.consumer_name = u.consumer_name;
+        this.formData.volntr_name = u.volntr_name;
         this.formData.gender = u.gender;
         this.formData.dob = u.dob;
         this.formData.address = u.address;
@@ -86,7 +86,7 @@ export class PersonalInfoPage implements OnInit {
       case 'personal':
         dataToSend = {
           gender: this.formData.gender,
-          consumer_name: this.formData.consumer_name,
+          volntr_name: this.formData.volntr_name,
           dob: this.formData.dob,
           step: 'personal'
         };
@@ -185,7 +185,7 @@ export class PersonalInfoPage implements OnInit {
 
     const fields = [
       this.formData.gender,
-      this.formData.consumer_name,
+      this.formData.volntr_name,
       this.formData.dob,
       this.formData.mobile_no,
       this.formData.email,

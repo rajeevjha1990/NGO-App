@@ -12,17 +12,17 @@ export class PubService {
   ) {
 
   }
-  async getOperators() {
-    const url = Constants.USER_API_PATH + 'operators';
+  async getQualifications() {
+    const url = Constants.COMMON_API_PATH + 'qualifications';
     const respData = await this.dibcHttp.post(url, {});
     if (respData) {
-      return respData.operators;
+      return respData.qualifications;
     } else {
       return []
     }
   }
   async getCircles() {
-    const url = Constants.USER_API_PATH + 'circles';
+    const url = Constants.COMMON_API_PATH + 'circles';
     const respData = await this.dibcHttp.post(url, {});
     if (respData) {
       return respData.circles;
@@ -31,7 +31,7 @@ export class PubService {
     }
   }
   async getStates() {
-    const url = Constants.USER_API_PATH + 'states';
+    const url = Constants.COMMON_API_PATH + 'states';
     const respData = await this.dibcHttp.post(url, {});
     if (respData) {
       return respData.states;
@@ -43,7 +43,7 @@ export class PubService {
     const params = {
       stateId: stateId
     };
-    const url = Constants.USER_API_PATH + 'cities';
+    const url = Constants.COMMON_API_PATH + 'cities';
     const respData = await this.dibcHttp.post(url, params);
     if (respData) {
       return respData.cities;
@@ -52,7 +52,7 @@ export class PubService {
     }
   }
   async planTypes() {
-    const url = Constants.USER_API_PATH + 'plan_types';
+    const url = Constants.COMMON_API_PATH + 'plan_types';
     const respData = await this.dibcHttp.post(url, {});
     if (respData) {
       return respData.plantypes;
@@ -66,7 +66,7 @@ export class PubService {
       operator: operator,
       circle: circle
     }
-    const url = Constants.USER_API_PATH + 'get_plans_by_type';
+    const url = Constants.COMMON_API_PATH + 'get_plans_by_type';
     const respData = await this.dibcHttp.post(url, data);
     if (respData) {
       return respData.plans;
@@ -78,7 +78,7 @@ export class PubService {
     const data = {
       mobile: mobile
     }
-    const url = Constants.CONSUMER_API_PATH + 'getMobile_info';
+    const url = Constants.COMMON_API_PATH + 'getMobile_info';
     const respData = await this.dibcHttp.post(url, data);
     if (respData) {
       return respData.mobileinfo;

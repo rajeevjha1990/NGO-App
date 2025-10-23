@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage-angular';
 import { Router, RouterLink } from '@angular/router';
 import Swiper from 'swiper';
 import { Navigation, Autoplay } from 'swiper/modules';
-import { User } from 'src/app/data-types/user';
+import { Volenteer } from 'src/app/data-types/volenteer';
 import { UserService } from 'src/app/services/user/user.service';
 
 Swiper.use([Navigation, Autoplay]);
@@ -21,37 +21,37 @@ Swiper.use([Navigation, Autoplay]);
 export class OnboardingPage implements OnInit {
   slides = [
     {
-      image: 'assets/intro/welcome.jpg',
+      image: 'assets/SVJ-images/welcome.png',
       title: 'Welcome to Veronmoney',
       subtitle: 'Seamless mobile recharge & bill payments — powered by Veteran Vision Services Pvt. Ltd.'
     },
     {
-      image: 'assets/intro/fast-service.jpg',
+      image: 'assets/SVJ-images/fast-service.png',
       title: 'Speed & Convenience',
       subtitle: 'Instant recharges and quick bill payments, saving you time and effort.'
     },
     {
-      image: 'assets/intro/security.jpg',
+      image: 'assets/SVJ-images/security.png',
       title: 'Secure Payments',
       subtitle: 'Secure payment gateway protecting your financial information.'
     },
     {
-      image: 'assets/intro/coverage.jpg',
+      image: 'assets/SVJ-images/logo.png',
       title: 'Wide Coverage',
       subtitle: 'Support for all major mobile operators and billers.'
     },
     {
-      image: 'assets/intro/offers.jpg',
+      image: 'assets/SVJ-images/logo.png',
       title: 'Exclusive Offers',
       subtitle: 'Enjoy discounts, cashback, and special promotions.'
     },
     {
-      image: 'assets/intro/availability.jpg',
+      image: 'assets/SVJ-images/logo.png',
       title: '24/7 Availability',
       subtitle: 'Recharge and pay bills anytime, anywhere.'
     },
     {
-      image: 'assets/intro/stock.jpg',
+      image: 'assets/SVJ-images/logo.png',
       title: 'Notifications & Reminders',
       subtitle: 'Never miss a bill payment with timely reminders.'
     }
@@ -69,22 +69,24 @@ export class OnboardingPage implements OnInit {
       clickable: true,
     }
   };
-  user: User = new User();
+  volenteer: Volenteer = new Volenteer();
 
   constructor(
     private storage: Storage,
     private router: Router,
     private userServ: UserService
   ) {
-    this.userServ.user.subscribe(async u => {
-      this.user = u;
+    this.userServ.volenteer.subscribe(async u => {
+      this.volenteer = u;
+      console.log(this.volenteer);
     });
   }
 
   ngOnInit() {
+    this.finishOnboarding()
   }
   async finishOnboarding() {
-    if (this.user) {
+    if (this.volenteer?.loggedIn) {
       this.router.navigateByUrl('/home');
     } else {
       this.router.navigateByUrl('/login');

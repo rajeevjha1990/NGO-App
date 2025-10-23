@@ -2,7 +2,8 @@
   <ion-toolbar class="custom-header">
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
-      <img src="assets/logo.png" alt="Company Logo" style="max-width: 50%;">
+      <img src="assets/SVJ-Images/logo.png" alt="Company Logo" style="max-width: 50%;">
+      सबका विकास जयति
     </ion-buttons>
 
     <!-- If not logged in -->
@@ -13,12 +14,12 @@
     </ion-buttons>
 
     <!-- If logged in -->
-    <ion-buttons slot="end" *ngIf="user.loggedIn" (click)="openPopover($event)">
+    <!-- <ion-buttons slot="end" (click)="openPopover($event)">
       <ion-button fill="clear">
         <ion-avatar slot="end" style="height: 30px;width: 30px;">
-          <img [src]="user.image ? user.image : '/assets/avtar.png'" alt="User Image" />
+          <img src="/assets/SVJ-Images/logo.png" alt="User Image" />
         </ion-avatar>
       </ion-button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>

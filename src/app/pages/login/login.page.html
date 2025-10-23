@@ -1,48 +1,29 @@
-<ion-header translucent="true">
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
 
   <ion-card>
     <ion-card-header>
       <ion-card-title>
         <div class="logo ion-text-center">
-          <img src="assets/logo.png" alt="Company Logo" />
+          <img src="assets/SVJ-Images/logo.png" alt="Company Logo" />
         </div>
         <h2 class="ion-text-center" style="font-size: 2rem;">Login</h2>
       </ion-card-title>
     </ion-card-header>
+
     <ion-card-content>
       <div>
-        <!-- Show Mobile and Password only if OTP is not sent -->
-        <div *ngIf="!otpSent">
-          <ion-item class="ion-margin-top">
-            <ion-input [(ngModel)]="formData.mobile" placeholder="Enter register mobile" type="tel" maxlength="10"
-              inputmode="numeric" required>
-            </ion-input>
-          </ion-item>
-          <ion-item class="ion-margin-bottom">
-            <ion-input [(ngModel)]="formData.password" placeholder="Password" type="password" required>
-            </ion-input>
-          </ion-item>
-          <ion-button expand="block" (click)="loginClick()">Login</ion-button>
-        </div>
+        <ion-item class="ion-margin-top">
+          <ion-input [(ngModel)]="formData.mobile" placeholder="Enter registered mobile" type="tel" maxlength="10"
+            inputmode="numeric" required>
+          </ion-input>
+        </ion-item>
 
-        <!-- OTP input and verification -->
-        <div *ngIf="otpSent">
-          <ion-input-otp [length]="4" [(ngModel)]="formData.otp"></ion-input-otp>
+        <ion-item class="ion-margin-bottom">
+          <ion-input [(ngModel)]="formData.password" placeholder="Password" type="password" required>
+          </ion-input>
+        </ion-item>
 
-          <p class="ion-text-center ion-margin-top">
-            OTP sent to {{ formData.mobile }}. Please enter the OTP {{genratedotpData}}.
-          </p>
-          <p class="ion-text-center ion-margin-top">
-            OTP expires in: {{ otpTimer }} seconds
-          </p>
-          <ion-button expand="block" (click)="verifyOtp()">Verify OTP</ion-button>
-        </div>
+        <ion-button expand="block" (click)="loginClick()">Login</ion-button>
       </div>
 
       <ion-grid class="ion-margin-top">
@@ -51,6 +32,7 @@
             <ion-button fill="clear" expand="block" routerLink="/signup">
               Sign Up
             </ion-button>
+
           </ion-col>
           <ion-col size="6">
             <ion-button fill="clear" expand="block" routerLink="/forgot-password">
@@ -60,7 +42,6 @@
         </ion-row>
       </ion-grid>
     </ion-card-content>
-
   </ion-card>
 
 </ion-content>

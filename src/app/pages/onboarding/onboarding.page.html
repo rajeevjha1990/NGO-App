@@ -19,10 +19,11 @@
     </div>
   </div>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar>
-    <ion-button *ngIf="!user.loggedIn" expand="block" routerLink="/login">Get Start</ion-button>
-    <ion-button *ngIf="user.loggedIn" expand="block" routerLink="/home">Get Start</ion-button>
-
+    <ion-button expand="block" (click)="finishOnboarding()">
+      Get Started
+    </ion-button>
   </ion-toolbar>
 </ion-footer>

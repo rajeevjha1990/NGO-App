@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { UserService } from 'src/app/services/user/user.service';
 import { PopoverController, NavController } from '@ionic/angular';
-import { User } from 'src/app/data-types/user';
+import { Volenteer } from 'src/app/data-types/volenteer';
 
 @Component({
   selector: 'app-header-popover',
@@ -14,14 +14,14 @@ import { User } from 'src/app/data-types/user';
 
 })
 export class HeaderPopoverComponent implements OnInit {
-  user: User = new User();
+  user: Volenteer = new Volenteer();
 
   constructor(
     private popoverCtrl: PopoverController,
     private userServ: UserService,
     private navCtrl: NavController,
   ) {
-    this.userServ.user.subscribe(async u => {
+    this.userServ.volenteer.subscribe(async u => {
       this.user = u;
     });
   }
@@ -30,12 +30,7 @@ export class HeaderPopoverComponent implements OnInit {
   onSelect(action: string) {
     console.log('Selected:', action);
     this.popoverCtrl.dismiss().then(() => {
-      if (action === 'coupon') {
-        this.navCtrl.navigateForward('/coupon-details');
-      }
-      if (action === 'wallet') {
-        this.navCtrl.navigateForward('/wallet-recharge-form');
-      }
+
     });
   }
 }

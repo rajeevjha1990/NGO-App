@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
 import { NavController, ModalController, PopoverController } from '@ionic/angular';
-import { User } from 'src/app/data-types/user';
+import { Volenteer } from 'src/app/data-types/volenteer';
 import { LoginPage } from 'src/app/pages/login/login.page';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { HeaderPopoverComponent } from '../header-popover/header-popover.component';
@@ -18,20 +18,20 @@ import { HeaderPopoverComponent } from '../header-popover/header-popover.compone
 })
 
 export class HeaderComponent {
-  user: User = new User();
+  user: Volenteer = new Volenteer();
   constructor(
     private userServ: UserService,
     private navCtrl: NavController,
     private modalCtrl: ModalController,
     private popoverCtrl: PopoverController
   ) {
-    this.userServ.user.subscribe(async u => {
+    this.userServ.volenteer.subscribe(async u => {
       this.user = u;
     });
   }
   async logout() {
     try {
-      await this.userServ.logout(); // Wait for server
+      await this.userServ.logout();
       this.navCtrl.navigateRoot('/');
     } catch (error) {
       console.error('Logout failed:', error);

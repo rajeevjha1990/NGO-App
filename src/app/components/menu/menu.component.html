@@ -1,8 +1,9 @@
 <ion-menu [type]="menuType" menuId="main-menu" contentId="main-content" side="start">
   <ion-header>
-    <ion-toolbar>
-      <ion-title><img src="assets/logo.png" alt="Company Logo" style="max-width: 50%;"></ion-title>
-    </ion-toolbar>
+    <ion-buttons slot="start">
+      <img src="assets/SVJ-Images/logo.png" alt="Company Logo" style="max-width: 15%;">
+      सबका विकास जयति
+    </ion-buttons>
   </ion-header>
 
   <ion-content>
@@ -13,49 +14,6 @@
           Dashboard
         </ion-item>
       </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="true">
-        <ion-item (click)="navigateAndCloseMenu('/order-history')">
-          <ion-icon slot="start" name="phone-portrait-outline"></ion-icon>
-          Transaction History
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="true">
-        <ion-item (click)="navigateAndCloseMenu('/coupon-details')">
-          <ion-icon name="card-outline" slot="start"></ion-icon>
-          Coupons
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="true">
-        <ion-item (click)="navigateAndCloseMenu('/favorites')">
-          <ion-icon slot="start" name="heart-outline"></ion-icon>
-          Favorites
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="true">
-        <ion-item (click)="navigateAndCloseMenu('/change-password')">
-          <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
-          Change Password
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="true">
-        <ion-item (click)="navigateAndCloseMenu('/support')">
-          <ion-icon slot="start" name="help-circle-outline"></ion-icon>
-          Support
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="true">
-        <ion-item (click)="navigateAndCloseMenu('/personal-info')">
-          <ion-icon slot="start" name="person-outline"></ion-icon>
-          Personal Information
-        </ion-item>
-      </ion-menu-toggle>
-
       <ion-menu-toggle auto-hide="true">
         <ion-item (click)="logout()">
           <ion-icon slot="start" name="log-out-outline"></ion-icon>
