@@ -31,5 +31,13 @@ export const routes: Routes = [
     path: 'profile',
     loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
   },
+  {
+    path: 'groups',
+    loadComponent: () => import('./pages/groups/groups.page').then( m => m.GroupsPage)
+  },
+  {
+    path: 'new-group',
+    loadComponent: () => import('./pages/new-group/new-group.page').then( m => m.NewGroupPage)
+  },
 
 ];

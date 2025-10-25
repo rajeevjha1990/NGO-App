@@ -44,9 +44,7 @@ export class AppComponent {
     this.userServ.volenteer.subscribe(async u => {
       this.user = u;
     });
-    if (this.user.loggedIn) {
-      this.userServ.updatePendingToFailure()
-    }
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.menuCtrl.close('main-menu');

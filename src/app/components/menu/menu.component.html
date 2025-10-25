@@ -13,6 +13,10 @@
           <ion-icon slot="start" name="home-outline"></ion-icon>
           Dashboard
         </ion-item>
+        <ion-item (click)="navigateAndCloseMenu('/groups', true)">
+          <ion-icon slot="start" name="people-outline"></ion-icon>
+          Groups
+        </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
         <ion-item (click)="logout()">

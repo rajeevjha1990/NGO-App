@@ -136,54 +136,7 @@ export class UserService {
     const apiResp = await this.veronHttp.post(url, formData);
     return apiResp;
   }
-  async rechargeHistory(all = false) {
-    const url = Constants.COMMON_API_PATH + 'recharge_history';
-    const respData = await this.veronHttp.post(url, {
-      all_data: all ? 'yes' : 'no'
-    });
 
-    if (respData) {
-      return {
-        mobileRecharge: respData.mobilerechargeHistorise || [],
-        electricityRecharge: respData.electricrechargeHistorise || []
-      };
-    } else {
-      return {
-        mobileRecharge: [],
-        electricityRecharge: []
-      };
-    }
-  }
-  async reschargeOrderByuser(orderData: any, showLoading = true) {
-
-    const url = Constants.COMMON_API_PATH + 'lastRechargeOrder';
-    const apiResp = await this.veronHttp.post(url, orderData, {}, showLoading);
-    return apiResp;
-  }
-  async consumerRescharges() {
-    const url = Constants.COMMON_API_PATH + 'recharge_list';
-    const respData = await this.veronHttp.post(url, {});
-    if (respData) {
-      return respData.consumerallrecharges;
-    } else {
-      return []
-    }
-  }
-  async orderReciept(orderId: any) {
-    const url = Constants.COMMON_API_PATH + 'receiptPDF/' + orderId;
-    const respData = await this.veronHttp.downloadFile(url, {});
-    return respData;
-  }
-  async verifyRegistrationOtp(data: any) {
-    const url = Constants.USER_API_PATH + 'registration_verification';
-    const apiResp = await this.veronHttp.post(url, data);
-    return apiResp;
-  }
-  async checkMobileRegisterorNot(data: any) {
-    const url = Constants.USER_API_PATH + 'check_mobile_registered';
-    const apiResp = await this.veronHttp.post(url, data);
-    return apiResp;
-  }
   async changePassword(data: any) {
     const url = Constants.COMMON_API_PATH + 'change_password';
     const apiResp = await this.veronHttp.post(url, data);
@@ -194,78 +147,8 @@ export class UserService {
     const apiResp = await this.veronHttp.post(url, data);
     return apiResp;
   }
-  async pwdOtpVerification(data: any) {
-    const url = Constants.USER_API_PATH + 'verify_forgot_otp';
-    const apiResp = await this.veronHttp.post(url, data);
-    return apiResp;
-  }
-  async transactionHistory() {
-    const url = Constants.COMMON_API_PATH + 'transaction_history';
-    const respData = await this.veronHttp.post(url, {});
-    if (respData) {
-      return respData.transactions;
-    } else {
-      return []
-    }
-  }
-  async consumerCoupons() {
-    const url = Constants.COMMON_API_PATH + 'consumer_coupons';
-    const respData = await this.veronHttp.post(url, {});
-    if (respData) {
-      return respData;
-    } else {
-      return []
-    }
-  }
-  async walletRecharge(data: any) {
-    const url = Constants.COMMON_API_PATH + 'wallet_recharge';
-    const apiResp = await this.veronHttp.post(url, data);
-    return apiResp;
-  }
-  async raisedYourTicket(ticketdata: any) {
-    const url = Constants.COMMON_API_PATH + 'new_support';
-    const apiResp = await this.veronHttp.post(url, ticketdata);
-    return apiResp;
-  }
-  async generatedTickets() {
-    const url = Constants.COMMON_API_PATH + 'getTickets';
-    const respData = await this.veronHttp.post(url, {});
-    if (respData) {
-      return respData.tickets;
-    } else {
-      return []
-    }
-  }
-  async getTicketConversation(tktno: any) {
-    const data = {
-      tktno: tktno
-    }
-    const url = Constants.COMMON_API_PATH + 'getTicketConversactions';
-    const respData = await this.veronHttp.post(url, data);
-    if (respData) {
-      return respData.conversactions;
-    } else {
-      return []
-    }
-  }
-  async replyToTicket(replydata: any) {
-    const url = Constants.COMMON_API_PATH + 'reply_to_ticket';
-    const apiResp = await this.veronHttp.post(url, replydata);
-    return apiResp;
-  }
-  async pendingOrderDetails(orderId: any) {
-    const data = {
-      orderId: orderId
-    }
-    const url = Constants.COMMON_API_PATH + 'pending_order_details';
-    const respData = await this.veronHttp.post(url, data);
-    if (respData) {
-      return respData.orderdetails;
-    } else {
-      return {}
-    }
-  }
-  async updatePendingToFailure() {
+
+  async createGroup(formdata: any) {
     const url = Constants.COMMON_API_PATH + 'update_two_days_pending';
     const apiResp = await this.veronHttp.post(url, {});
     return apiResp;

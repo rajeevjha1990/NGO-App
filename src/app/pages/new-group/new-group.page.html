@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>new-group</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-title class="ion-padding">Create new Group</ion-title>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-select labelPlacement="floating" label="Program" [(ngModel)]="formData.program_id" fill="outline">
+          <ion-select-option *ngFor="let program of programs" [value]="program.program_id">
+            {{program.program_name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-input labelPlacement="floating" label="Ep No" [(ngModel)]="formData.ep_no" fill="outline" type="text">
+        </ion-input>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-input labelPlacement="floating" label="Senior Ep No" [(ngModel)]="formData.senior_ep_no" fill="outline"
+          type="text">
+        </ion-input>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-input labelPlacement="floating" label="No of Members" [(ngModel)]="formData.no_of_members" fill="outline"
+          type="number">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-title class="ion-margin-top">Group Members</ion-title>
+        <ion-button expand="block" (click)="addMember()">Add Member</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngFor="let member of members; let i = index">
+      <ion-col size="10">
+        <ion-input labelPlacement="floating" label="Member Name" [(ngModel)]="member.name" fill="outline"></ion-input>
+      </ion-col>
+      <ion-col size="10">
+        <ion-input labelPlacement="floating" label="Mobile" [(ngModel)]="member.mobile" type="tel"
+          fill="outline"></ion-input>
+      </ion-col>
+      <ion-col size="2" class="ion-text-center">
+        <ion-button color="danger" fill="clear" (click)="removeMember(i)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button (click)="saveGroup()" expand="block" type="submit" class="ion-margin-top">
+          Save Group
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
