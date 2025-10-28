@@ -24,28 +24,68 @@ export class NewGroupPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.programs = await this.pubServ.getQualifications();
+    this.programs = await this.pubServ.getPrograms();
   }
-  addMember() {
-    this.members.push({ name: '', mobile: '' });
+  onNoOfMembersChange() {
+    const count = Number(this.formData.no_of_members) || 0;
+
+    if (count > this.members.length) {
+      for (let i = this.members.length; i < count; i++) {
+        this.members.push({ name: '', mobile: '' });
+      }
+    } else if (count < this.members.length) {
+      this.members.splice(count);
+    }
   }
-
-  removeMember(index: number) {
-    this.members.splice(index, 1);
-  }
-
-
   async saveGroup() {
-    if (this.members.length < 10) {
+    // 1. Program must be selected
+    if (!this.formData.program_id) {
+      await this.showAlert('Please select a Program.');
+      return;
+    }
+
+    // 2. EP No and Senior EP No
+    if (!this.formData.ep_no || !this.formData.senior_ep_no) {
+      await this.showAlert('Please enter both EP No and Senior EP No.');
+      return;
+    }
+
+    // 3. No of members
+    const totalMembers = Number(this.formData.no_of_members) || 0;
+    if (totalMembers < 10) {
       await this.showAlert('Please add at least 10 members.');
       return;
     }
 
+    // 4. Validate each member
+    for (let i = 0; i < this.members.length; i++) {
+      const member = this.members[i];
+
+      if (!member.name || !member.name.trim()) {
+        await this.showAlert(`Please enter a name for member ${i + 1}.`);
+        return;
+      }
+
+      if (!member.mobile || !member.mobile.trim()) {
+        await this.showAlert(`Please enter a mobile number for member ${i + 1}.`);
+        return;
+      }
+
+      // Check mobile is numeric and 10 digits
+      const mobilePattern = /^\d{10}$/;
+      if (!mobilePattern.test(member.mobile)) {
+        await this.showAlert(`Mobile number for member ${i + 1} must be 10 digits.`);
+        return;
+      }
+    }
+
+    // 5. Prepare payload and send
     const payload = {
       ...this.formData,
       members: this.members
     };
-
+    console.log(payload);
+    return
     const resp = await this.userServ.createGroup(payload);
 
     if (resp?.status) {

@@ -13,8 +13,7 @@ import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
   imports: [...SHARED_IONIC_MODULES]
 })
 export class ProfilePage implements OnInit {
-  user: Volenteer = new Volenteer();
-  formData: any = {};
+  profileData: any = {};
   qualifications: any[] = []
   constructor(
     private userServ: UserService,
@@ -24,59 +23,53 @@ export class ProfilePage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.userServ.volenteer.subscribe(u => {
-      if (u) {
-        this.user = u;
-        this.formData = { ...u };
-        console.log('User loaded:', this.user);
-      } else {
-        console.warn('No user data found!');
-      }
-    });
     this.qualifications = await this.pubServ.getQualifications();
+    this.profileData = await this.userServ.getProfile()
   }
 
   async saveProfile() {
-    if (!this.formData.volunteer_name || this.formData.volunteer_name.trim() === '') {
+    if (!this.profileData.volntr_name || this.profileData.volntr_name.trim() === '') {
       return this.showAlert('Name is required.');
     }
 
-    if (!this.formData.volntr_mobile) {
+    if (!this.profileData.volntr_mobile) {
       return this.showAlert('Mobile number is required.');
     }
 
-    if (!/^[0-9]{10}$/.test(this.formData.volntr_mobile)) {
+    if (!/^[0-9]{10}$/.test(this.profileData.volntr_mobile)) {
       return this.showAlert('Enter a valid 10-digit mobile number.');
     }
 
-    if (!this.formData.volntr_email || this.formData.volntr_email.trim() === '') {
+    if (!this.profileData.volntr_email || this.profileData.volntr_email.trim() === '') {
       return this.showAlert('Email is required.');
     }
 
-    if (!/^\S+@\S+\.\S+$/.test(this.formData.volntr_email)) {
+    if (!/^\S+@\S+\.\S+$/.test(this.profileData.volntr_email)) {
       return this.showAlert('Enter a valid email address.');
     }
-    if (!this.formData.volntr_ep_temp || this.formData.volntr_ep_temp.trim() === '') {
+    if (!this.profileData.volntr_ep_temp || this.profileData.volntr_ep_temp.trim() === '') {
       return this.showAlert('Temp EP no is required.');
     }
-    if (!this.formData.volntr_qualification) {
+    if (!this.profileData.volntr_qualification) {
       return this.showAlert('Please select your qualification.');
     }
 
-    if (!this.formData.volntr_join_date) {
+    if (!this.profileData.volntr_join_date) {
       return this.showAlert('Join date is required.');
     }
 
-    if (!this.formData.volntr_address || this.formData.volntr_address.trim() === '') {
-      return this.showAlert('Address is required.');
+    if (!this.profileData.volntr_pincode || this.profileData.volntr_pincode.trim() === '') {
+      return this.showAlert('Pincode is required.');
     }
 
-
+    if (!this.profileData.volntr_address || this.profileData.volntr_address.trim() === '') {
+      return this.showAlert('Address is required.');
+    }
     // Call API
-    const resp = await this.userServ.profileUpdate(this.formData);
+    const resp = await this.userServ.profileUpdate(this.profileData);
 
     if (resp?.status) {
-      await this.showAlert('Registration successful!');
+      // await this.showAlert('Registration successful!');
       this.navCtrl.navigateForward(['/home']);
     } else {
       await this.showAlert(resp?.msg || 'Registration failed.');

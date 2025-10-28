@@ -28,16 +28,12 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userServ.volenteer.subscribe(u => {
-      this.user = u;
-      if (!this.user?.loggedIn) {
-        this.router.navigateForward('/onboarding');
-        return;
-      }
-      this.isProfileComplete = this.checkProfileCompletion(this.user);
-    });
-  }
 
+  }
+  async ionViewDidEnter() {
+    this.user = await this.userServ.getProfile()
+    this.isProfileComplete = this.checkProfileCompletion(this.user);
+  }
   checkProfileCompletion(user: Volenteer): boolean {
     console.log(user);
     return !!(user.volntr_name && user.volntr_email && user.volntr_mobile && user.volntr_address);

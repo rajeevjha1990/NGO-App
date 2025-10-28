@@ -28,8 +28,8 @@
       </ion-col>
 
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="No of Members" [(ngModel)]="formData.no_of_members" fill="outline"
-          type="number">
+        <ion-input (ionChange)="onNoOfMembersChange()" labelPlacement="floating" label="No of Members"
+          [(ngModel)]="formData.no_of_members" fill="outline" type="number">
         </ion-input>
       </ion-col>
     </ion-row>
@@ -37,22 +37,21 @@
     <ion-row>
       <ion-col size="12">
         <ion-title class="ion-margin-top">Group Members</ion-title>
-        <ion-button expand="block" (click)="addMember()">Add Member</ion-button>
       </ion-col>
     </ion-row>
 
-    <ion-row *ngFor="let member of members; let i = index">
-      <ion-col size="10">
-        <ion-input labelPlacement="floating" label="Member Name" [(ngModel)]="member.name" fill="outline"></ion-input>
+    <ion-row *ngFor="let member of members; let i = index" class="ion-align-items-start">
+      <ion-col size="1" class="ion-text-center">
+        <div class="member-counter">{{ i + 1 }}</div>
       </ion-col>
-      <ion-col size="10">
-        <ion-input labelPlacement="floating" label="Mobile" [(ngModel)]="member.mobile" type="tel"
-          fill="outline"></ion-input>
-      </ion-col>
-      <ion-col size="2" class="ion-text-center">
-        <ion-button color="danger" fill="clear" (click)="removeMember(i)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
+
+
+      <ion-col size="11">
+        <ion-input labelPlacement="floating" label="Member Name" [(ngModel)]="member.name" fill="outline">
+        </ion-input>
+        <ion-input labelPlacement="floating" label="Mobile" [(ngModel)]="member.mobile" type="tel" fill="outline"
+          class="ion-margin-top">
+        </ion-input>
       </ion-col>
     </ion-row>
 

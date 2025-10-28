@@ -9,27 +9,28 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Name" [(ngModel)]="formData.volunteer_name" fill="outline"
+        <ion-input labelPlacement="floating" label="Temp EP" [(ngModel)]="profileData.volntr_ep_temp" fill="outline"
           type="text">
         </ion-input>
       </ion-col>
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Mobile Number" [(ngModel)]="formData.volntr_mobile" fill="outline"
-          type="number">
+        <ion-input labelPlacement="floating" label="Name" [(ngModel)]="profileData.volntr_name" fill="outline"
+          type="text">
         </ion-input>
       </ion-col>
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Email ID" [(ngModel)]="formData.volntr_email" fill="outline"
+        <ion-input labelPlacement="floating" label="Mobile Number" [(ngModel)]="profileData.volntr_mobile"
+          fill="outline" type="number">
+        </ion-input>
+      </ion-col>
+      <ion-col size="12">
+        <ion-input labelPlacement="floating" label="Email ID" [(ngModel)]="profileData.volntr_email" fill="outline"
           type="email">
         </ion-input>
       </ion-col>
+
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Temp EP" [(ngModel)]="formData.volntr_ep_temp" fill="outline"
-          type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-select labelPlacement="floating" label="Qualification" [(ngModel)]="formData.volntr_qualification"
+        <ion-select labelPlacement="floating" label="Qualification" [(ngModel)]="profileData.volntr_qualification"
           fill="outline">
           <ion-select-option *ngFor="let qftn of  qualifications"
             value="{{qftn.qualification_id}}">{{qftn.qualification_short}}
@@ -37,12 +38,17 @@
         </ion-select>
       </ion-col>
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Join Date" [(ngModel)]="formData.volntr_join_date" fill="outline"
+        <ion-input labelPlacement="floating" label="Join Date" [(ngModel)]="profileData.volntr_join_date" fill="outline"
           type="date">
         </ion-input>
       </ion-col>
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Address" [(ngModel)]="formData.volntr_address" fill="outline"
+        <ion-input labelPlacement="floating" label="Pincode" [(ngModel)]="profileData.volntr_pincode" fill="outline"
+          type="text">
+        </ion-input>
+      </ion-col>
+      <ion-col size="12">
+        <ion-input labelPlacement="floating" label="Address" [(ngModel)]="profileData.volntr_address" fill="outline"
           type="text">
         </ion-input>
       </ion-col>

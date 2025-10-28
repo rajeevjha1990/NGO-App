@@ -119,14 +119,11 @@ export class UserService {
       return []
     }
   }
-  async getuser(userId: any) {
-    const data = {
-      userId: userId
-    }
-    const url = Constants.USER_API_PATH + 'get_userbyId';
-    const respData = await this.veronHttp.post(url, data);
+  async getProfile() {
+    const url = Constants.USER_API_PATH + 'get_profile';
+    const respData = await this.veronHttp.post(url, {});
     if (respData) {
-      return respData.user;
+      return respData.profile;
     } else {
       return {}
     }

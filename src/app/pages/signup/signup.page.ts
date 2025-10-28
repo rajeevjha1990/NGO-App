@@ -26,12 +26,12 @@ export class SignupPage implements OnInit {
 
   async newRegistration() {
     // Validation
-    if (!this.formData.volunteer_name || this.formData.volunteer_name.trim() === '') {
+    if (!this.formData.volntr_name || this.formData.volntr_name.trim() === '') {
       await this.showAlert('Name is required.');
       return;
     }
 
-    if (!this.formData.email || this.formData.email.trim() === '') {
+    if (!this.formData.volntr_email || this.formData.volntr_email.trim() === '') {
       await this.showAlert('Email is required.');
       return;
     }
@@ -41,7 +41,7 @@ export class SignupPage implements OnInit {
       return;
     }
 
-    if (!this.formData.password || this.formData.password.trim() === '') {
+    if (!this.formData.volntr_password || this.formData.volntr_password.trim() === '') {
       await this.showAlert('Password is required.');
       return;
     }
