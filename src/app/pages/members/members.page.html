@@ -30,15 +30,15 @@
       <ion-label>
         <h2>
           {{ member.name }}
-          <span [style.color]="getRoleColor(member.member_role)">
-            ({{ member.member_role || 'Member' }})
+          <span [style.color]="getRoleColor(member.role)">
+            ({{ member.role || 'Member' }})
           </span>
         </h2>
         <p><b>Mobile:</b> {{ member.mobile }}</p>
       </ion-label>
 
       <!-- Role Selection -->
-      <ion-select interface="popover" placeholder="Change Role" [value]="member.member_role"
+      <ion-select interface="popover" placeholder="Change Role" [value]="member.role"
         (ionChange)="changeMemberRole(member, $event.detail.value)">
         <ion-select-option value="Leader">Leader</ion-select-option>
         <ion-select-option value="Assistant">Assistant</ion-select-option>

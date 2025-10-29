@@ -25,5 +25,12 @@ export class GroupsPage implements OnInit {
       this.programObject[program.program_id] = program
     });
   }
-
+  editGroup(group: any) {
+    console.log('Edit group clicked:', group);
+    // Example navigation (you can change route)
+    // this.router.navigate(['/edit-group', group.group_id]);
+  }
+  requesteditGroup(group: any) {
+    console.log('Edit group clicked:', group);
+  }
 }

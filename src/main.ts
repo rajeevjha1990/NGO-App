@@ -41,7 +41,8 @@ import {
   giftOutline,
   helpCircleOutline,
   sendOutline,
-  trashOutline
+  trashOutline,
+  createOutline
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -86,7 +87,8 @@ addIcons({
   'gift-outline': giftOutline,
   'help-circle-outline': helpCircleOutline,
   'send-outline': sendOutline,
-  'trash-outline': trashOutline
+  'trash-outline': trashOutline,
+  'create-outline': createOutline
 
 });
 
