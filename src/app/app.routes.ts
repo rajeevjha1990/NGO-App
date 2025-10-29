@@ -25,19 +25,23 @@ export const routes: Routes = [
   },
   {
     path: 'signup',
-    loadComponent: () => import('./pages/signup/signup.page').then( m => m.SignupPage)
+    loadComponent: () => import('./pages/signup/signup.page').then(m => m.SignupPage)
   },
   {
     path: 'profile',
-    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+    loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage)
   },
   {
     path: 'groups',
-    loadComponent: () => import('./pages/groups/groups.page').then( m => m.GroupsPage)
+    loadComponent: () => import('./pages/groups/groups.page').then(m => m.GroupsPage)
   },
   {
     path: 'new-group',
-    loadComponent: () => import('./pages/new-group/new-group.page').then( m => m.NewGroupPage)
+    loadComponent: () => import('./pages/new-group/new-group.page').then(m => m.NewGroupPage)
+  },
+  {
+    path: 'members/:groupId',
+    loadComponent: () => import('./pages/members/members.page').then(m => m.MembersPage)
   },
 
 ];

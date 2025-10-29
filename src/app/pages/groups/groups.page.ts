@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PubService } from 'src/app/services/pub/pub.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 
 @Component({
@@ -9,10 +11,19 @@ import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
   imports: [...SHARED_IONIC_MODULES]
 })
 export class GroupsPage implements OnInit {
+  groups: any = [];
+  programObject: any = {}
+  constructor(
+    private userServ: UserService,
+    private pubServ: PubService
+  ) { }
 
-  constructor() { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    this.groups = await this.userServ.epGroups();
+    const programs = await this.pubServ.getPrograms();
+    programs.forEach((program: any) => {
+      this.programObject[program.program_id] = program
+    });
   }
 
 }

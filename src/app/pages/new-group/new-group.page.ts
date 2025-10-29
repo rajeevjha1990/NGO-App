@@ -24,6 +24,9 @@ export class NewGroupPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    const profiledata = await this.userServ.getProfile();
+    this.formData.ep_no = profiledata.volntr_ep_temp;
+
     this.programs = await this.pubServ.getPrograms();
   }
   onNoOfMembersChange() {
@@ -39,6 +42,10 @@ export class NewGroupPage implements OnInit {
   }
   async saveGroup() {
     // 1. Program must be selected
+    if (!this.formData.group_name) {
+      await this.showAlert('Group name is required');
+      return;
+    }
     if (!this.formData.program_id) {
       await this.showAlert('Please select a Program.');
       return;
@@ -51,11 +58,11 @@ export class NewGroupPage implements OnInit {
     }
 
     // 3. No of members
-    const totalMembers = Number(this.formData.no_of_members) || 0;
-    if (totalMembers < 10) {
-      await this.showAlert('Please add at least 10 members.');
-      return;
-    }
+    // const totalMembers = Number(this.formData.no_of_members) || 0;
+    // if (totalMembers < 10) {
+    //   await this.showAlert('Please add at least 10 members.');
+    //   return;
+    // }
 
     // 4. Validate each member
     for (let i = 0; i < this.members.length; i++) {
@@ -79,14 +86,8 @@ export class NewGroupPage implements OnInit {
       }
     }
 
-    // 5. Prepare payload and send
-    const payload = {
-      ...this.formData,
-      members: this.members
-    };
-    console.log(payload);
-    return
-    const resp = await this.userServ.createGroup(payload);
+    this.formData.members = JSON.stringify(this.members)
+    const resp = await this.userServ.createGroup(this.formData);
 
     if (resp?.status) {
       await this.showAlert('Group created successfully!');

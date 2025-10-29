@@ -10,6 +10,37 @@
       <ion-title size="large">groups</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" *ngFor="let group of groups">
+        <ion-card>
+          <ion-card-header>
+            <div class="ion-flex ion-justify-content-between ion-align-items-center">
+              <div>
+                <h2 class="group-title">{{ group.group_name }}</h2>
+                <small class="program-name" *ngIf="programObject[group.group_program]">
+                  {{ programObject[group.group_program].program_name }}
+                </small>
+              </div>
+              <ion-badge routerLink="/members/{{group.group_id}}" color="tertiary">{{ group.group_noof_member }}
+                Members</ion-badge>
+            </div>
+            <ion-card-subtitle>
+              Created on: {{ group.group_created | date:'dd MMM yyyy' }}
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <b>Senior EP:</b> {{ group.group_senior_epno }} <br>
+            <b>Status:</b>
+            <ion-badge color="success" *ngIf="group.group_status == 1">Active</ion-badge>
+            <ion-badge color="medium" *ngIf="group.group_status == 0">Closed</ion-badge>
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed" routerLink="/new-group">
     <ion-fab-button>
       <ion-icon name="add-outline"></ion-icon>

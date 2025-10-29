@@ -8,13 +8,13 @@ import { RajeevhttpService } from '../http/rajeevhttp.service';
 export class PubService {
 
   constructor(
-    private dibcHttp: RajeevhttpService
+    private svjHttp: RajeevhttpService
   ) {
 
   }
   async getQualifications() {
     const url = Constants.COMMON_API_PATH + 'qualifications';
-    const respData = await this.dibcHttp.post(url, {});
+    const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.qualifications;
     } else {
@@ -23,9 +23,21 @@ export class PubService {
   }
   async getPrograms() {
     const url = Constants.COMMON_API_PATH + 'getPrograms';
-    const respData = await this.dibcHttp.post(url, {});
+    const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.programs;
+    } else {
+      return []
+    }
+  }
+  async groupmembers(groupId: any) {
+    const data = {
+      groupId: groupId
+    }
+    const url = Constants.COMMON_API_PATH + 'getMembers';
+    const respData = await this.svjHttp.post(url, data);
+    if (respData) {
+      return respData.groupmembers;
     } else {
       return []
     }
