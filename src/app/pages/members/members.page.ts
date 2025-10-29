@@ -3,6 +3,8 @@ import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PubService } from 'src/app/services/pub/pub.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { AlertController, ToastController } from '@ionic/angular';
+import { exit } from 'ionicons/icons';
 
 @Component({
   selector: 'app-members',
@@ -12,13 +14,15 @@ import { UserService } from 'src/app/services/user/user.service';
   imports: [...SHARED_IONIC_MODULES]
 })
 export class MembersPage implements OnInit {
-  groupId: any = ''
+  groupId: any
   groupMembers: any = [];
   groupObject: any = {}
   constructor(
     private activatedRoute: ActivatedRoute,
     private pubServ: PubService,
-    private userServ: UserService
+    private userServ: UserService,
+    private toastCtrl: ToastController
+
   ) { }
 
   async ngOnInit() {
@@ -30,7 +34,41 @@ export class MembersPage implements OnInit {
       this.groupObject[group.group_id] = group
     });
     this.groupMembers = await this.pubServ.groupmembers(this.groupId);
-
+  }
+  getRoleColor(role: string): string {
+    switch (role) {
+      case 'Leader':
+        return '#28a745';
+      case 'Assistant':
+        return '#f4b400';
+      case 'Treasurer':
+        return '#4285f4';
+      case 'Secretary':
+        return '#9c27b0';
+      default:
+        return '#666';
+    }
+  }
+  async changeMemberRole(member: any, newRole: string) {
+    console.log(member);
+    exit;
+    member.member_role = newRole;
+    const res = await this.pubServ.updateMemberRole(member.id, newRole);
+    if (res) {
+      const toast = await this.toastCtrl.create({
+        message: `${member.name}'s role updated to ${newRole || 'Member'}`,
+        duration: 2000,
+        color: 'success'
+      });
+      toast.present();
+    } else {
+      const toast = await this.toastCtrl.create({
+        message: `Failed to update ${member.name}'s role`,
+        duration: 2000,
+        color: 'danger'
+      });
+      toast.present();
+    }
   }
 
 }

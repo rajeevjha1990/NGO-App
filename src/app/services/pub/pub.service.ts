@@ -42,4 +42,14 @@ export class PubService {
       return []
     }
   }
+  async updateMemberRole(memberId: string, role: string) {
+    const data = {
+      memberId: memberId,
+      role: role
+    }
+    const url = Constants.COMMON_API_PATH + 'update_role';
+    const apiResp = await this.svjHttp.post(url, data);
+    return apiResp;
+  }
+
 }
