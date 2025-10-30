@@ -51,5 +51,13 @@ export class PubService {
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
-
+  async requestEditGroup(groupId: any, reson: any) {
+    const data = {
+      groupId: groupId,
+      reason: reson
+    }
+    const url = Constants.COMMON_API_PATH + 'request_edit_group';
+    const apiResp = await this.svjHttp.post(url, data);
+    return apiResp;
+  }
 }
