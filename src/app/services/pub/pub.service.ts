@@ -60,4 +60,25 @@ export class PubService {
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
+  async alleditRequests() {
+    const url = Constants.COMMON_API_PATH + 'getAllEditRequests';
+    const respData = await this.svjHttp.post(url, {});
+    if (respData) {
+      return respData.allrequests;
+    } else {
+      return []
+    }
+  }
+  async getGroup(groupId: any) {
+    const data = { groupId };
+    const url = Constants.COMMON_API_PATH + 'get_groupdata';
+    const respData = await this.svjHttp.post(url, data);
+
+    if (respData) {
+      return respData;
+    } else {
+      return null;
+    }
+  }
+
 }

@@ -1,8 +1,9 @@
 import { NavController, AlertController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PubService } from 'src/app/services/pub/pub.service';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { UserService } from 'src/app/services/user/user.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-new-group',
@@ -15,19 +16,34 @@ export class NewGroupPage implements OnInit {
   formData: any = {}
   programs: any = []
   members: any[] = [];
-
+  @Input()
+  groupId: any;
   constructor(
     private pubServ: PubService,
     private navCtrl: NavController,
     private alertCtrl: AlertController,
-    private userServ: UserService
+    private userServ: UserService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   async ngOnInit() {
-    const profiledata = await this.userServ.getProfile();
-    this.formData.ep_no = profiledata.volntr_ep_temp;
+    this.activatedRoute.paramMap.subscribe(async (queryParams: ParamMap) => {
+      this.groupId = queryParams.get('groupId');
 
-    this.programs = await this.pubServ.getPrograms();
+      const profiledata = await this.userServ.getProfile();
+      this.formData.ep_no = profiledata.volntr_ep_temp;
+      this.programs = await this.pubServ.getPrograms();
+
+      if (this.groupId) {
+        const groupResp = await this.pubServ.getGroup(this.groupId);
+
+        if (groupResp) {
+          this.formData = groupResp.groupdata || {};
+          this.members = groupResp.members || [];
+          this.formData.no_of_members = this.members.length;
+        }
+      }
+    });
   }
   onNoOfMembersChange() {
     const count = Number(this.formData.no_of_members) || 0;
@@ -85,13 +101,16 @@ export class NewGroupPage implements OnInit {
         return;
       }
     }
+    if (this.groupId) {
+      this.formData.group_id = this.groupId;
+    }
 
     this.formData.members = JSON.stringify(this.members)
     const resp = await this.userServ.createGroup(this.formData);
 
     if (resp?.status) {
-      await this.showAlert('Group created successfully!');
-      this.navCtrl.navigateForward(['/home']);
+      // await this.showAlert('Group created successfully!');
+      this.navCtrl.navigateForward(['/groups']);
     } else {
       await this.showAlert(resp?.msg || 'Group creation failed.');
     }

@@ -28,10 +28,8 @@
               <ion-badge routerLink="/members/{{group.group_id}}" color="tertiary">{{ group.group_noof_member }}
                 Members</ion-badge>
             </div>
-
-
             <ion-card-subtitle>
-              Created on: {{ group.group_created | date:'dd MMM yyyy' }}
+              Created on: {{ group.group_start_date | date:'dd MMM yyyy' }}
             </ion-card-subtitle>
           </ion-card-header>
 
@@ -41,11 +39,17 @@
             <ion-badge color="success" *ngIf="group.group_status == 1">Active</ion-badge>
             <ion-badge color="medium" *ngIf="group.group_status == 0">Closed</ion-badge>
           </ion-card-content>
-          <ion-button expand="block" (click)="editGroup(group)" *ngIf="group.group_status==2">
+          <ion-button expand="block" routerLink="/edit-group/{{group.group_id}}" *ngIf="group.group_status==2">
             Edit
           </ion-button>
-          <ion-button expand="block" (click)="requesteditGroup(group)" *ngIf="group.group_status==1">
+          <ion-button expand="block" (click)="requesteditGroup(group)"
+            *ngIf="group.group_status == 1 && !group.hasEditRequest">
             Request for edit
+          </ion-button>
+
+          <ion-button expand="block" color="medium" disabled="true"
+            *ngIf="group.group_status == 1 && group.hasEditRequest">
+            On your request administrator reviewing
           </ion-button>
 
         </ion-card>

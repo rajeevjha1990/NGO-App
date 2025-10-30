@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PubService } from 'src/app/services/pub/pub.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { AlertController } from '@ionic/angular';
@@ -11,9 +11,11 @@ import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
   standalone: true,
   imports: [...SHARED_IONIC_MODULES]
 })
-export class GroupsPage implements OnInit {
+export class GroupsPage implements OnInit, OnDestroy {
   groups: any = [];
-  programObject: any = {}
+  programObject: any = {};
+  editrequests: any = [];
+  private refreshInterval: any;
 
   constructor(
     private userServ: UserService,
@@ -21,17 +23,33 @@ export class GroupsPage implements OnInit {
     private alertCtrl: AlertController
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() { }
+
+  async ionViewDidEnter() {
+    await this.loadData();
+
+    this.refreshInterval = setInterval(async () => {
+      await this.loadData(true);
+    }, 120000);
+  }
+
+  async loadData(isAutoRefresh: boolean = false) {
     this.groups = await this.userServ.epGroups();
     const programs = await this.pubServ.getPrograms();
+    this.programObject = {};
     programs.forEach((program: any) => {
       this.programObject[program.program_id] = program;
     });
-  }
 
-  editGroup(group: any) {
-    console.log('Edit group clicked:', group);
-    // this.router.navigate(['/edit-group', group.group_id]);
+    this.editrequests = await this.pubServ.alleditRequests();
+    this.groups.forEach((g: any) => {
+      const existing = this.editrequests.find((r: any) => r.group_id == g.group_id && r.status == 1);
+      g.hasEditRequest = !!existing;
+    });
+
+    if (isAutoRefresh) {
+      console.log('🔁 Groups auto-refreshed at', new Date().toLocaleTimeString());
+    }
   }
 
   async requesteditGroup(group: any) {
@@ -54,12 +72,10 @@ export class GroupsPage implements OnInit {
           text: 'Send Request',
           handler: async (data) => {
             if (!data.reason) {
-              // Just stop, no message
               return false;
             }
-
-            // Call API silently
             await this.pubServ.requestEditGroup(group.group_id, data.reason);
+            await this.loadData();
             return true;
           }
         }
@@ -67,6 +83,12 @@ export class GroupsPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  ngOnDestroy() {
+    if (this.refreshInterval) {
+      clearInterval(this.refreshInterval);
+    }
   }
 
 }

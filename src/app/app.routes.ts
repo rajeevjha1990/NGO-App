@@ -40,6 +40,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/new-group/new-group.page').then(m => m.NewGroupPage)
   },
   {
+    path: 'edit-group/:groupId',
+    loadComponent: () => import('./pages/new-group/new-group.page').then(m => m.NewGroupPage)
+  },
+  {
     path: 'members/:groupId',
     loadComponent: () => import('./pages/members/members.page').then(m => m.MembersPage)
   },
