@@ -35,3 +35,24 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Default: show desktop menu */
+.desktop-only {
+    display: flex;
+    gap: 10px;
+}
+
+.mobile-only {
+    display: none;
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: inline-block !important;
+    }
+}

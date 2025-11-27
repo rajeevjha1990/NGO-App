@@ -1,10 +1,9 @@
+import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController } from '@ionic/angular';
-import { UserService } from 'src/app/services/user/user.service';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { Volenteer } from 'src/app/data-types/volenteer';
+import { HeaderComponent } from 'src/app/components/header/header.component';
+import { LoginPage } from '../login/login.page';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +12,8 @@ import { Volenteer } from 'src/app/data-types/volenteer';
   standalone: true,
   imports: [
     ...SHARED_IONIC_MODULES,
-    CommonModule,
-    RouterLink
+    HeaderComponent // ✅ add this line
+
   ]
 })
 export class HomePage implements OnInit {
@@ -22,24 +21,16 @@ export class HomePage implements OnInit {
   isProfileComplete = false;
 
   constructor(
-    private userServ: UserService,
-    private router: NavController,
-    private alertCtrl: AlertController
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
 
   }
-  async ionViewDidEnter() {
-    this.user = await this.userServ.getProfile()
-    this.isProfileComplete = this.checkProfileCompletion(this.user);
-  }
-  checkProfileCompletion(user: Volenteer): boolean {
-    console.log(user);
-    return !!(user.volntr_name && user.volntr_email && user.volntr_mobile && user.volntr_address);
-  }
-
-  goToProfile() {
-    this.router.navigateForward('/profile');
+  async goToLogin() {
+    const modal = await this.modalCtrl.create({
+      component: LoginPage,
+    });
+    return await modal.present();
   }
 }

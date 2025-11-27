@@ -74,11 +74,11 @@ export class NewGroupPage implements OnInit {
     }
 
     // 3. No of members
-    // const totalMembers = Number(this.formData.no_of_members) || 0;
-    // if (totalMembers < 10) {
-    //   await this.showAlert('Please add at least 10 members.');
-    //   return;
-    // }
+    const totalMembers = Number(this.formData.no_of_members) || 0;
+    if (totalMembers < 10) {
+      await this.showAlert('Please add at least 10 members.');
+      return;
+    }
 
     // 4. Validate each member
     for (let i = 0; i < this.members.length; i++) {
@@ -107,7 +107,6 @@ export class NewGroupPage implements OnInit {
 
     this.formData.members = JSON.stringify(this.members)
     const resp = await this.userServ.createGroup(this.formData);
-
     if (resp?.status) {
       // await this.showAlert('Group created successfully!');
       this.navCtrl.navigateForward(['/groups']);

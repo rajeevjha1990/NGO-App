@@ -73,12 +73,40 @@ export class PubService {
     const data = { groupId };
     const url = Constants.COMMON_API_PATH + 'get_groupdata';
     const respData = await this.svjHttp.post(url, data);
-
     if (respData) {
       return respData;
     } else {
       return null;
     }
   }
-
+  async allStates() {
+    const url = Constants.COMMON_API_PATH + 'get_states';
+    const respData = await this.svjHttp.post(url, {});
+    if (respData) {
+      return respData.states;
+    } else {
+      return []
+    }
+  }
+  async districtByState(stateId: any) {
+    const data = {
+      stateId: stateId
+    }
+    const url = Constants.COMMON_API_PATH + 'state_districts';
+    const respData = await this.svjHttp.post(url, data);
+    if (respData) {
+      return respData.districts;
+    } else {
+      return []
+    }
+  }
+  async allDistributedSaintri() {
+    const url = Constants.COMMON_API_PATH + 'distributed_saintries';
+    const respData = await this.svjHttp.post(url, {});
+    if (respData) {
+      return respData.distributedsaintries;
+    } else {
+      return []
+    }
+  }
 }

@@ -1,25 +1,10 @@
 <ion-header>
   <ion-toolbar class="custom-header">
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" class="header-left">
+      <!-- ✅ This links to the 'main-menu' -->
       <ion-menu-button menu="main-menu"></ion-menu-button>
-      <img src="assets/SVJ-Images/logo.png" alt="Company Logo" style="max-width: 50%;">
-      सबका विकास जयति
+      <img src="assets/SVJ-Images/logo.png" alt="Logo" class="logo" />
+      <span class="app-title">सबका विकास जयति</span>
     </ion-buttons>
-
-    <!-- If not logged in -->
-    <ion-buttons slot="end" *ngIf="!user.loggedIn">
-      <ion-button style="color: #000;" fill="clear" (click)="goToLogin()">
-        Login
-      </ion-button>
-    </ion-buttons>
-
-    <!-- If logged in -->
-    <!-- <ion-buttons slot="end" (click)="openPopover($event)">
-      <ion-button fill="clear">
-        <ion-avatar slot="end" style="height: 30px;width: 30px;">
-          <img src="/assets/SVJ-Images/logo.png" alt="User Image" />
-        </ion-avatar>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>

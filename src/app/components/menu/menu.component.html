@@ -17,6 +17,10 @@
           <ion-icon slot="start" name="people-outline"></ion-icon>
           Groups
         </ion-item>
+        <ion-item (click)="navigateAndCloseMenu('/distributed-saintries', true)">
+          <ion-icon slot="start" name="medkit-outline"></ion-icon>
+          Distributed Saintries
+        </ion-item>
       </ion-menu-toggle>
       <ion-menu-toggle auto-hide="true">
         <ion-item (click)="logout()">

@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Distributed Saintries</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Distributed Saintries</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list *ngIf="distributedsaintries.length > 0; else noData">
+    <ion-card *ngFor="let item of distributedsaintries">
+      <ion-card-header>
+        <ion-card-title>{{ item.member_name }} ({{ item.mobile }})</ion-card-title>
+        <ion-card-subtitle>Issue Date:{{ item.issue_date | date:'mediumDate' }}
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+  <ng-template #noData>
+    <ion-text color="medium" class="ion-text-center">
+      <p>No records found.</p>
+    </ion-text>
+  </ng-template>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed" routerLink="/new-distribution">
+    <ion-fab-button color="success">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

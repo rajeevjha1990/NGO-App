@@ -52,26 +52,25 @@ export class UserService {
     }
     return apiResp;
   }
+
+
   async logout() {
     const url = Constants.USER_API_PATH + 'logout';
     try {
-      const apiResp: any = await this.svjHttp.post(url, {});
-      if (apiResp && apiResp.status) {
-        this.authClear();
-        console.log('Logout successful');
+      const apiResp: any = await this.svjHttp.post(url, {}, {});
+      if (apiResp) {
+        this.authServ.clear();
+        this.volenteerObj = new Volenteer();
+        this.volenteer.next(this.volenteerObj);
+        localStorage.clear();
       } else {
-        console.warn('Logout failed on server');
+        console.warn('Logout failed on server, token not cleared');
       }
+
     } catch (error) {
       console.error('Logout failed:', error);
     }
   }
-  authClear() {
-    this.volenteerObj = new Volenteer();
-    this.volenteer.next(this.volenteerObj);
-    // localStorage.clear(); // optional, if you are storing any other session info
-  }
-
 
   async getUserProfile() {
     if (!this.volenteerObj.volntr_name || this.volenteerObj.volntr_name.length === 0) {
@@ -158,5 +157,10 @@ export class UserService {
     } else {
       return {}
     }
+  }
+  async saintriDistribution(formdata: any) {
+    const url = Constants.COMMON_API_PATH + 'saintri_distribution';
+    const apiResp = await this.svjHttp.post(url, formdata);
+    return apiResp;
   }
 }

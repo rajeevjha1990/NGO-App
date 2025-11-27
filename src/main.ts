@@ -42,7 +42,8 @@ import {
   helpCircleOutline,
   sendOutline,
   trashOutline,
-  createOutline
+  createOutline,
+  medkitOutline
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -88,7 +89,8 @@ addIcons({
   'help-circle-outline': helpCircleOutline,
   'send-outline': sendOutline,
   'trash-outline': trashOutline,
-  'create-outline': createOutline
+  'create-outline': createOutline,
+  'medkit-outline': medkitOutline
 
 });
 

@@ -1,34 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header></app-header>
 <ion-content class="ion-padding">
+  <section class="intro-section ion-text-center">
+    <h1>Making a Difference Together 🌍</h1>
+    <p>हमारा उद्देश्य समाज में सकारात्मक परिवर्तन लाना है।</p>
 
-  <!-- Profile incomplete message -->
-  <div *ngIf="!isProfileComplete; else homeData">
-    <h2>Welcome, {{ user?.volntr_name || 'User' }}</h2>
-    <p>आपका प्रोफ़ाइल अभी अधूरा है। कृपया प्रोफ़ाइल पूरा करें।</p>
-    <ion-button expand="block" color="primary" (click)="goToProfile()">
-      Complete Your Profile
+    <ion-button expand="block" color="primary" routerLink="/about">
+      Learn More
     </ion-button>
-  </div>
+  </section>
 
-  <!-- Show home data if profile is complete -->
-  <ng-template #homeData>
-    <h2>Welcome, {{ user?.volntr_name }}</h2>
-    <p>You are logged in.</p>
-
-    <!-- यहाँ बाकी का होम डेटा या सेक्शन दिखा सकते हैं -->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Dashboard Data</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>यहाँ आपके NGO से संबंधित डेटा दिखाया जाएगा।</p>
-      </ion-card-content>
-    </ion-card>
-  </ng-template>
-
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Our Projects</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      हम कई सामाजिक परियोजनाओं पर काम कर रहे हैं — जैसे शिक्षा, स्वच्छता, और महिलाओं का सशक्तिकरण।
+    </ion-card-content>
+  </ion-card>
 </ion-content>
