@@ -1,6 +1,5 @@
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
@@ -11,7 +10,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
   standalone: true,
-  imports: [...SHARED_IONIC_MODULES, RouterLink, FormsModule]
+  imports: [...SHARED_IONIC_MODULES, RouterLink]
 })
 export class SignupPage implements OnInit {
   formData: any = {};
@@ -45,16 +44,23 @@ export class SignupPage implements OnInit {
       await this.showAlert('Password is required.');
       return;
     }
-
-    // Call API
     const resp = await this.userServ.volunteerRegistration(this.formData);
+    console.log('API Response:', resp);
 
-    if (resp?.status) {
-      await this.showAlert('Registration successful!');
+    if (resp?.status === true) {
       this.navCtrl.navigateForward(['/login']);
     } else {
-      await this.showAlert(resp?.msg || 'Registration failed.');
+      if (resp?.err?.volntr_mobile) {
+      } else if (resp?.err) {
+        const firstError = Object.values(resp.err)[0];
+        await this.showAlert(String(firstError));
+      } else if (resp?.msg) {
+        await this.showAlert(resp.msg);
+      } else {
+        await this.showAlert('Registration failed.');
+      }
     }
+
   }
 
   async showAlert(message: string) {

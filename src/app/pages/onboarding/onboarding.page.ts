@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { Storage } from '@ionic/storage-angular';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import Swiper from 'swiper';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { Volenteer } from 'src/app/data-types/volenteer';
@@ -16,7 +16,7 @@ Swiper.use([Navigation, Autoplay]);
   templateUrl: './onboarding.page.html',
   styleUrls: ['./onboarding.page.scss'],
   standalone: true,
-  imports: [...SHARED_IONIC_MODULES, CommonModule, FormsModule, RouterLink]
+  imports: [...SHARED_IONIC_MODULES, CommonModule, FormsModule]
 })
 export class OnboardingPage implements OnInit {
   slides = [

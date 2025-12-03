@@ -143,7 +143,11 @@ export class UserService {
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
-
+  async checkMobileRegisterorNot(data: any) {
+    const url = Constants.USER_API_PATH + 'check_mobile_registered';
+    const apiResp = await this.svjHttp.post(url, data);
+    return apiResp;
+  }
   async createGroup(formdata: any) {
     const url = Constants.COMMON_API_PATH + 'new_group';
     const apiResp = await this.svjHttp.post(url, formdata);
@@ -161,6 +165,11 @@ export class UserService {
   async saintriDistribution(formdata: any) {
     const url = Constants.COMMON_API_PATH + 'saintri_distribution';
     const apiResp = await this.svjHttp.post(url, formdata);
+    return apiResp;
+  }
+  async pwdOtpVerification(data: any) {
+    const url = Constants.USER_API_PATH + 'verify_forgot_otp';
+    const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
 }

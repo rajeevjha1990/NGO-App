@@ -3,24 +3,32 @@ import { AuthGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
 
-  // 🔐 Auth routes (PUBLIC)
+  // 🔐 Public Routes
   {
     path: 'home',
-    loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
+    loadComponent: () =>
+      import('./pages/home/home.page').then(m => m.HomePage),
   },
   {
     path: 'onboarding',
-    loadComponent: () => import('./pages/onboarding/onboarding.page').then(m => m.OnboardingPage)
+    loadComponent: () =>
+      import('./pages/onboarding/onboarding.page').then(m => m.OnboardingPage)
   },
   {
     path: 'login',
-    loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage),
+    loadComponent: () =>
+      import('./pages/login/login.page').then(m => m.LoginPage),
   },
   {
     path: 'signup',
-    loadComponent: () => import('./pages/signup/signup.page').then(m => m.SignupPage)
+    loadComponent: () =>
+      import('./pages/signup/signup.page').then(m => m.SignupPage)
   },
-
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./pages/forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage)
+  },
+  // 🔐 Protected Routes
   {
     path: 'profile',
     canActivate: [AuthGuard],
@@ -69,16 +77,20 @@ export const routes: Routes = [
     path: 'statefilter',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import('./pages/statefilter/statefilter.page').then(m => m.StatefilterPage)
+      import('./pages/statefilter/statefilter.page')
+        .then(m => m.StatefilterPage)
   },
   {
     path: 'cityfilter',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import('./pages/cityfilter/cityfilter.page').then(m => m.CityfilterPage)
+      import('./pages/cityfilter/cityfilter.page')
+        .then(m => m.CityfilterPage)
   },
 
-  // ✅ Default & Fallback
+  // ✅ Default Route (Only for ROOT)
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' },
+
+  // ✅ Fallback (404 Safe)
+  { path: '**', redirectTo: 'home' },
 ];

@@ -100,13 +100,23 @@ export class PubService {
       return []
     }
   }
-  async allDistributedSaintri() {
+  async allDistributedSaintri(pageno: any, limit: any) {
+    const data = {
+      pageno: pageno,
+      limit: limit
+    }
     const url = Constants.COMMON_API_PATH + 'distributed_saintries';
-    const respData = await this.svjHttp.post(url, {});
+    const respData = await this.svjHttp.post(url, data);
     if (respData) {
-      return respData.distributedsaintries;
+      return respData;
     } else {
       return []
     }
   }
+  async reIssuePad(formData: any) {
+    const url = Constants.COMMON_API_PATH + 'saintri_distribution';
+    const apiResp = await this.svjHttp.post(url, formData);
+    return apiResp;
+  }
+
 }
