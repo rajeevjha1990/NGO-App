@@ -52,8 +52,6 @@ export class LoginPage implements OnInit {
     }
 
     const resp = await this.userServ.login({ mobile, password });
-    console.log('Login response:', resp);
-
     if (resp && (resp.status === true || resp.status === 200)) {
       await this.closeAndRedirect();
     } else {

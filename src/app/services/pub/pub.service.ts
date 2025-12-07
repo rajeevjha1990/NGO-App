@@ -100,6 +100,30 @@ export class PubService {
       return []
     }
   }
+  async blockByDistrict(districtId: any) {
+    const data = {
+      districtId: districtId
+    }
+    const url = Constants.COMMON_API_PATH + 'district_blocks';
+    const respData = await this.svjHttp.post(url, data);
+    if (respData) {
+      return respData.blocks;
+    } else {
+      return []
+    }
+  }
+  async villageByBlock(blockId: any) {
+    const data = {
+      blockId: blockId
+    }
+    const url = Constants.COMMON_API_PATH + 'block_villages';
+    const respData = await this.svjHttp.post(url, data);
+    if (respData) {
+      return respData.villages;
+    } else {
+      return []
+    }
+  }
   async allDistributedSaintri(pageno: any, limit: any) {
     const data = {
       pageno: pageno,

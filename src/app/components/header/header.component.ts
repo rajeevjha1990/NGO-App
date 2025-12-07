@@ -52,6 +52,5 @@ export class HeaderComponent {
     });
     await popover.present();
   }
-
 }
 

@@ -5,6 +5,8 @@ import { UserService } from 'src/app/services/user/user.service';
 import { PubService } from 'src/app/services/pub/pub.service';
 import { StatefilterPage } from '../statefilter/statefilter.page';
 import { CityfilterPage } from '../cityfilter/cityfilter.page';
+import { BlockfilterPage } from '../blockfilter/blockfilter.page';
+import { VillagefilterPage } from '../villagefilter/villagefilter.page';
 
 @Component({
   selector: 'app-new-distribution',
@@ -17,6 +19,8 @@ export class NewDistributionPage implements OnInit {
   formData: any = {};
   states: any = [];
   districts: any = [];
+  blocks: any = [];
+  villages: any = [];
 
   constructor(
     private alertCtrl: AlertController,
@@ -30,91 +34,133 @@ export class NewDistributionPage implements OnInit {
     this.states = await this.pubServ.allStates();
   }
 
-  /** 🔹 Open State Selection Modal */
+  // ⭐ STATE LIST MODAL
   async StateList() {
     const modal = await this.modalCtrl.create({
-      component: StatefilterPage,
+      component: StatefilterPage
     });
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
-
     if (data?.state) {
-      // Save state name and id
       this.formData.state = data.state.state_name;
       this.formData.state_id = data.state.state_id;
 
-      // Reset district when state changes
+      // Reset
       this.formData.district = '';
       this.formData.district_id = null;
       this.districts = await this.pubServ.districtByState(this.formData.state_id);
+
+      this.formData.block = '';
+      this.formData.block_id = null;
+      this.blocks = [];
+
+      this.formData.village = '';
+      this.formData.village_id = null;
+      this.villages = [];
     }
   }
 
-  /** 🔹 Open District Selection Modal */
+  // ⭐ DISTRICT LIST MODAL
   async DistrictList() {
-    if (!this.formData.state_id) {
+    if (!this.formData.state_id)
       return this.showAlert('Please select a state first');
-    }
 
     const modal = await this.modalCtrl.create({
       component: CityfilterPage,
-      componentProps: {
-        stateId: this.formData.state_id
-      }
+      componentProps: { stateId: this.formData.state_id }
     });
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
-    console.log('District modal returned:', data);
-
     if (data?.district) {
       this.formData.district = data.district.district_name;
       this.formData.district_id = data.district.district_id;
-    } else {
-      this.formData.district = '';
-      this.formData.district_id = null;
+
+      // Load blocks
+      this.blocks = await this.pubServ.blockByDistrict(this.formData.district_id);
+
+      // Reset lower fields
+      this.formData.block = '';
+      this.formData.block_id = null;
+
+      this.formData.village = '';
+      this.formData.village_id = null;
+      this.villages = [];
     }
   }
 
-  /** 🔹 Submit Form Data */
+  // ⭐ BLOCK LIST MODAL
+  async blockList() {
+    if (!this.formData.district_id)
+      return this.showAlert('Please select a district first');
+
+    const modal = await this.modalCtrl.create({
+      component: BlockfilterPage,
+      componentProps: { districtId: this.formData.district_id }
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data?.block) {
+      this.formData.block = data.block.block_name;
+      this.formData.block_id = data.block.block_id;
+
+      // Load villages
+      this.villages = await this.pubServ.villageByBlock(this.formData.block_id);
+
+      this.formData.village = '';
+      this.formData.village_id = null;
+    }
+  }
+
+  // ⭐ VILLAGE LIST MODAL
+  async VillageList() {
+    if (!this.formData.block_id)
+      return this.showAlert('Please select a block first');
+
+    const modal = await this.modalCtrl.create({
+      component: VillagefilterPage,
+      componentProps: { blockId: this.formData.block_id }
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (data?.village) {
+      this.formData.village = data.village.village_name;
+      this.formData.village_id = data.village.village_id;
+    }
+  }
+
+  // ⭐ SUBMIT
   async saveData() {
     const f = this.formData;
 
-    // --- Validation ---
     if (!f.member_name?.trim()) return this.showAlert('Please enter Name');
     if (!f.guardian?.trim()) return this.showAlert('Please enter Guardian name');
-    if (!f.age) return this.showAlert('Please enter age');
-    if (!f.village?.trim()) return this.showAlert('Please enter Village');
-    if (!f.post?.trim()) return this.showAlert('Please enter Post');
-    if (!f.police_station?.trim()) return this.showAlert('Please enter Police Station');
-    if (!f.district_id) return this.showAlert('Please select a district');
+
     if (!f.state_id) return this.showAlert('Please select a state');
+    if (!f.district_id) return this.showAlert('Please select a district');
+    if (!f.block_id) return this.showAlert('Please select a block');
+    if (!f.village_id) return this.showAlert('Please select a village');
 
     if (!f.pincode || f.pincode.toString().length !== 6)
-      return this.showAlert('Please enter a valid 6-digit Pincode');
-
-    if (!f.aadhar || f.aadhar.toString().length !== 4)
-      return this.showAlert('Please enter the last 4 digits of Aadhar');
+      return this.showAlert('Please enter valid 6-digit pincode');
 
     if (!f.mobile || !/^\d{10}$/.test(f.mobile))
-      return this.showAlert('Please enter a valid 10-digit Mobile number');
+      return this.showAlert('Please enter valid 10-digit mobile number');
 
-    if (!f.membership_amount || isNaN(f.membership_amount))
-      return this.showAlert('Please enter a valid Membership Amount');
-
-    // --- API Call ---
     console.log('Sending to API:', this.formData);
+
     const resp = await this.userServ.saintriDistribution(this.formData);
 
     if (resp?.status) {
       this.navCtrl.navigateForward(['/distributed-saintries']);
     } else {
-      await this.showAlert(resp?.msg || 'Data submission failed.');
+      this.showAlert(resp?.msg || 'Submission failed');
     }
   }
 
-  /** 🔹 Common Alert */
   async showAlert(msg: string) {
     const alert = await this.alertCtrl.create({
       header: 'Notice',

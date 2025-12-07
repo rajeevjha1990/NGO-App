@@ -1,15 +1,23 @@
 .custom-header {
-    --min-height: 52px;
+    --min-height: 75px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: #fff;
     border-bottom: 1px solid #e0e0e0;
     padding: 0 16px;
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+
+}
+
+ion-header,
+ion-toolbar {
+    --background: #839764 !important;
 }
 
 /* Left section */
 .header-left {
+    margin-top: 25px;
     display: flex;
     align-items: center;
     gap: 8px;

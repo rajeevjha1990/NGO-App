@@ -1,7 +1,7 @@
 import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ActivatedRoute } from '@angular/router';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { PubService } from 'src/app/services/pub/pub.service';
 
@@ -17,7 +17,7 @@ export class DistributedSaintriesPage implements OnInit {
   distributedsaintries: any[] = [];
   dueTodayCount = 0;
 
-  // ✅ Infinite Scroll vars
+  // Infinite scroll vars
   page = 1;
   limit = 20;
   hasMoreData = true;
@@ -25,16 +25,18 @@ export class DistributedSaintriesPage implements OnInit {
 
   constructor(
     private pubServ: PubService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() { }
 
-  async ionViewDidEnter() {
-    this.resetAndLoad();
+  // 🔥 THIS FIXES YOUR REFRESH ISSUE (runs every time page opens)
+  async ionViewWillEnter() {
+    await this.resetAndLoad();
   }
 
-  // ✅ Reset on page enter
+  // Reset + load
   async resetAndLoad() {
     this.page = 1;
     this.hasMoreData = true;
@@ -42,7 +44,7 @@ export class DistributedSaintriesPage implements OnInit {
     await this.loadData();
   }
 
-  // ✅ Load paginated data
+  // Load paginated data
   async loadData(event?: any) {
     if (this.loading || !this.hasMoreData) return;
 
@@ -70,7 +72,7 @@ export class DistributedSaintriesPage implements OnInit {
     return item.id;
   }
 
-  // ✅ HIGHLIGHT LOGIC (same as your rule)
+  // Highlight logic
   calculateTodayDue() {
     const today = new Date();
     this.dueTodayCount = 0;
@@ -106,7 +108,7 @@ export class DistributedSaintriesPage implements OnInit {
     });
   }
 
-  // ✅ RE-ISSUE WITH AUTO REFRESH
+  // Re-issue logic
   async reIssue(item: any) {
     const confirmAlert = await this.alertCtrl.create({
       header: 'Confirm Re-Issue',

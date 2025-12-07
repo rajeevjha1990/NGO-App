@@ -1,33 +1,90 @@
-<ion-menu [type]="menuType" menuId="main-menu" contentId="main-content" side="start">
+<ion-menu menuId="main-menu" contentId="main-content" side="start" type="overlay">
   <ion-header>
-    <ion-buttons slot="start">
-      <img src="assets/SVJ-Images/logo.png" alt="Company Logo" style="max-width: 15%;">
-      सबका विकास जयति
-    </ion-buttons>
+    <ion-toolbar>
+      <ion-title>
+        <img src="assets/SVJ-Images/logo.png" style="width:30px; vertical-align: middle;">
+        <span style="margin-left:8px;">सबका विकास जयति</span>
+      </ion-title>
+    </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
-      <ion-menu-toggle auto-hide="true">
-        <ion-item (click)="navigateAndCloseMenu('/home', true)">
+
+      <!-- Dashboard -->
+      <ion-menu-toggle auto-hide="false">
+        <ion-item routerLink="/home">
           <ion-icon slot="start" name="home-outline"></ion-icon>
-          Dashboard
-        </ion-item>
-        <ion-item (click)="navigateAndCloseMenu('/groups', true)">
-          <ion-icon slot="start" name="people-outline"></ion-icon>
-          Groups
-        </ion-item>
-        <ion-item (click)="navigateAndCloseMenu('/distributed-saintries', true)">
-          <ion-icon slot="start" name="medkit-outline"></ion-icon>
-          Distributed Saintries
+          <ion-label>Dashboard</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="true">
+
+      <!-- Groups -->
+      <ion-menu-toggle auto-hide="false">
+        <ion-item routerLink="/groups">
+          <ion-icon slot="start" name="people-outline"></ion-icon>
+          <ion-label>Groups</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <!-- Distributed -->
+      <ion-menu-toggle auto-hide="false">
+        <ion-item routerLink="/distributed-saintries">
+          <ion-icon slot="start" name="medkit-outline"></ion-icon>
+          <ion-label>Distributed Saintries</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <!-- ✅ Vermi Compost Accordion Menu -->
+      <ion-accordion-group>
+        <ion-accordion value="vermi">
+          <ion-item slot="header">
+            <ion-icon slot="start" name="leaf-outline"></ion-icon>
+            <ion-label>Vermi Compost Training</ion-label>
+          </ion-item>
+
+          <div slot="content">
+
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerLink="/vermi/trainees">
+                <ion-icon slot="start" name="person-add-outline"></ion-icon>
+                Trainee Registration
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerLink="/vermi/material">
+                <ion-icon slot="start" name="cube-outline"></ion-icon>
+                Bag Distribution
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerLink="/vermi/certificate">
+                <ion-icon slot="start" name="ribbon-outline"></ion-icon>
+                Certificate
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerLink="/vermi/report">
+                <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
+                Reports
+              </ion-item>
+            </ion-menu-toggle>
+
+          </div>
+        </ion-accordion>
+
+      </ion-accordion-group>
+      <!-- ✅ End Vermi -->
+
+      <!-- Logout -->
+      <ion-menu-toggle auto-hide="false">
         <ion-item (click)="logout()">
           <ion-icon slot="start" name="log-out-outline"></ion-icon>
-          Logout
+          <ion-label>Logout</ion-label>
         </ion-item>
       </ion-menu-toggle>
+
     </ion-list>
   </ion-content>
 </ion-menu>

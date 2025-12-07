@@ -17,10 +17,7 @@
           type="text">
         </ion-input>
       </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Age" [(ngModel)]="formData.age" fill="outline" type="number">
-        </ion-input>
-      </ion-col>
+
       <ion-col size="12">
         <ion-input type="text" [(ngModel)]="formData.state" name="state" labelPlacement="floating" label="State"
           fill="outline" (click)="StateList()">
@@ -34,25 +31,18 @@
       </ion-col>
 
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Police Station" [(ngModel)]="formData.police_station" fill="outline"
-          type="text">
+        <ion-input (click)="blockList()" labelPlacement="floating" label="Block" [(ngModel)]="formData.block"
+          fill="outline" type="text">
         </ion-input>
       </ion-col>
+
       <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Post" [(ngModel)]="formData.post" fill="outline" type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Village" [(ngModel)]="formData.village" fill="outline" type="text">
+        <ion-input (click)="VillageList()" labelPlacement="floating" label="Village" [(ngModel)]="formData.village"
+          fill="outline" type="text">
         </ion-input>
       </ion-col>
       <ion-col size="12">
         <ion-input labelPlacement="floating" label="Pincode" [(ngModel)]="formData.pincode" fill="outline" type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Aadhar (Only last 4-digit)" [(ngModel)]="formData.aadhar"
-          fill="outline" type="text">
         </ion-input>
       </ion-col>
       <ion-col size="12">

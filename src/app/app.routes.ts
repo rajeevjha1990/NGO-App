@@ -93,4 +93,12 @@ export const routes: Routes = [
 
   // ✅ Fallback (404 Safe)
   { path: '**', redirectTo: 'home' },
+  {
+    path: 'blockfilter',
+    loadComponent: () => import('./pages/blockfilter/blockfilter.page').then( m => m.BlockfilterPage)
+  },
+  {
+    path: 'villagefilter',
+    loadComponent: () => import('./pages/villagefilter/villagefilter.page').then( m => m.VillagefilterPage)
+  },
 ];

@@ -14,7 +14,6 @@
       [ngClass]="{'due-today': item.is_due_today}">
 
       <ion-card-header>
-
         <ion-card-title>
           {{ item.member_name }} ({{ item.mobile }})
 
@@ -36,7 +35,7 @@
 
   </ion-list>
 
-  <!-- ✅ INFINITE SCROLL -->
+  <!-- Infinite scroll -->
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="hasMoreData">
 
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more records...">
@@ -50,6 +49,7 @@
     </ion-text>
   </ng-template>
 
+  <!-- Add New -->
   <ion-fab horizontal="end" vertical="bottom" slot="fixed" routerLink="/new-distribution">
     <ion-fab-button color="success">
       <ion-icon name="add-outline"></ion-icon>

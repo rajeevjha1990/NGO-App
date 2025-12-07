@@ -43,7 +43,10 @@ import {
   sendOutline,
   trashOutline,
   createOutline,
-  medkitOutline
+  medkitOutline,
+  leafOutline,
+  personAddOutline,
+  cubeOutline
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -90,8 +93,10 @@ addIcons({
   'send-outline': sendOutline,
   'trash-outline': trashOutline,
   'create-outline': createOutline,
-  'medkit-outline': medkitOutline
-
+  'medkit-outline': medkitOutline,
+  'leaf-outline': leafOutline,
+  'person-add-outline': personAddOutline,
+  'cube-outline': cubeOutline
 });
 
 bootstrapApplication(AppComponent, appConfig)
