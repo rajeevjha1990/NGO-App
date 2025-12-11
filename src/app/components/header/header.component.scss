@@ -7,7 +7,6 @@
     border-bottom: 1px solid #e0e0e0;
     padding: 0 16px;
     background: linear-gradient(90deg, #ff9800, #ff5722);
-
 }
 
 ion-header,
@@ -30,12 +29,27 @@ ion-toolbar {
     vertical-align: middle;
 }
 
+/* Wrapper for title + slogan */
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
 /* App title */
 .app-title {
     font-size: 16px;
     font-weight: 600;
     color: #000;
     white-space: nowrap;
+}
+
+/* App slogan below title */
+.app-slogan {
+    font-size: 14px;
+    color: #000;
+    /* you can change color if needed */
+    margin-top: 3px;
 }
 
 /* Right links */
@@ -59,7 +73,7 @@ ion-toolbar {
     text-decoration: underline;
 }
 
-/* ✅ Show menu button, hide right links on mobile */
+/* Show menu button, hide right links on mobile */
 @media (max-width: 768px) {
     .header-right {
         display: none;

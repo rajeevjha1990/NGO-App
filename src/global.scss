@@ -56,3 +56,12 @@
         display: inline-block !important;
     }
 }
+
+:root {
+    --ion-background-color: #EDFFF0;
+    --ion-item-background: #EDFFF0;
+}
+
+ion-content {
+    --background: var(--ion-background-color);
+}

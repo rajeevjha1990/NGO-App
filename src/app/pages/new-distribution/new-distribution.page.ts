@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { NavController, AlertController, ModalController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user/user.service';
@@ -13,10 +13,12 @@ import { VillagefilterPage } from '../villagefilter/villagefilter.page';
   templateUrl: './new-distribution.page.html',
   styleUrls: ['./new-distribution.page.scss'],
   standalone: true,
-  imports: [...SHARED_IONIC_MODULES]
+  imports: [...SHARED_IONIC_MODULES],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class NewDistributionPage implements OnInit {
-  formData: any = {};
+  formData: any = { membership_amount: 300 };
   states: any = [];
   districts: any = [];
   blocks: any = [];
@@ -27,11 +29,14 @@ export class NewDistributionPage implements OnInit {
     private navCtrl: NavController,
     private userServ: UserService,
     private pubServ: PubService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private cdr: ChangeDetectorRef
   ) { }
 
   async ngOnInit() {
     this.states = await this.pubServ.allStates();
+    this.cdr.markForCheck();
+
   }
 
   // ⭐ STATE LIST MODAL
@@ -132,7 +137,6 @@ export class NewDistributionPage implements OnInit {
     }
   }
 
-  // ⭐ SUBMIT
   async saveData() {
     const f = this.formData;
 
@@ -142,13 +146,17 @@ export class NewDistributionPage implements OnInit {
     if (!f.state_id) return this.showAlert('Please select a state');
     if (!f.district_id) return this.showAlert('Please select a district');
     if (!f.block_id) return this.showAlert('Please select a block');
-    if (!f.village_id) return this.showAlert('Please select a village');
 
     if (!f.pincode || f.pincode.toString().length !== 6)
       return this.showAlert('Please enter valid 6-digit pincode');
 
     if (!f.mobile || !/^\d{10}$/.test(f.mobile))
       return this.showAlert('Please enter valid 10-digit mobile number');
+
+    //  MINIMUM Membership Amount Validation
+    if (!f.membership_amount || f.membership_amount < 300) {
+      return this.showAlert('Membership amount must be at least ₹300');
+    }
 
     console.log('Sending to API:', this.formData);
 
@@ -161,6 +169,7 @@ export class NewDistributionPage implements OnInit {
     }
   }
 
+
   async showAlert(msg: string) {
     const alert = await this.alertCtrl.create({
       header: 'Notice',
@@ -169,4 +178,13 @@ export class NewDistributionPage implements OnInit {
     });
     await alert.present();
   }
+  checkAmount() {
+    const amt = Number(this.formData.membership_amount);
+
+    if (!amt || amt < 300) {
+      this.formData.membership_amount = 300;
+      this.cdr.markForCheck();
+    }
+  }
+
 }

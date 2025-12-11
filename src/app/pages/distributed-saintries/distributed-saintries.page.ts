@@ -1,5 +1,5 @@
 import { AlertController } from '@ionic/angular';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
@@ -10,7 +10,8 @@ import { PubService } from 'src/app/services/pub/pub.service';
   templateUrl: './distributed-saintries.page.html',
   styleUrls: ['./distributed-saintries.page.scss'],
   standalone: true,
-  imports: [CommonModule, ...SHARED_IONIC_MODULES]
+  imports: [CommonModule, ...SHARED_IONIC_MODULES],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DistributedSaintriesPage implements OnInit {
 
@@ -26,7 +27,9 @@ export class DistributedSaintriesPage implements OnInit {
   constructor(
     private pubServ: PubService,
     private alertCtrl: AlertController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+
   ) { }
 
   ngOnInit() { }
@@ -34,6 +37,8 @@ export class DistributedSaintriesPage implements OnInit {
   // 🔥 THIS FIXES YOUR REFRESH ISSUE (runs every time page opens)
   async ionViewWillEnter() {
     await this.resetAndLoad();
+    this.cdr.markForCheck();
+
   }
 
   // Reset + load

@@ -1,20 +1,33 @@
-<app-header></app-header>
 <ion-content class="ion-padding">
-  <section class="intro-section ion-text-center">
-    <h1>Making a Difference Together 🌍</h1>
-    <p>हमारा उद्देश्य समाज में सकारात्मक परिवर्तन लाना है।</p>
+  <ion-header class="ion-no-border ion-padding">
+    <ion-toolbar class="profile-header">
+      <div class="profile-info">
+        <img src="assets/SVJ-Images/images.png" class="avatar" />
+        <h2>{{ user.volntr_name }}</h2>
+        <p>{{ user.volntr_mobile }}</p>
+        <p class="email">EPNO : {{ user.volntr_ep_temp }}</p>
+      </div>
+    </ion-toolbar>
+  </ion-header>
 
-    <ion-button expand="block" color="primary" routerLink="/about">
-      Learn More
-    </ion-button>
-  </section>
+  <!-- Stats Section -->
+  <div class="stats-container">
+    <ion-card class="stat-card">
+      <h3>{{countgroup}}</h3>
+      <p>Group Created</p>
+    </ion-card>
+    <ion-card class="stat-card">
+      <h3>{{countsainetri}}</h3>
+      <p>Saintri Distributed</p>
+    </ion-card>
+  </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Our Projects</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      हम कई सामाजिक परियोजनाओं पर काम कर रहे हैं — जैसे शिक्षा, स्वच्छता, और महिलाओं का सशक्तिकरण।
-    </ion-card-content>
-  </ion-card>
+  <!-- Options Menu -->
+  <ion-list class="menu-list">
+
+    <ion-item button detail="true" (click)="editProfile()">
+      <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+      <ion-label>Edit Profile</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

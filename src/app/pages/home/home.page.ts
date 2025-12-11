@@ -1,9 +1,10 @@
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { Volenteer } from 'src/app/data-types/volenteer';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { LoginPage } from '../login/login.page';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-home',
@@ -12,25 +13,31 @@ import { LoginPage } from '../login/login.page';
   standalone: true,
   imports: [
     ...SHARED_IONIC_MODULES,
-    HeaderComponent // ✅ add this line
+    HeaderComponent
 
   ]
 })
 export class HomePage implements OnInit {
   user: Volenteer = new Volenteer();
-  isProfileComplete = false;
-
+  countsainetri: number = 0
+  countgroup: number = 0
   constructor(
-    private modalCtrl: ModalController
+    private userServ: UserService,
+    private navCtrl: NavController
   ) { }
 
-  ngOnInit() {
-
-  }
-  async goToLogin() {
-    const modal = await this.modalCtrl.create({
-      component: LoginPage,
+  async ngOnInit() {
+    await this.userServ.volenteer.subscribe(u => {
+      this.user = u;
     });
-    return await modal.present();
+    this.countsainetri = await this.userServ.sainitriCount();
+    this.countgroup = await this.userServ.groupCount()
+  }
+
+  editProfile() {
+    this.navCtrl.navigateForward('/edit-profile');
+  }
+  async logout() {
+
   }
 }

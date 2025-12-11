@@ -82,7 +82,7 @@ export class UserService {
   async getVolenteerProfileFromServer() {
     const url = Constants.USER_API_PATH + 'get_volunteer';
     try {
-      const respData = await this.svjHttp.post(url, {}, false);
+      const respData = await this.svjHttp.post(url, {});
       console.log(respData);
       if (respData && respData.volunteer.volntr_id) {
         this.volenteerObj = {
@@ -91,7 +91,7 @@ export class UserService {
           volntr_mobile: respData.volunteer.volntr_mobile,
           volntr_email: respData.volunteer.volntr_email,
           volntr_address: respData.volunteer.volntr_address,
-
+          volntr_ep_temp: respData.volunteer.volntr_ep_temp,
           loggedIn: true,
         } as any;
 
@@ -162,6 +162,22 @@ export class UserService {
       return {}
     }
   }
+  async epGroupAndProgram() {
+    const url = Constants.COMMON_API_PATH + 'getProgramsAndGroups';
+    const respData = await this.svjHttp.post(url, {});
+    if (respData) {
+      return {
+        programs: respData.programs ?? [],
+        groups: respData.groups ?? []
+      };
+    } else {
+      return {
+        programs: [],
+        groups: []
+      };
+    }
+
+  }
   async saintriDistribution(formdata: any) {
     const url = Constants.COMMON_API_PATH + 'saintri_distribution';
     const apiResp = await this.svjHttp.post(url, formdata);
@@ -172,4 +188,23 @@ export class UserService {
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
+  async sainitriCount() {
+    const url = Constants.COMMON_API_PATH + 'get_allsainetriCount';
+    const respData = await this.svjHttp.post(url, {});
+    if (respData) {
+      return respData.countsaintri;
+    } else {
+      return {}
+    }
+  }
+  async groupCount() {
+    const url = Constants.COMMON_API_PATH + 'get_allGroupCount';
+    const respData = await this.svjHttp.post(url, {});
+    if (respData) {
+      return respData.countgroup;
+    } else {
+      return {}
+    }
+  }
+
 }

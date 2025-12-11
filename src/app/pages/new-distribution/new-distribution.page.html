@@ -1,68 +1,79 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>new-distribution</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-title class="ion-padding">New Saintri Distribution</ion-title>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Name" [(ngModel)]="formData.member_name" fill="outline" type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Guardian" [(ngModel)]="formData.guardian" fill="outline"
-          type="text">
-        </ion-input>
-      </ion-col>
 
-      <ion-col size="12">
-        <ion-input type="text" [(ngModel)]="formData.state" name="state" labelPlacement="floating" label="State"
-          fill="outline" (click)="StateList()">
-        </ion-input>
-      </ion-col>
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>New Saintri Distribution</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Name" [(ngModel)]="formData.member_name" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Guardian" [(ngModel)]="formData.guardian" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
 
-      <ion-col size="12">
-        <ion-input type="text" [(ngModel)]="formData.district" name="District" labelPlacement="floating"
-          label="District" fill="outline" (click)="DistrictList()" readonly required>
-        </ion-input>
-      </ion-col>
+          <ion-col size="12">
+            <ion-input type="text" [(ngModel)]="formData.state" name="state" labelPlacement="floating" label="State"
+              fill="outline" (click)="StateList()">
+            </ion-input>
+          </ion-col>
 
-      <ion-col size="12">
-        <ion-input (click)="blockList()" labelPlacement="floating" label="Block" [(ngModel)]="formData.block"
-          fill="outline" type="text">
-        </ion-input>
-      </ion-col>
+          <ion-col size="12">
+            <ion-input type="text" [(ngModel)]="formData.district" name="District" labelPlacement="floating"
+              label="District" fill="outline" (click)="DistrictList()" readonly required>
+            </ion-input>
+          </ion-col>
 
-      <ion-col size="12">
-        <ion-input (click)="VillageList()" labelPlacement="floating" label="Village" [(ngModel)]="formData.village"
-          fill="outline" type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Pincode" [(ngModel)]="formData.pincode" fill="outline" type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Mobile" [(ngModel)]="formData.mobile" fill="outline" type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Membership Amount" [(ngModel)]="formData.membership_amount"
-          fill="outline" type="number">
-        </ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <ion-button (click)="saveData()" expand="block" type="submit" class="ion-margin-top">
-          Save Group
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          <ion-col size="12">
+            <ion-input (click)="blockList()" labelPlacement="floating" label="Block" [(ngModel)]="formData.block"
+              fill="outline" type="text">
+            </ion-input>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Village" [(ngModel)]="formData.village" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Pincode" [(ngModel)]="formData.pincode" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Mobile" [(ngModel)]="formData.mobile" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Membership Amount " [(ngModel)]="formData.membership_amount"
+              fill="outline" type="number" min="300" (ionChange)="checkAmount()">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button (click)="saveData()" expand="block" type="submit" class="ion-margin-top">
+              Save Group
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
 
 
 </ion-content>

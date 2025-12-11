@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>Group Members</ion-title>
+    <ion-title>Members</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -24,30 +24,34 @@
     <p><b>Group:</b> {{ groupObject?.[groupId]?.group_name || 'Loading...' }}</p>
   </ion-title>
 
-  <!-- Member List -->
-  <ion-list *ngIf="groupMembers && groupMembers.length > 0">
-    <ion-item lines="full" *ngFor="let member of groupMembers">
-      <ion-label>
-        <h2>
-          {{ member.name }}
-          <span [style.color]="getRoleColor(member.role)">
-            ({{ member.role || 'Member' }})
-          </span>
-        </h2>
-        <p><b>Mobile:</b> {{ member.mobile }}</p>
-      </ion-label>
+  <!-- Member Cards -->
+  <ion-card *ngFor="let member of groupMembers">
+    <ion-card-content>
 
-      <!-- Role Selection -->
+      <!-- Name + Role -->
+      <div class="member-header">
+        <h2>{{ member.name }}</h2>
+        <span class="role" [style.color]="getRoleColor(member.role)">
+          ({{ member.role || 'Member' }})
+        </span>
+      </div>
+
+      <!-- Mobile -->
+      <p><b>Mobile:</b> {{ member.mobile }}</p>
+
+      <!-- Role Selector -->
       <ion-select interface="popover" placeholder="Change Role" [value]="member.role"
         (ionChange)="changeMemberRole(member, $event.detail.value)">
-        <ion-select-option value="Leader">Leader</ion-select-option>
-        <ion-select-option value="Assistant">Assistant</ion-select-option>
-        <ion-select-option value="Treasurer">Treasurer</ion-select-option>
-        <ion-select-option value="Secretary">Secretary</ion-select-option>
-        <ion-select-option value="">Member</ion-select-option>
+
+        <ion-select-option *ngFor="let r of getAvailableRoles(member)" [value]="r.value">
+          {{ r.label }}
+        </ion-select-option>
+
       </ion-select>
-    </ion-item>
-  </ion-list>
+
+
+    </ion-card-content>
+  </ion-card>
 
   <!-- Floating Add Button -->
   <ion-fab horizontal="end" vertical="bottom" slot="fixed" routerLink="/new-group">

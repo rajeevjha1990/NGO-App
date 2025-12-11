@@ -1,16 +1,24 @@
-ion-item {
-    --min-height: 60px;
-    border-radius: 10px;
-    margin-bottom: 6px;
-    background: #f8f9fa;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-        background: #eef3ff;
-    }
+ion-card {
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    margin-bottom: 14px;
+    background: #ffffff;
 }
 
-.role-text {
-    font-size: 13px;
-    color: #777;
+.member-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.member-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+}
+
+.role {
+    font-size: 14px;
+    font-weight: 500;
 }

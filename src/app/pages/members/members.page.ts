@@ -16,7 +16,15 @@ export class MembersPage implements OnInit {
   groupId: any;
   groupMembers: any = [];
   groupObject: any = {};
+  rolesList = [
+    { value: 'Leader', label: 'Leader' },
+    { value: 'Assistant', label: 'Assistant' },
+    { value: 'Treasurer', label: 'Treasurer' },
+    { value: 'Secretary', label: 'Secretary' },
+    { value: '', label: 'Member' }
+  ];
 
+  canChangeRoles = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private pubServ: PubService,
@@ -53,4 +61,14 @@ export class MembersPage implements OnInit {
   async changeMemberRole(member: any, newRole: string) {
     const res: any = await this.pubServ.updateMemberRole(member.id, newRole);
   }
+  getAvailableRoles(currentMember: any) {
+    // find roles already assigned to other members
+    const takenRoles = this.groupMembers
+      .filter((m: any) => m.id !== currentMember.id && m.role) // exclude current member
+      .map((m: any) => m.role);
+
+    // return roles NOT already assigned
+    return this.rolesList.filter(r => !takenRoles.includes(r.value));
+  }
+
 }

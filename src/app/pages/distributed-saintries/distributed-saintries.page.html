@@ -1,15 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>Distributed Saintries</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <h1 style="text-align: center;">Distributed Saintries</h1>
-
   <ion-list *ngIf="distributedsaintries.length > 0; else noData">
-
     <ion-card *ngFor="let item of distributedsaintries; trackBy: trackById"
       [ngClass]="{'due-today': item.is_due_today}">
 

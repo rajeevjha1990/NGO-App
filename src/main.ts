@@ -46,7 +46,8 @@ import {
   medkitOutline,
   leafOutline,
   personAddOutline,
-  cubeOutline
+  cubeOutline,
+  refreshOutline
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -96,7 +97,8 @@ addIcons({
   'medkit-outline': medkitOutline,
   'leaf-outline': leafOutline,
   'person-add-outline': personAddOutline,
-  'cube-outline': cubeOutline
+  'cube-outline': cubeOutline,
+  'refresh-outline': refreshOutline
 });
 
 bootstrapApplication(AppComponent, appConfig)
