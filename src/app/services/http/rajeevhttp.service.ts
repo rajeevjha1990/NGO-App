@@ -117,10 +117,10 @@ export class RajeevhttpService {
       }
 
     } catch (httpErrResp: any) {
-      const status = httpErrResp.status; // Server se aaya HTTP status code
+      const status = httpErrResp.status;
       console.log(status);
 
-      let error = 'Unidentified error, contact veron team.';
+      let error = 'Unidentified error, contact to admin.';
       try {
         error = httpErrResp.error?.err || httpErrResp.error?.msg || error;
       } catch { }
@@ -143,7 +143,7 @@ export class RajeevhttpService {
           this.navCtrl.navigateRoot('/');
           break;
         default:
-          let defaultErr = 'Unidentified error,contact  veron team.';
+          let defaultErr = 'Unidentified error,contact  to admin.';
           try {
             defaultErr = httpErrResp.error?.err || httpErrResp.error?.msg || defaultErr;
           } catch { }

@@ -5,60 +5,78 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-title class="ion-padding">Complete your profile</ion-title>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Temp EP" [(ngModel)]="profileData.volntr_ep_temp" fill="outline"
-          type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Name" [(ngModel)]="profileData.volntr_name" fill="outline"
-          type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Mobile Number" [(ngModel)]="profileData.volntr_mobile"
-          fill="outline" type="number">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Email ID" [(ngModel)]="profileData.volntr_email" fill="outline"
-          type="email">
-        </ion-input>
-      </ion-col>
+  <ion-card class="ion-padding">
+    <ion-card-header>
+      <ion-card-title>Update your profile</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Temp EP" [(ngModel)]="profileData.volntr_ep_temp" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Name" [(ngModel)]="profileData.volntr_name" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Mobile Number" [(ngModel)]="profileData.volntr_mobile"
+              fill="outline" type="number">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Email ID" [(ngModel)]="profileData.volntr_email" fill="outline"
+              type="email">
+            </ion-input>
+          </ion-col>
 
-      <ion-col size="12">
-        <ion-select labelPlacement="floating" label="Qualification" [(ngModel)]="profileData.volntr_qualification"
-          fill="outline">
-          <ion-select-option *ngFor="let qftn of  qualifications"
-            value="{{qftn.qualification_id}}">{{qftn.qualification_short}}
-            {{qftn.qualification_title}}</ion-select-option>
-        </ion-select>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Join Date" [(ngModel)]="profileData.volntr_join_date" fill="outline"
-          type="date">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Pincode" [(ngModel)]="profileData.volntr_pincode" fill="outline"
-          type="text">
-        </ion-input>
-      </ion-col>
-      <ion-col size="12">
-        <ion-input labelPlacement="floating" label="Address" [(ngModel)]="profileData.volntr_address" fill="outline"
-          type="text">
-        </ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12">
-        <ion-button (click)="saveProfile()" expand="block" type="submit" class="ion-margin-top">
-          Save
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          <ion-col size="12">
+            <ion-select labelPlacement="floating" label="Qualification" [(ngModel)]="profileData.volntr_qualification"
+              fill="outline">
+              <ion-select-option *ngFor="let qftn of  qualifications"
+                value="{{qftn.qualification_id}}">{{qftn.qualification_short}}
+                {{qftn.qualification_title}}</ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Join Date" [(ngModel)]="profileData.volntr_join_date"
+              fill="outline" type="date">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Pincode" [(ngModel)]="profileData.volntr_pincode" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input labelPlacement="floating" label="Address" [(ngModel)]="profileData.volntr_address" fill="outline"
+              type="text">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+        <ng-container>
+          <ion-col size-md="4" size-sm="12" size-xl="4" size-xs="12">
+            <ion-img *ngIf="profileData.volntr_image"
+              [src]="myhttp.BASE_URL + '/' + profileData.volntr_image"></ion-img>
+          </ion-col>
+          <ion-col size-md="4" size-sm="12" size-xl="4" size-xs="12">
+            <ion-item lines="none">
+              <ion-button (click)="selectImage($event)">Profile Image</ion-button>
+            </ion-item>
+          </ion-col>
+        </ng-container>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button (click)="saveProfile()" expand="block" type="submit" class="ion-margin-top">
+              Save
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>

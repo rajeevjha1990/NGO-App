@@ -18,6 +18,7 @@ export class NewGroupPage implements OnInit {
   members: any[] = [];
   @Input()
   groupId: any;
+  totalGroupPaidAmount: number = 0
   constructor(
     private pubServ: PubService,
     private navCtrl: NavController,
@@ -55,9 +56,9 @@ export class NewGroupPage implements OnInit {
     } else if (count < this.members.length) {
       this.members.splice(count);
     }
+    this.totalGroupPaidAmount = this.formData.no_of_members * 225
   }
   async saveGroup() {
-    // 1. Program must be selected
     if (!this.formData.group_name) {
       await this.showAlert('Group name is required');
       return;
@@ -67,20 +68,15 @@ export class NewGroupPage implements OnInit {
       return;
     }
 
-    // 2. EP No and Senior EP No
     if (!this.formData.ep_no || !this.formData.senior_ep_no) {
       await this.showAlert('Please enter both EP No and Senior EP No.');
       return;
     }
-
-    // 3. No of members
     const totalMembers = Number(this.formData.no_of_members) || 0;
     if (totalMembers < 12) {
       await this.showAlert('Please add at least 10 members.');
       return;
     }
-
-    // 4. Validate each member
     for (let i = 0; i < this.members.length; i++) {
       const member = this.members[i];
 

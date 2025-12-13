@@ -9,6 +9,7 @@ export class Volenteer {
     volntr_qualification: any = '';
     volntr_pincode: number = 0;
     volntr_join_date: any = '';
-    volntr_status: any = 1
+    volntr_status: any = 1;
+    volntr_image: any = '';
 
 };

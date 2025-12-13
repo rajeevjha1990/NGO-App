@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { NavController, AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Volenteer } from 'src/app/data-types/volenteer';
 import { PubService } from 'src/app/services/pub/pub.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
+import { UploadService } from 'src/app/services/upload/upload.service';
+import { RajeevhttpService } from 'src/app/services/http/rajeevhttp.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,14 +22,45 @@ export class ProfilePage implements OnInit {
     private userServ: UserService,
     private pubServ: PubService,
     private navCtrl: NavController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private uploadServ: UploadService,
+    public myhttp: RajeevhttpService
   ) { }
 
   async ngOnInit() {
     this.qualifications = await this.pubServ.getQualifications();
     this.profileData = await this.userServ.getProfile()
   }
+  async selectImage(event: MouseEvent) {
+    const inFile = document.createElement('input');
+    inFile.setAttribute('type', 'file');
+    inFile.click();
 
+    inFile.addEventListener('change', async (event) => {
+      await this.uploadimage(event);
+    });
+  }
+
+  async uploadimage(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const files = inputElement.files;
+    if (!files || files.length === 0) return;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const data = {
+        file_upload: file,
+        upload_type: 'misc',
+      };
+
+      const uploadedFile = await this.uploadServ.uploadImage(data);
+      if (uploadedFile) {
+        this.profileData.volntr_image = uploadedFile.imgValue;
+      } else {
+        console.error('Image not uploaded.');
+      }
+    }
+  }
   async saveProfile() {
     if (!this.profileData.volntr_name || this.profileData.volntr_name.trim() === '') {
       return this.showAlert('Name is required.');

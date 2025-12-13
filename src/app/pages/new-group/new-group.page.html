@@ -1,22 +1,48 @@
-<!-- <ion-header [translucent]="true">
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>new-group</ion-title>
+    <ion-title></ion-title>
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-title class="ion-padding">Create new Group</ion-title>
+
+  <!-- NEW AMOUNT SECTION CARD -->
+  <ion-card class="amount-card">
+    <ion-card-content>
+
+      <div class="amount-header">
+        <h2>Registration Amount</h2>
+        <span class="per-member">₹ 225 / Member</span>
+      </div>
+
+      <div class="calc-box">
+        <div class="left">
+          <p>No. of Members:</p>
+          <h3>{{ formData.no_of_members || 0 }}</h3>
+        </div>
+
+        <div class="right">
+          <p>Total Amount:</p>
+          <h2 class="total-amount">₹ {{ totalGroupPaidAmount }}</h2>
+        </div>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+  <!-- END AMOUNT SECTION -->
+
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Create new Group</ion-card-title>
+      <ion-card-title>Create New Group</ion-card-title>
     </ion-card-header>
+
     <ion-card-content>
       <ion-grid>
+
         <ion-row>
           <ion-col size="12">
             <ion-input labelPlacement="floating" label="Group Name" [(ngModel)]="formData.group_name" fill="outline"
-              type="text">
-            </ion-input>
+              type="text"></ion-input>
           </ion-col>
 
           <ion-col size="12">
@@ -28,28 +54,24 @@
           </ion-col>
 
           <ion-col size="12">
-            <ion-input labelPlacement="floating" label="Ep No" [(ngModel)]="formData.ep_no" fill="outline" type="text">
-            </ion-input>
+            <ion-input labelPlacement="floating" label="Ep No" [(ngModel)]="formData.ep_no" fill="outline"
+              type="text"></ion-input>
           </ion-col>
 
           <ion-col size="12">
             <ion-input labelPlacement="floating" label="Senior Ep No" [(ngModel)]="formData.senior_ep_no" fill="outline"
-              type="text">
-            </ion-input>
+              type="text"></ion-input>
           </ion-col>
 
           <ion-col size="12">
             <ion-input labelPlacement="floating" label="Start Date" [(ngModel)]="formData.group_start_date"
-              fill="outline" type="date">
-            </ion-input>
+              fill="outline" type="date"></ion-input>
           </ion-col>
 
           <ion-col size="12">
             <ion-input maxlength="2" (ionInput)="onNoOfMembersChange()" labelPlacement="floating" label="No of Members"
-              [(ngModel)]="formData.no_of_members" fill="outline" type="number">
-            </ion-input>
+              [(ngModel)]="formData.no_of_members" fill="outline" type="number"></ion-input>
           </ion-col>
-
         </ion-row>
 
         <ion-row>
@@ -62,12 +84,13 @@
           <ion-col size="1" class="ion-text-center">
             <div class="member-counter">{{ i + 1 }}</div>
           </ion-col>
+
           <ion-col size="11">
-            <ion-input labelPlacement="floating" label="Member Name" [(ngModel)]="member.name" fill="outline">
-            </ion-input>
+            <ion-input labelPlacement="floating" label="Member Name" [(ngModel)]="member.name"
+              fill="outline"></ion-input>
+
             <ion-input maxlength="10" labelPlacement="floating" label="Mobile" [(ngModel)]="member.mobile" type="tel"
-              fill="outline" class="ion-margin-top">
-            </ion-input>
+              fill="outline" class="ion-margin-top"></ion-input>
           </ion-col>
         </ion-row>
 
@@ -78,9 +101,9 @@
             </ion-button>
           </ion-col>
         </ion-row>
+
       </ion-grid>
     </ion-card-content>
   </ion-card>
-
 
 </ion-content>

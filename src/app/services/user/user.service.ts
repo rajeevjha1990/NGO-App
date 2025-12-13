@@ -22,6 +22,7 @@ export class UserService {
   }
 
   async init() {
+    this.loadFromStorage();
     this.authkey = await this.getAuthKey();
     if (this.authkey) {
       const volenteer = await this.getVolenteerProfileFromServer();
@@ -29,10 +30,11 @@ export class UserService {
         volenteer.loggedIn = true;
         this.volenteerObj = volenteer;
         this.volenteer.next(this.volenteerObj);
-
+        localStorage.setItem('volenteer', JSON.stringify(this.volenteerObj));
       }
     }
   }
+
 
   async getAuthKey() {
     if (!this.authkey) {
@@ -92,9 +94,9 @@ export class UserService {
           volntr_email: respData.volunteer.volntr_email,
           volntr_address: respData.volunteer.volntr_address,
           volntr_ep_temp: respData.volunteer.volntr_ep_temp,
+          volntr_image: respData.volunteer.volntr_image,
           loggedIn: true,
         } as any;
-
         this.volenteer.next(this.volenteerObj);
       }
       return this.volenteerObj;
@@ -130,9 +132,15 @@ export class UserService {
   async profileUpdate(formData: any) {
     const url = Constants.USER_API_PATH + 'update_profile';
     const apiResp = await this.svjHttp.post(url, formData);
+
+    if (apiResp && apiResp.volunteer) {
+      this.volenteerObj = apiResp.volunteer;
+      this.volenteer.next(this.volenteerObj);
+      localStorage.setItem('volenteer', JSON.stringify(this.volenteerObj));
+    }
+
     return apiResp;
   }
-
   async changePassword(data: any) {
     const url = Constants.COMMON_API_PATH + 'change_password';
     const apiResp = await this.svjHttp.post(url, data);
@@ -204,6 +212,13 @@ export class UserService {
       return respData.countgroup;
     } else {
       return {}
+    }
+  }
+  loadFromStorage() {
+    const u = JSON.parse(localStorage.getItem('volenteer') || '{}');
+    if (u && u.volntr_id) {
+      this.volenteerObj = u;
+      this.volenteer.next(this.volenteerObj);
     }
   }
 

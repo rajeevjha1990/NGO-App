@@ -51,6 +51,7 @@ import {
     IonProgressBar,
     IonMenuToggle,
     IonItemDivider,
+    IonImg
 
 } from '@ionic/angular/standalone';
 
@@ -108,4 +109,6 @@ export const SHARED_IONIC_MODULES = [
     IonMenuToggle,
     IonItemDivider,
     RouterLink,
+    IonImg
+
 ];

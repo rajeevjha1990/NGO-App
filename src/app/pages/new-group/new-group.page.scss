@@ -12,3 +12,58 @@
     margin-left: -15px;
     margin-top: 10px;
 }
+
+.amount-card {
+    border-left: 6px solid #ff9800;
+    border-radius: 12px;
+    background: #fffaf0;
+}
+
+.amount-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.amount-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.per-member {
+    background: #ff9800;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.calc-box {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    background: #fff3d4;
+    padding: 14px;
+    border-radius: 12px;
+}
+
+.calc-box p {
+    margin: 0;
+    color: #444;
+    font-size: 14px;
+}
+
+.calc-box h3 {
+    margin: 4px 0 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.total-amount {
+    margin: 4px 0 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #e65100;
+}

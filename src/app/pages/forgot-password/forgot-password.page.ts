@@ -138,7 +138,6 @@ export class ForgotPasswordPage implements OnInit {
       new_password: this.formData.new_password,
       confirm_password: this.formData.confirm_password,
       mobileno: this.formData.mobile,
-      login_token: this.formData.login_token
     }
 
     const resp = await this.userService.resetpassword(passworddata);
@@ -148,6 +147,7 @@ export class ForgotPasswordPage implements OnInit {
         this.router.navigate(['/forgot-password']);
         break;
       case 200:
+        await this.userServ.logout();
         this.router.navigate(['/login']);
         this.formData = {}
         break
