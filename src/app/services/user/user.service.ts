@@ -221,5 +221,9 @@ export class UserService {
       this.volenteer.next(this.volenteerObj);
     }
   }
-
+  async saveGroupPayment(savedata: any) {
+    const url = Constants.USER_API_PATH + 'verify_forgot_otp';
+    const apiResp = await this.svjHttp.post(url, savedata);
+    return apiResp;
+  }
 }

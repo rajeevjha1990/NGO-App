@@ -19,6 +19,12 @@ export class NewGroupPage implements OnInit {
   @Input()
   groupId: any;
   totalGroupPaidAmount: number = 0
+  upiId = 'yourupi@upi';
+  receiverName = 'Sabka Vikas Jyoti';
+  utr: string = '';
+  paymentScreenshot!: File;
+  paymentDone = false;
+
   constructor(
     private pubServ: PubService,
     private navCtrl: NavController,
@@ -58,6 +64,52 @@ export class NewGroupPage implements OnInit {
     }
     this.totalGroupPaidAmount = this.formData.no_of_members * 225
   }
+  payNow() {
+    if (this.totalGroupPaidAmount <= 0) {
+      this.showAlert('Invalid amount');
+      return;
+    }
+
+    const note = `GROUP_${this.formData.group_name || 'NEW'}`;
+
+    const upiUrl =
+      `upi://pay?pa=${this.upiId}` +
+      `&pn=${encodeURIComponent(this.receiverName)}` +
+      `&am=${this.totalGroupPaidAmount}` +
+      `&cu=INR` +
+      `&tn=${encodeURIComponent(note)}`;
+
+    window.location.href = upiUrl;
+  }
+
+  onFileChange(event: any) {
+    this.paymentScreenshot = event.target.files[0];
+  }
+
+
+  async submitPaymentProof() {
+    if (!this.utr || !this.paymentScreenshot) {
+      await this.showAlert('UTR number and screenshot are required');
+      return;
+    }
+
+    const fd = new FormData();
+    fd.append('group_name', this.formData.group_name);
+    fd.append('amount', this.totalGroupPaidAmount.toString());
+    fd.append('utr', this.utr);
+    fd.append('screenshot', this.paymentScreenshot);
+
+    const resp = await this.userServ.saveGroupPayment(fd);
+
+    if (resp?.status) {
+      this.paymentDone = true;
+      await this.showAlert('Payment submitted. Verification pending.');
+    } else {
+      await this.showAlert(resp?.msg || 'Payment failed');
+    }
+  }
+
+
   async saveGroup() {
     if (!this.formData.group_name) {
       await this.showAlert('Group name is required');

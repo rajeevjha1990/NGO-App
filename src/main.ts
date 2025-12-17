@@ -33,7 +33,6 @@ import {
   ticketOutline,
   cardOutline,
   walletOutline,
-  calendarNumberOutline,
   cashOutline,
   calendarOutline,
   documentOutline,
@@ -47,7 +46,12 @@ import {
   leafOutline,
   personAddOutline,
   cubeOutline,
-  refreshOutline
+  refreshOutline,
+  nutritionOutline,
+  schoolOutline,
+  briefcaseOutline,
+  laptopOutline,
+  cogOutline
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -98,7 +102,12 @@ addIcons({
   'leaf-outline': leafOutline,
   'person-add-outline': personAddOutline,
   'cube-outline': cubeOutline,
-  'refresh-outline': refreshOutline
+  'refresh-outline': refreshOutline,
+  'nutrition-outline': nutritionOutline,
+  'school-outline': schoolOutline,
+  'briefcase-outline': briefcaseOutline,
+  'laptop-outline': laptopOutline,
+  'cog-outline': cogOutline,
 });
 
 bootstrapApplication(AppComponent, appConfig)

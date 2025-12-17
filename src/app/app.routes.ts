@@ -28,13 +28,21 @@ export const routes: Routes = [
     path: 'forgot-password',
     loadComponent: () => import('./pages/forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage)
   },
-  // 🔐 Protected Routes
+  //  Protected Routes
   {
     path: 'profile',
     canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/profile/profile.page').then(m => m.ProfilePage)
   },
+  {
+    path: 'personal-info',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/personal-info/personal-info.page')
+        .then(m => m.PersonalInfoPage)
+  },
+
   {
     path: 'groups',
     canActivate: [AuthGuard],
@@ -87,18 +95,15 @@ export const routes: Routes = [
       import('./pages/cityfilter/cityfilter.page')
         .then(m => m.CityfilterPage)
   },
-
-  // ✅ Default Route (Only for ROOT)
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  // ✅ Fallback (404 Safe)
   { path: '**', redirectTo: 'home' },
   {
     path: 'blockfilter',
-    loadComponent: () => import('./pages/blockfilter/blockfilter.page').then( m => m.BlockfilterPage)
+    loadComponent: () => import('./pages/blockfilter/blockfilter.page').then(m => m.BlockfilterPage)
   },
   {
     path: 'villagefilter',
-    loadComponent: () => import('./pages/villagefilter/villagefilter.page').then( m => m.VillagefilterPage)
+    loadComponent: () => import('./pages/villagefilter/villagefilter.page').then(m => m.VillagefilterPage)
   },
+
 ];

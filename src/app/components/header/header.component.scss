@@ -36,29 +36,33 @@ ion-toolbar {
     line-height: 1.1;
 }
 
-/* App title */
 .app-title {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 18px;
+    /* ⬆ slightly reduced */
+    font-weight: 700;
     color: #000;
     white-space: nowrap;
 }
 
-/* App slogan below title */
+/* App slogan */
 .app-slogan {
-    font-size: 14px;
-    color: #000;
-    /* you can change color if needed */
-    margin-top: 3px;
+    font-size: 11px;
+    /* ✅ clearly smaller than title */
+    font-weight: 400;
+    color: #222;
+    margin-top: 2px;
+    /* ⬇ reduced spacing */
+    opacity: 0.85;
 }
 
-/* Right links */
-.header-right {
+.header-left {
+    margin-top: 0;
+    /* ❌ 25px hata diya */
     display: flex;
     align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
+    gap: 10px;
 }
+
 
 .header-right a {
     text-decoration: none;
@@ -72,6 +76,20 @@ ion-toolbar {
     color: var(--ion-color-primary);
     text-decoration: underline;
 }
+
+.profile-avatar {
+    width: 45px !important;
+    height: 45px !important;
+}
+
+/* image fit */
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 
 /* Show menu button, hide right links on mobile */
 @media (max-width: 768px) {

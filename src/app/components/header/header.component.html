@@ -1,15 +1,31 @@
 <ion-header>
   <ion-toolbar class="custom-header">
-    <ion-buttons slot="start" class="header-left">
-      <ion-menu-button menu="main-menu"></ion-menu-button>
 
+    <!-- LEFT : Profile + Logo + Title -->
+    <ion-buttons slot="start" class="header-left">
+
+      <!-- Profile Icon -->
+      <ion-avatar class="profile-avatar" routerLink="/personal-info">
+        <img routerLink="/personal-info" *ngIf="!user.volntr_image" src="assets/SVJ-Images/images.png" />
+        <img routerLink="/personal-info"
+          [src]="user.volntr_image ? (myhttp.BASE_URL + '/' + user.volntr_image) : 'assets/SVJ-Images/images.png'">
+      </ion-avatar>
+
+      <!-- Logo -->
       <img src="assets/SVJ-Images/logo.png" alt="Logo" class="logo" />
 
-      <!-- Title + Slogan wrapper -->
+      <!-- Title + Slogan -->
       <div class="title-wrapper">
-        <span class="app-title">सबका विकास जयति</span>
+        <span class="app-title">सबका विकास ज्यति</span>
         <span class="app-slogan">गाँव गाँव खुशी, देश खुशहाल</span>
       </div>
+
     </ion-buttons>
+
+    <!-- RIGHT : Menu Button -->
+    <ion-buttons slot="end">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>

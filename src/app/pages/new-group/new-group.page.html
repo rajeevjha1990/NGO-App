@@ -5,11 +5,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-
-  <!-- NEW AMOUNT SECTION CARD -->
   <ion-card class="amount-card">
     <ion-card-content>
-
       <div class="amount-header">
         <h2>Registration Amount</h2>
         <span class="per-member">₹ 225 / Member</span>
@@ -26,11 +23,27 @@
           <h2 class="total-amount">₹ {{ totalGroupPaidAmount }}</h2>
         </div>
       </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Payment Proof</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-input labelPlacement="floating" label="UTR Number" [(ngModel)]="utr" fill="outline"></ion-input>
+
+      <ion-input type="file" accept="image/*" fill="outline" class="ion-margin-top" (change)="onFileChange($event)">
+      </ion-input>
+
+      <ion-button expand="block" class="ion-margin-top" (click)="submitPaymentProof()">
+        Submit Payment Proof
+      </ion-button>
 
     </ion-card-content>
   </ion-card>
-  <!-- END AMOUNT SECTION -->
-
   <ion-card>
     <ion-card-header>
       <ion-card-title>Create New Group</ion-card-title>
