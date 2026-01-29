@@ -1,0 +1,48 @@
+/* Programs */
+.program-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.program-card.highlighted {
+  border: 2px solid #2dd36f;
+  /* Ionic success green */
+  box-shadow: 0 0 15px rgba(45, 211, 111, 0.6);
+  transform: scale(1.05);
+  background: #eafff3;
+}
+
+.program-icon {
+  font-size: 36px;
+  color: var(--ion-color-primary);
+}
+
+/* Gallery */
+.gallery-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 40vh;
+  }
+
+  .hero-overlay h1 {
+    font-size: 22px;
+  }
+
+  .hero-overlay p {
+    font-size: 14px;
+  }
+
+  .team-img-wrapper {
+    height: 200px;
+  }
+}

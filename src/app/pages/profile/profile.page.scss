@@ -1,0 +1,65 @@
+.ngo-profile {
+  --background: #f8fbff;
+
+  .profile-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    .profile-hero-avatar {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 8px;
+      border: 4px solid #3880ff22;
+      box-shadow: 0 2px 8px rgba(56, 128, 255, 0.08);
+    }
+    .profile-hero-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #222f3e;
+      margin: 0;
+    }
+    .profile-hero-subtitle {
+      font-size: 1.1rem;
+      color: #3880ff;
+      margin: 2px 0 0 0;
+    }
+  }
+
+  .profile-card {
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(56, 128, 255, 0.1);
+    margin-top: 0;
+    ion-card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #3880ff;
+    }
+    ion-item {
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    ion-button {
+      margin-top: 8px;
+    }
+    ion-avatar {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .profile-card {
+      padding: 8px !important;
+    }
+    .profile-hero {
+      .profile-hero-avatar {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
+}

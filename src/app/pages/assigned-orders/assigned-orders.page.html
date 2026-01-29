@@ -1,0 +1,89 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-title>Assigned Orders</ion-title>
+    <ion-badge slot="end" color="light" class="ion-margin-end">
+      {{ assignedorders.length }} Orders
+    </ion-badge>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top">
+  <div *ngIf="assignedorders.length > 0; else noData">
+    <ion-card class="order-card" *ngFor="let order of assignedorders">
+      <ion-card-header>
+        <div class="header-flex">
+          <ion-badge
+            [color]="order.order_status === '0' ? 'warning' : 'success'"
+          >
+            {{ order.order_status === '0' ? 'Pending' : 'Completed' }}
+          </ion-badge>
+          <span class="order-date"
+            >{{ order.assigned_at | date:'dd MMM, hh:mm a' }}</span
+          >
+        </div>
+        <ion-card-title>ID: #ORD-{{order.order_id}}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <!-- Customer Info Section -->
+        <div class="info-grid">
+          <div class="info-row">
+            <ion-icon name="person"></ion-icon>
+            <p>{{ order.order_name }}</p>
+          </div>
+          <div class="info-row">
+            <ion-icon name="call"></ion-icon>
+            <p>{{ order.order_number }}</p>
+          </div>
+          <div class="info-row">
+            <ion-icon name="location"></ion-icon>
+            <p>{{ order.order_address }}, {{ order.order_pincode }}</p>
+          </div>
+        </div>
+
+        <!-- Payment Info Section -->
+        <div class="payment-bar">
+          <div class="pay-method">
+            <span class="label">Payment</span>
+            <span class="val"
+              >{{ order.payment_mode }} - {{ order.payment_status }}</span
+            >
+          </div>
+          <div class="amount-val">₹{{ order.amount }}</div>
+        </div>
+
+        <!-- Action Buttons (Row 1) -->
+        <div class="action-row">
+          <a [href]="'tel:' + order.order_number" class="call-btn">
+            <ion-icon name="call-outline"></ion-icon> Call
+          </a>
+        </div>
+
+        <!-- Assign Associate Dropdown (Row 2 - Niche) -->
+        <ion-item lines="none" class="assign-item">
+          <ion-label position="stacked">Assign to Associate</ion-label>
+          <ion-select
+            placeholder="Sathi Chunein"
+            [(ngModel)]="order.selectedAssociate"
+            (ionChange)="assignToAssociate(order, $event)"
+          >
+            <ion-select-option
+              *ngFor="let associate of associatesList"
+              [value]="associate.volntr_id"
+            >
+              {{ associate.volntr_name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ng-template #noData>
+    <div class="empty-state">
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <h3>No Orders Found</h3>
+      <p>Aapke liye koi assigned order nahi hai.</p>
+    </div>
+  </ng-template>
+</ion-content>

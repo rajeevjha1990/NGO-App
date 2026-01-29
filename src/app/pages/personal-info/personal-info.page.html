@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Personal Information</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card class="profile-card">
+    <ion-card-content>
+      <div class="profile-center">
+        <ion-avatar class="avatar">
+          <img *ngIf="!user.volntr_image" src="assets/SVJ-Images/images.png" />
+          <img
+            [src]="user.volntr_image ? (myhttp.BASE_URL + '/' + user.volntr_image) : 'assets/SVJ-Images/images.png'"
+          />
+        </ion-avatar>
+
+        <h2 class="user-name">{{ user.volntr_name }}</h2>
+        <p class="mobile">{{ user.volntr_mobile }}</p>
+        <p class="email">EPNO : {{ user.volntr_ep_temp }}</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <!-- Stats Section -->
+  <div class="stats-container">
+    <ion-card class="stat-card" routerLink="/groups">
+      <h3>{{countgroup}}</h3>
+      <p>Group Created</p>
+    </ion-card>
+    <ion-card class="stat-card" routerLink="/distributed-saintries">
+      <h3>{{countsainetri}}</h3>
+      <p>Saintri Distributed</p>
+    </ion-card>
+  </div>
+
+  <div class="stats-container">
+    <ion-card class="stat-card" routerLink="/profile"> Edit Profile </ion-card>
+    <ion-card class="stat-card" routerLink="/forgot-password">
+      Change Password
+    </ion-card>
+  </div>
+</ion-content>

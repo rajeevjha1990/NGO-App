@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Villages</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-input class="ion-margin-top" fill="outline" placeholder="Search village" [(ngModel)]="searchText"
+    (ionInput)="filterVillages()">
+  </ion-input>
+
+  <ion-list *ngIf="filteredVillages.length > 0">
+    <ion-item button detail="false" *ngFor="let v of filteredVillages" (click)="selectVillage(v)">
+      <ion-label>
+        <p>{{ v.village_name }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-text color="medium" *ngIf="filteredVillages.length === 0 && searchText">
+    <p>No village found for "{{ searchText }}"</p>
+  </ion-text>
+
+</ion-content>

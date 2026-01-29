@@ -1,0 +1,25 @@
+<app-header></app-header>
+<ion-content class="ion-padding">
+  <ion-grid class="ion-padding">
+    <h1 style="margin-top: 15px">Our Programs.</h1>
+    <ion-row>
+      <ion-col
+        size-md="3"
+        size-sm="6"
+        size-xs="12"
+        *ngFor="let prog of programs"
+      >
+        <ion-card
+          routerLink="/program-view/{{prog.id}}"
+          class="program-card ion-text-center"
+          [ngClass]="{'highlighted': highlightPrograms.includes(prog.name)}"
+        >
+          <ion-icon [name]="prog.icon" class="program-icon"></ion-icon>
+          <ion-card-content>
+            <strong> {{prog.name}} </strong>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Members</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ngo-members ion-padding">
+  <section class="members-hero ion-padding-horizontal ion-padding-vertical">
+    <ion-icon name="people-outline" class="members-hero-icon"></ion-icon>
+    <h2 class="members-hero-title">Group Members</h2>
+    <p class="members-hero-subtitle">
+      <b>Group:</b> {{ groupObject?.[groupId]?.group_name || 'Loading...' }}
+    </p>
+  </section>
+
+  <div
+    *ngIf="!groupMembers || groupMembers.length === 0"
+    class="ion-text-center ion-margin-top"
+  >
+    <ion-icon name="people-outline" size="large" color="medium"></ion-icon>
+    <p>No members found in this group.</p>
+  </div>
+
+  <ion-card *ngFor="let member of groupMembers" class="member-card">
+    <ion-card-content>
+      <div class="member-header">
+        <h2>{{ member.name }}</h2>
+        <span class="role" [style.color]="getRoleColor(member.role)">
+          ({{ member.role || 'Member' }})
+        </span>
+      </div>
+      <p><b>Mobile:</b> {{ member.mobile }}</p>
+      <ion-select
+        interface="popover"
+        placeholder="Change Role"
+        [value]="member.role"
+        (ionChange)="changeMemberRole(member, $event.detail.value)"
+      >
+        <ion-select-option
+          *ngFor="let r of getAvailableRoles(member)"
+          [value]="r.value"
+        >
+          {{ r.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-fab
+    horizontal="end"
+    vertical="bottom"
+    slot="fixed"
+    routerLink="/new-group"
+  >
+    <ion-fab-button color="primary">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cities</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-input class="ion-margin-top" fill="outline" placeholder="Search city" [(ngModel)]="searchText"
+    (ionInput)="filterdistricts()">
+  </ion-input>
+
+  <ion-list *ngIf="filteredDistricts.length > 0">
+    <!-- Fixed variable name typo -->
+    <ion-item button detail="false" *ngFor="let district of filteredDistricts" (click)="selectDistrict(district)">
+      <ion-label>
+        <p>{{ district.district_name }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-text color="medium" *ngIf="filteredDistricts.length === 0 && searchText">
+    <p>No district found for "{{ searchText }}"</p>
+  </ion-text>
+</ion-content>

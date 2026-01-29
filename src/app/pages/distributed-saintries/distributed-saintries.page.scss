@@ -1,0 +1,25 @@
+.due-today {
+    border-left: 6px solid #eb445a;
+    background: #fff1f1;
+    box-shadow: 0 0 12px rgba(235, 68, 90, 0.4);
+}
+
+ion-card.due-today {
+    border: 3px solid red;
+    background: #fff1f1;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        box-shadow: 0 0 5px red;
+    }
+
+    50% {
+        box-shadow: 0 0 15px red;
+    }
+
+    100% {
+        box-shadow: 0 0 5px red;
+    }
+}

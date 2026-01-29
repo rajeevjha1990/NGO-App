@@ -1,0 +1,153 @@
+.profile-card {
+    border-radius: 18px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Center Alignment */
+.profile-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    width: 110px;
+    height: 110px;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Avatar Wrapper */
+.profile-info .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.95);
+    overflow: hidden;
+    margin: 0 auto 12px auto;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    background: white;
+}
+
+.profile-info h2 {
+    margin: 10px 0 0;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.profile-info p {
+    margin: 0;
+    font-size: 15px;
+    opacity: 0.95;
+}
+
+.user-name {
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.mobile {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.email {
+    font-size: 13px;
+    color: #555;
+    opacity: 0.9;
+}
+
+/* Stats cards */
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 8px;
+}
+
+.stat-card {
+    width: 50%;
+    text-align: center;
+    padding: 12px 10px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.stat-card p {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.7;
+}
+
+/* Menu list */
+.menu-list ion-item {
+    --padding-start: 16px;
+    margin: 6px 0;
+    --background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+
+
+ion-content.home-page {
+    --background: #f9f9f9;
+}
+
+swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hero Overlay */
+.hero-banner {
+    position: relative;
+    /* ye important hai for absolute overlay */
+    width: 100%;
+    height: 50vh;
+    /* ya 40vh mobile me */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    /* overlay ko front me le aayega */
+    background: rgba(76, 72, 72, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+}
+
+.hero-overlay h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.hero-overlay p {
+    font-size: 16px;
+}

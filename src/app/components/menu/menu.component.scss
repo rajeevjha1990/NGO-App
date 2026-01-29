@@ -1,0 +1,62 @@
+
+.menu-header-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  .m-logo {
+    width: 32px;
+    height: 32px;
+    background: white;
+    border-radius: 6px;
+    padding: 2px;
+  }
+}
+
+.menu-list-container {
+  padding: 12px;
+
+  .m-item {
+    --background: transparent;
+    --border-radius: 8px;
+    --min-height: 48px;
+    margin-bottom: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    
+    ion-icon {
+      color: var(--ion-color-primary);
+      font-size: 22px;
+    }
+  }
+
+  .sub-menu-bg {
+    background: #f7f8fa;
+    border-radius: 0 0 8px 8px;
+    margin: -4px 0 10px 0;
+    padding: 4px 0;
+  }
+
+  .sub-item {
+    font-size: 14px;
+    --padding-start: 24px;
+    --min-height: 42px;
+    ion-icon { font-size: 18px; opacity: 0.8; }
+  }
+
+  .m-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    
+    .logout-red {
+      color: #eb445a;
+      ion-icon { color: #eb445a; }
+    }
+  }
+}
+
+// Accordion का डिफ़ॉल्ट बॉर्डर हटाने के लिए
+ion-accordion-group {
+  background: transparent;
+  ion-accordion { background: transparent; }
+}

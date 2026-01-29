@@ -1,0 +1,150 @@
+
+/* --- प्रोफेशनल 2026 हेडर स्टाइल --- */
+
+.purple { color: #6a1b9a; }
+.green { color: #2e7d32; }
+
+// डेस्कटॉप कांटेक्ट बार
+.top-contact-bar {
+  background: #2e7d32;
+  color: white;
+  padding: 8px 30px;
+  font-size: 13px;
+  display: flex;
+  justify-content: flex-end;
+
+  .contact-content {
+    display: flex;
+    gap: 25px;
+    span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+  }
+}
+
+.main-header-toolbar {
+  --background: #ffffff;
+  --min-height: 90px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --padding-start: 15px;
+  --padding-end: 15px;
+}
+
+/* लोगो और ब्रांडिंग */
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+}
+
+.profile-avatar {
+  width: 45px;
+  height: 45px;
+  margin-right: 5px;
+}
+
+.header-logo {
+  height: 65px;
+  width: auto;
+  object-fit: contain;
+}
+
+.main-app-title {
+  font-size: 28px; 
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.app-slogan-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin: 2px 0 0 0;
+  letter-spacing: 0.5px;
+}
+
+/* डेस्कटॉप नेविगेशन */
+.desktop-navigation {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-left: 20px;
+}
+
+.links-wrapper {
+  display: flex;
+  gap: 20px;
+
+  a {
+    text-decoration: none;
+    color: #444;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    padding: 8px 0;
+
+    &:hover, &.active-link {
+      color: #6a1b9a;
+      border-bottom: 3px solid #6a1b9a;
+    }
+  }
+}
+
+.donate-button-nav {
+  --border-radius: 50px;
+  --box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
+  font-weight: 700;
+  height: 42px;
+  margin-left: 10px;
+}
+
+/* --- RESPONSIVE LOGIC --- */
+
+@media (max-width: 991px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .show-on-mobile {
+    display: block !important;
+  }
+
+  .main-header-toolbar {
+    --min-height: 70px;
+  }
+
+  .header-logo {
+    height: 45px;
+  }
+
+  .main-app-title {
+    font-size: 18px;
+  }
+
+  .app-slogan-text {
+    font-size: 9px;
+    margin-top: 0;
+  }
+
+  .profile-avatar {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (min-width: 992px) {
+  .show-on-mobile {
+    display: none !important;
+  }
+  
+  .hide-on-mobile {
+    display: flex !important;
+  }
+}

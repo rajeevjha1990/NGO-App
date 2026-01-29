@@ -1,0 +1,57 @@
+<ion-header class="ion-no-border">
+  <!-- 1. Top Contact Bar (Desktop Only) -->
+  <div class="top-contact-bar hide-on-mobile">
+    <div class="contact-content">
+      <span><ion-icon name="call-outline"></ion-icon> +91 98765 43210</span>
+      <span><ion-icon name="mail-outline"></ion-icon> info@svj.org</span>
+    </div>
+  </div>
+
+  <ion-toolbar class="main-header-toolbar">
+    <!-- Left Section: Logo & Branding -->
+    <ion-buttons slot="start">
+      <div class="logo-box">
+        <!-- Profile Avatar (Optional based on your previous requirement) -->
+        <ion-avatar class="profile-avatar" routerLink="/personal-info">
+          <img
+            [src]="
+              user.volntr_image
+                ? myhttp.BASE_URL + '/' + user.volntr_image
+                : 'assets/SVJ-Images/images.png'
+            "
+          />
+        </ion-avatar>
+
+        <!-- Branding -->
+        <img src="/assets/SVJ-Images/logo.png" alt="Logo" class="header-logo" />
+        <div class="text-box">
+          <h1 class="main-app-title">
+            <span class="purple">सबका</span>
+            <span class="green"> वि</span><span class="purple">का</span
+            ><span class="green">स </span>
+            <span class="purple">ज्योति</span>
+          </h1>
+          <p class="app-slogan-text">“गाँव गाँव खुशी, देश खुशहाल”</p>
+        </div>
+      </div>
+    </ion-buttons>
+
+    <!-- Right Section: Desktop Navigation & Mobile Menu -->
+    <ion-buttons slot="end">
+      <!-- Desktop Links (Hidden on Mobile) -->
+      <nav class="desktop-navigation hide-on-mobile">
+        <div class="links-wrapper">
+          <a routerLink="/home" routerLinkActive="active-link">Home</a>
+          <a routerLink="/about">Home</a>
+          <a routerLink="/programs">Groups</a>
+          <a routerLink="/distributed-saintries">Distributed Sanatries</a>
+          <a routerLink="/assigned-orders">Assigned Orders</a>
+          <a>Trainee Registration</a>
+        </div>
+      </nav>
+
+      <!-- Mobile Hamburger (Hidden on Desktop) -->
+      <ion-menu-button class="show-on-mobile" color="primary"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

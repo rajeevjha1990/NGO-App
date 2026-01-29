@@ -1,0 +1,110 @@
+<ion-header class="ion-no-border">
+  <app-header></app-header>
+</ion-header>
+
+<ion-content class="home-page">
+  <div *ngIf="program">
+    <!-- Hero Section with Background Blur -->
+    <div class="hero-container">
+      <div
+        class="hero-bg"
+        [style.backgroundImage]="'url(' + program.hero_image + ')'"
+      ></div>
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <ion-badge color="secondary" mode="ios" class="ion-margin-bottom"
+            >SABKA VIKAS JAYTI PROGRAM</ion-badge
+          >
+          <h1>{{ program.name }}</h1>
+          <p>{{ program.short_desc }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="main-wrapper">
+      <ion-grid>
+        <ion-row>
+          <!-- Left Column: Details -->
+          <ion-col size-xs="12" size-lg="8">
+            <div class="content-card">
+              <div class="section-header">
+                <h2>कार्यक्रम का विवरण</h2>
+                <div class="line"></div>
+              </div>
+
+              <div class="description-body">
+                <div
+                  *ngFor="let block of program.description_blocks"
+                  class="content-block"
+                >
+                  <!-- Text Block -->
+                  <p *ngIf="block.type === 'text'" class="text-p">
+                    {{ block.content }}
+                  </p>
+
+                  <!-- Image Block -->
+                  <div *ngIf="block.type === 'image'" class="image-block">
+                    <img
+                      [src]="block.url"
+                      [alt]="block.caption"
+                      class="content-image"
+                    />
+                    <p class="image-caption">{{ block.caption }}</p>
+                  </div>
+
+                  <!-- Bullet List Block -->
+                  <div *ngIf="block.type === 'bullet'" class="bullet-container">
+                    <div *ngFor="let item of block.points" class="bullet-item">
+                      <ion-icon
+                        name="checkmark-circle"
+                        color="success"
+                      ></ion-icon>
+                      <span>{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ion-col>
+
+          <!-- Right Column: Action Box -->
+          <ion-col size-xs="12" size-lg="4">
+            <div class="action-card">
+              <ion-icon
+                name="heart-circle"
+                color="danger"
+                class="big-icon"
+              ></ion-icon>
+              <h3>बदलाव का हिस्सा बनें</h3>
+              <p>आपका एक छोटा सा कदम किसी के जीवन में बड़ी खुशी ला सकता है।</p>
+
+              <!-- <ion-button
+                [routerLink]="['/program-apply', program.id]"
+                expand="block"
+                shape="round"
+                class="apply-btn"
+              >
+                लाभ प्राप्त करें / योगदान दें
+              </ion-button> -->
+
+              <!-- <div class="share-box">
+                <span>शेयर करें:</span>
+                <ion-buttons>
+                  <ion-button fill="clear"
+                    ><ion-icon name="logo-whatsapp"></ion-icon
+                  ></ion-button>
+                  <ion-button fill="clear"
+                    ><ion-icon name="logo-facebook"></ion-icon
+                  ></ion-button>
+                </ion-buttons>
+              </div> -->
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</ion-content>

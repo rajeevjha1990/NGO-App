@@ -1,0 +1,7 @@
+{
+  "name": "SVJ",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
