@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { NavController, AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { Volenteer } from 'src/app/data-types/volenteer';
 import { PubService } from 'src/app/services/pub/pub.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
@@ -13,11 +11,11 @@ import { RajeevhttpService } from 'src/app/services/http/rajeevhttp.service';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [...SHARED_IONIC_MODULES]
+  imports: [...SHARED_IONIC_MODULES],
 })
 export class ProfilePage implements OnInit {
   profileData: any = {};
-  qualifications: any[] = []
+  qualifications: any[] = [];
   constructor(
     private userServ: UserService,
     private pubServ: PubService,
@@ -25,11 +23,11 @@ export class ProfilePage implements OnInit {
     private alertCtrl: AlertController,
     private uploadServ: UploadService,
     public myhttp: RajeevhttpService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.qualifications = await this.pubServ.getQualifications();
-    this.profileData = await this.userServ.getProfile()
+    this.profileData = await this.userServ.getProfile();
   }
   async selectImage(event: MouseEvent) {
     const inFile = document.createElement('input');
@@ -53,7 +51,10 @@ export class ProfilePage implements OnInit {
 
       // If the file size exceeds the maximum limit, the upload will not proceed.
       if (file.size / 1024 / 1024 > MAX_SIZE_MB) {
-        await this.imageshowAlert('Error', `Image size should not exceed ${MAX_SIZE_MB} MB`);
+        await this.imageshowAlert(
+          'Error',
+          `Image size should not exceed ${MAX_SIZE_MB} MB`
+        );
         return;
       }
 
@@ -82,7 +83,10 @@ export class ProfilePage implements OnInit {
   }
 
   async saveProfile() {
-    if (!this.profileData.volntr_name || this.profileData.volntr_name.trim() === '') {
+    if (
+      !this.profileData.volntr_name ||
+      this.profileData.volntr_name.trim() === ''
+    ) {
       return this.showAlert('Name is required.');
     }
 
@@ -94,14 +98,20 @@ export class ProfilePage implements OnInit {
       return this.showAlert('Enter a valid 10-digit mobile number.');
     }
 
-    if (!this.profileData.volntr_email || this.profileData.volntr_email.trim() === '') {
+    if (
+      !this.profileData.volntr_email ||
+      this.profileData.volntr_email.trim() === ''
+    ) {
       return this.showAlert('Email is required.');
     }
 
     if (!/^\S+@\S+\.\S+$/.test(this.profileData.volntr_email)) {
       return this.showAlert('Enter a valid email address.');
     }
-    if (!this.profileData.volntr_ep_temp || this.profileData.volntr_ep_temp.trim() === '') {
+    if (
+      !this.profileData.volntr_ep_temp ||
+      this.profileData.volntr_ep_temp.trim() === ''
+    ) {
       return this.showAlert('Temp EP no is required.');
     }
     if (!this.profileData.volntr_qualification) {
@@ -112,11 +122,17 @@ export class ProfilePage implements OnInit {
       return this.showAlert('Join date is required.');
     }
 
-    if (!this.profileData.volntr_pincode || this.profileData.volntr_pincode.trim() === '') {
+    if (
+      !this.profileData.volntr_pincode ||
+      this.profileData.volntr_pincode.trim() === ''
+    ) {
       return this.showAlert('Pincode is required.');
     }
 
-    if (!this.profileData.volntr_address || this.profileData.volntr_address.trim() === '') {
+    if (
+      !this.profileData.volntr_address ||
+      this.profileData.volntr_address.trim() === ''
+    ) {
       return this.showAlert('Address is required.');
     }
     // Call API
@@ -134,7 +150,7 @@ export class ProfilePage implements OnInit {
     const alert = await this.alertCtrl.create({
       header: 'Notice',
       message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }

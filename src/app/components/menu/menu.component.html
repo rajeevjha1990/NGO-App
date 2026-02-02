@@ -1,20 +1,33 @@
 <ion-menu menuId="main-menu" contentId="main-content" side="end" type="overlay">
-
   <!-- Menu Header -->
   <ion-header class="ion-no-border">
-    <ion-toolbar color="primary">
-      <ion-title>
-        <div class="menu-header-box">
-          <img src="assets/SVJ-Images/logo.png" class="m-logo">
-          <span>सबका विकास जयति</span>
-        </div>
-      </ion-title>
+    <ion-toolbar>
+      <ion-card>
+        <ion-card-header class="menu-card-header">
+          <ion-card-title class="menu-card-title">
+            <div class="menu-header-box">
+              <img
+                src="assets/SVJ-Images/logo.png"
+                class="m-logo header-logo"
+              />
+              <div class="text-box">
+                <h1 class="main-app-title">
+                  <span class="purple">सबका</span>
+                  <span class="green"> वि</span><span class="purple">का</span
+                  ><span class="green">स </span>
+                  <span class="purple">ज्योति</span>
+                </h1>
+                <p class="app-slogan-text">“गाँव गाँव खुशी, देश खुशहाल”</p>
+              </div>
+            </div>
+          </ion-card-title>
+        </ion-card-header>
+      </ion-card>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list class="menu-list-container">
-      
       <!-- 1. Dashboard -->
       <ion-menu-toggle auto-hide="false">
         <ion-item routerLink="/home" detail="false" class="m-item">
@@ -33,7 +46,11 @@
 
       <!-- 3. Distributed Sanatries -->
       <ion-menu-toggle auto-hide="false">
-        <ion-item routerLink="/distributed-saintries" detail="false" class="m-item">
+        <ion-item
+          routerLink="/distributed-saintries"
+          detail="false"
+          class="m-item"
+        >
           <ion-icon slot="start" name="medkit-outline"></ion-icon>
           <ion-label>Distributed Sanatries</ion-label>
         </ion-item>
@@ -41,12 +58,16 @@
 
       <!-- 4. Assigned Orders -->
       <ion-menu-toggle auto-hide="false">
-        <ion-item routerLink="/assigned-orders" routerDirection="forward" detail="false" class="m-item">
+        <ion-item
+          routerLink="/assigned-orders"
+          routerDirection="forward"
+          detail="false"
+          class="m-item"
+        >
           <ion-icon slot="start" name="medkit-outline"></ion-icon>
           <ion-label>Assigned orders</ion-label>
         </ion-item>
       </ion-menu-toggle>
-
 
       <!-- 5. Vermi Compost Accordion -->
       <ion-accordion-group class="m-accordion">
@@ -58,28 +79,44 @@
 
           <div slot="content" class="sub-menu-bg">
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerLink="/vermi/trainees" lines="none" class="sub-item">
+              <ion-item
+                routerLink="/vermi/trainees"
+                lines="none"
+                class="sub-item"
+              >
                 <ion-icon slot="start" name="person-add-outline"></ion-icon>
                 Trainee Registration
               </ion-item>
             </ion-menu-toggle>
-            
+
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerLink="/vermi/material" lines="none" class="sub-item">
+              <ion-item
+                routerLink="/vermi/material"
+                lines="none"
+                class="sub-item"
+              >
                 <ion-icon slot="start" name="cube-outline"></ion-icon>
                 Bag Distribution
               </ion-item>
             </ion-menu-toggle>
 
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerLink="/vermi/certificate" lines="none" class="sub-item">
+              <ion-item
+                routerLink="/vermi/certificate"
+                lines="none"
+                class="sub-item"
+              >
                 <ion-icon slot="start" name="ribbon-outline"></ion-icon>
                 Certificate
               </ion-item>
             </ion-menu-toggle>
 
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerLink="/vermi/report" lines="none" class="sub-item">
+              <ion-item
+                routerLink="/vermi/report"
+                lines="none"
+                class="sub-item"
+              >
                 <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
                 Reports
               </ion-item>
@@ -97,7 +134,6 @@
           </ion-item>
         </ion-menu-toggle>
       </div>
-
     </ion-list>
   </ion-content>
 </ion-menu>

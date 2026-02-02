@@ -1,13 +1,13 @@
+/* =====================================================
+   BRAND COLORS
+===================================================== */
 
-/* --- प्रोफेशनल 2026 हेडर स्टाइल --- */
-
-.purple { color: #6a1b9a; }
-.green { color: #2e7d32; }
-
-// डेस्कटॉप कांटेक्ट बार
+/* =====================================================
+   TOP CONTACT BAR (DESKTOP ONLY)
+===================================================== */
 .top-contact-bar {
   background: #2e7d32;
-  color: white;
+  color: #ffffff;
   padding: 8px 30px;
   font-size: 13px;
   display: flex;
@@ -16,24 +16,34 @@
   .contact-content {
     display: flex;
     gap: 25px;
+
     span {
       display: flex;
       align-items: center;
       gap: 6px;
       font-weight: 500;
+
+      ion-icon {
+        font-size: 14px;
+      }
     }
   }
 }
 
+/* =====================================================
+   MAIN HEADER TOOLBAR
+===================================================== */
 .main-header-toolbar {
   --background: #ffffff;
   --min-height: 90px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   --padding-start: 15px;
   --padding-end: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* लोगो और ब्रांडिंग */
+/* =====================================================
+   LOGO + BRANDING
+===================================================== */
 .logo-box {
   display: flex;
   align-items: center;
@@ -44,7 +54,6 @@
 .profile-avatar {
   width: 45px;
   height: 45px;
-  margin-right: 5px;
 }
 
 .header-logo {
@@ -53,50 +62,79 @@
   object-fit: contain;
 }
 
-.main-app-title {
-  font-size: 28px; 
-  font-weight: 800;
-  margin: 0;
-  line-height: 1.1;
-  letter-spacing: -0.5px;
-}
-
-.app-slogan-text {
-  font-size: 13px;
-  font-weight: 700;
-  color: #2e7d32;
-  margin: 2px 0 0 0;
-  letter-spacing: 0.5px;
-}
-
-/* डेस्कटॉप नेविगेशन */
+/* =====================================================
+   DESKTOP NAVIGATION
+===================================================== */
 .desktop-navigation {
   display: flex;
   align-items: center;
   gap: 30px;
-  margin-left: 20px;
 }
 
 .links-wrapper {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 22px;
 
   a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     text-decoration: none;
     color: #444;
     font-weight: 600;
     font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s ease;
     padding: 8px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
 
-    &:hover, &.active-link {
+    ion-icon {
+      font-size: 18px;
+    }
+
+    &:hover,
+    &.active-link {
       color: #6a1b9a;
       border-bottom: 3px solid #6a1b9a;
     }
   }
 }
 
+/* =====================================================
+   NOTIFICATION ICON
+===================================================== */
+.notification-icon {
+  position: relative;
+  padding: 6px;
+  margin-left: 10px;
+
+  ion-icon {
+    font-size: 22px;
+    color: #444;
+    transition: 0.3s ease;
+  }
+
+  &:hover ion-icon {
+    color: #6a1b9a;
+  }
+}
+
+.notify-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 50%;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* =====================================================
+   DONATE / CTA BUTTON (OPTIONAL)
+===================================================== */
 .donate-button-nav {
   --border-radius: 50px;
   --box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
@@ -105,8 +143,9 @@
   margin-left: 10px;
 }
 
-/* --- RESPONSIVE LOGIC --- */
-
+/* =====================================================
+   RESPONSIVE – MOBILE & TABLET
+===================================================== */
 @media (max-width: 991px) {
   .hide-on-mobile {
     display: none !important;
@@ -118,10 +157,6 @@
 
   .main-header-toolbar {
     --min-height: 70px;
-  }
-
-  .header-logo {
-    height: 45px;
   }
 
   .main-app-title {
@@ -139,11 +174,14 @@
   }
 }
 
+/* =====================================================
+   RESPONSIVE – DESKTOP ONLY
+===================================================== */
 @media (min-width: 992px) {
   .show-on-mobile {
     display: none !important;
   }
-  
+
   .hide-on-mobile {
     display: flex !important;
   }

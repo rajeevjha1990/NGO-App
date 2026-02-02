@@ -1,21 +1,21 @@
-import { Injectable } from "@angular/core";
-import { RajeevhttpService } from "../http/rajeevhttp.service";
-import { BehaviorSubject } from "rxjs";
-import { AuthService } from "../auth/auth.service";
-import * as Constants from "../../constant/app.constatnt";
-import { Volenteer } from "src/app/data-types/volenteer";
+import { Injectable } from '@angular/core';
+import { RajeevhttpService } from '../http/rajeevhttp.service';
+import { BehaviorSubject } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
+import * as Constants from '../../constant/app.constatnt';
+import { Volenteer } from 'src/app/data-types/volenteer';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class UserService {
-  userdata: any = "";
-  mobile: any = "";
+  userdata: any = '';
+  mobile: any = '';
   public volenteerObj = new Volenteer();
   public volenteer: BehaviorSubject<Volenteer> = new BehaviorSubject<Volenteer>(
     this.volenteerObj
   );
-  private authkey = "";
+  private authkey = '';
   constructor(
     private authServ: AuthService,
     private svjHttp: RajeevhttpService
@@ -32,7 +32,7 @@ export class UserService {
         volenteer.loggedIn = true;
         this.volenteerObj = volenteer;
         this.volenteer.next(this.volenteerObj);
-        localStorage.setItem("volenteer", JSON.stringify(this.volenteerObj));
+        localStorage.setItem('volenteer', JSON.stringify(this.volenteerObj));
       }
     }
   }
@@ -45,7 +45,7 @@ export class UserService {
   }
 
   async login(logindata: any) {
-    const url = Constants.USER_API_PATH + "/" + "login";
+    const url = Constants.USER_API_PATH + '/' + 'login';
     const apiResp = await this.svjHttp.post(url, logindata);
     if (apiResp && apiResp.authkey) {
       this.authkey = apiResp.authkey;
@@ -57,7 +57,7 @@ export class UserService {
   }
 
   async logout() {
-    const url = Constants.USER_API_PATH + "logout";
+    const url = Constants.USER_API_PATH + 'logout';
     try {
       const apiResp: any = await this.svjHttp.post(url, {}, {});
       if (apiResp) {
@@ -66,10 +66,10 @@ export class UserService {
         this.volenteer.next(this.volenteerObj);
         localStorage.clear();
       } else {
-        console.warn("Logout failed on server, token not cleared");
+        console.warn('Logout failed on server, token not cleared');
       }
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error('Logout failed:', error);
     }
   }
 
@@ -84,7 +84,7 @@ export class UserService {
   }
 
   async getVolenteerProfileFromServer() {
-    const url = Constants.USER_API_PATH + "get_volunteer";
+    const url = Constants.USER_API_PATH + 'get_volunteer';
     try {
       const respData = await this.svjHttp.post(url, {});
       console.log(respData);
@@ -103,18 +103,18 @@ export class UserService {
       }
       return this.volenteerObj;
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      console.error('Error fetching user profile:', error);
       return this.volenteerObj;
     }
   }
   async volunteerRegistration(userdata: any) {
-    const url = Constants.USER_API_PATH + "volunteer_register";
+    const url = Constants.USER_API_PATH + 'volunteer_register';
     const apiResp = await this.svjHttp.post(url, userdata);
     console.log(apiResp);
     return apiResp;
   }
   async allusers() {
-    const url = Constants.USER_API_PATH + "allUsers";
+    const url = Constants.USER_API_PATH + 'allUsers';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.users;
@@ -123,7 +123,7 @@ export class UserService {
     }
   }
   async getProfile() {
-    const url = Constants.USER_API_PATH + "get_profile";
+    const url = Constants.USER_API_PATH + 'get_profile';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.profile;
@@ -132,39 +132,39 @@ export class UserService {
     }
   }
   async profileUpdate(formData: any) {
-    const url = Constants.USER_API_PATH + "update_profile";
+    const url = Constants.USER_API_PATH + 'update_profile';
     const apiResp = await this.svjHttp.post(url, formData);
 
     if (apiResp && apiResp.volunteer) {
       this.volenteerObj = apiResp.volunteer;
       this.volenteer.next(this.volenteerObj);
-      localStorage.setItem("volenteer", JSON.stringify(this.volenteerObj));
+      localStorage.setItem('volenteer', JSON.stringify(this.volenteerObj));
     }
 
     return apiResp;
   }
   async changePassword(data: any) {
-    const url = Constants.COMMON_API_PATH + "change_password";
+    const url = Constants.COMMON_API_PATH + 'change_password';
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
   async resetpassword(data: any) {
-    const url = Constants.USER_API_PATH + "reset_password";
+    const url = Constants.USER_API_PATH + 'reset_password';
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
   async checkMobileRegisterorNot(data: any) {
-    const url = Constants.USER_API_PATH + "check_mobile_registered";
+    const url = Constants.USER_API_PATH + 'check_mobile_registered';
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
   async createGroup(formdata: any) {
-    const url = Constants.COMMON_API_PATH + "new_group";
+    const url = Constants.COMMON_API_PATH + 'new_group';
     const apiResp = await this.svjHttp.post(url, formdata);
     return apiResp;
   }
   async epGroups() {
-    const url = Constants.COMMON_API_PATH + "epGropus";
+    const url = Constants.COMMON_API_PATH + 'epGropus';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.groups;
@@ -173,7 +173,7 @@ export class UserService {
     }
   }
   async epGroupAndProgram() {
-    const url = Constants.COMMON_API_PATH + "getProgramsAndGroups";
+    const url = Constants.COMMON_API_PATH + 'getProgramsAndGroups';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return {
@@ -188,17 +188,17 @@ export class UserService {
     }
   }
   async saintriDistribution(formdata: any) {
-    const url = Constants.COMMON_API_PATH + "saintri_distribution";
+    const url = Constants.COMMON_API_PATH + 'saintri_distribution';
     const apiResp = await this.svjHttp.post(url, formdata);
     return apiResp;
   }
   async pwdOtpVerification(data: any) {
-    const url = Constants.USER_API_PATH + "verify_forgot_otp";
+    const url = Constants.USER_API_PATH + 'verify_forgot_otp';
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
   async sainitriCount() {
-    const url = Constants.COMMON_API_PATH + "get_allsainetriCount";
+    const url = Constants.COMMON_API_PATH + 'get_allsainetriCount';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.countsaintri;
@@ -207,7 +207,7 @@ export class UserService {
     }
   }
   async groupCount() {
-    const url = Constants.COMMON_API_PATH + "get_allGroupCount";
+    const url = Constants.COMMON_API_PATH + 'get_allGroupCount';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.countgroup;
@@ -216,19 +216,19 @@ export class UserService {
     }
   }
   loadFromStorage() {
-    const u = JSON.parse(localStorage.getItem("volenteer") || "{}");
+    const u = JSON.parse(localStorage.getItem('volenteer') || '{}');
     if (u && u.volntr_id) {
       this.volenteerObj = u;
       this.volenteer.next(this.volenteerObj);
     }
   }
   async saveGroupPayment(savedata: any) {
-    const url = Constants.USER_API_PATH + "verify_forgot_otp";
+    const url = Constants.USER_API_PATH + 'verify_forgot_otp';
     const apiResp = await this.svjHttp.post(url, savedata);
     return apiResp;
   }
   async assigneOrders() {
-    const url = Constants.COMMON_API_PATH + "assigned_orders";
+    const url = Constants.COMMON_API_PATH + 'assigned_orders';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.assigned_orders;
@@ -237,7 +237,7 @@ export class UserService {
     }
   }
   async myareaAssociates() {
-    const url = Constants.COMMON_API_PATH + "near_my_associates";
+    const url = Constants.COMMON_API_PATH + 'near_my_associates';
     const respData = await this.svjHttp.post(url, {});
     if (respData) {
       return respData.nearmyassociates;
@@ -246,7 +246,7 @@ export class UserService {
     }
   }
   async orderAssignedChoosesAssociate(data: any) {
-    const url = Constants.COMMON_API_PATH + "order_assigned_your_associate";
+    const url = Constants.COMMON_API_PATH + 'order_assigned_your_associate';
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }

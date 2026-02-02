@@ -1,146 +1,195 @@
-import { Routes } from "@angular/router";
-import { AuthGuard } from "./guards/auth-guard";
+import { Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth-guard';
+import { FootertabComponent } from './components/footertab/footertab.component';
 
 export const routes: Routes = [
   // 1. Default Route (Sabse upar)
-  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   // 🔐 Public Routes
   {
-    path: "home",
+    path: 'home',
     loadComponent: () =>
-      import("./pages/home/home.page").then((m) => m.HomePage),
+      import('./pages/home/home.page').then((m) => m.HomePage),
   },
   {
-    path: "onboarding",
+    path: 'onboarding',
     loadComponent: () =>
-      import("./pages/onboarding/onboarding.page").then(
-        (m) => m.OnboardingPage,
+      import('./pages/onboarding/onboarding.page').then(
+        (m) => m.OnboardingPage
       ),
   },
   {
-    path: "login",
+    path: 'login',
     loadComponent: () =>
-      import("./pages/login/login.page").then((m) => m.LoginPage),
+      import('./pages/login/login.page').then((m) => m.LoginPage),
   },
   {
-    path: "signup",
+    path: 'signup',
     loadComponent: () =>
-      import("./pages/signup/signup.page").then((m) => m.SignupPage),
+      import('./pages/signup/signup.page').then((m) => m.SignupPage),
   },
   {
-    path: "forgot-password",
+    path: 'forgot-password',
     loadComponent: () =>
-      import("./pages/forgot-password/forgot-password.page").then(
-        (m) => m.ForgotPasswordPage,
+      import('./pages/forgot-password/forgot-password.page').then(
+        (m) => m.ForgotPasswordPage
       ),
   },
 
   // 🛡️ Protected Routes (AuthGuard ke saath)
   {
-    path: "profile",
+    path: 'profile',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/profile/profile.page").then((m) => m.ProfilePage),
+      import('./pages/profile/profile.page').then((m) => m.ProfilePage),
   },
   {
-    path: "personal-info",
+    path: 'personal-info',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/personal-info/personal-info.page").then(
-        (m) => m.PersonalInfoPage,
+      import('./pages/personal-info/personal-info.page').then(
+        (m) => m.PersonalInfoPage
       ),
   },
   {
-    path: "groups",
+    path: 'groups',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/groups/groups.page").then((m) => m.GroupsPage),
+      import('./pages/groups/groups.page').then((m) => m.GroupsPage),
   },
   {
-    path: "new-group",
+    path: 'about',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/new-group/new-group.page").then((m) => m.NewGroupPage),
+      import('./pages/about/about.page').then((m) => m.AboutPage),
   },
   {
-    path: "edit-group/:groupId",
+    path: 'new-group',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/new-group/new-group.page").then((m) => m.NewGroupPage),
+      import('./pages/new-group/new-group.page').then((m) => m.NewGroupPage),
   },
   {
-    path: "members/:groupId",
+    path: 'edit-group/:groupId',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/members/members.page").then((m) => m.MembersPage),
+      import('./pages/new-group/new-group.page').then((m) => m.NewGroupPage),
   },
   {
-    path: "distributed-saintries",
+    path: 'members/:groupId',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/distributed-saintries/distributed-saintries.page").then(
-        (m) => m.DistributedSaintriesPage,
+      import('./pages/members/members.page').then((m) => m.MembersPage),
+  },
+  {
+    path: 'distributed-saintries',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/distributed-saintries/distributed-saintries.page').then(
+        (m) => m.DistributedSaintriesPage
       ),
   },
   {
-    path: "new-distribution",
+    path: 'new-distribution',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/new-distribution/new-distribution.page").then(
-        (m) => m.NewDistributionPage,
+      import('./pages/new-distribution/new-distribution.page').then(
+        (m) => m.NewDistributionPage
       ),
   },
   {
-    path: "assigned-orders", // ✅ Ab ye sahi jagah par hai
-    canActivate: [AuthGuard], // Agar login zaroori hai toh Guard lagayein
+    path: 'edit-distribution/:id',
+    canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/assigned-orders/assigned-orders.page").then(
-        (m) => m.AssignedOrdersPage,
+      import('./pages/new-distribution/new-distribution.page').then(
+        (m) => m.NewDistributionPage
+      ),
+  },
+  {
+    path: 'notifications',
+    loadComponent: () =>
+      import('./pages/notifications/notifications.page').then(
+        (m) => m.NotificationsPage
+      ),
+  },
+  {
+    path: 'assigned-orders',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/assigned-orders/assigned-orders.page').then(
+        (m) => m.AssignedOrdersPage
       ),
   },
 
   // 🔍 Filter Routes
   {
-    path: "statefilter",
+    path: 'statefilter',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/statefilter/statefilter.page").then(
-        (m) => m.StatefilterPage,
+      import('./pages/statefilter/statefilter.page').then(
+        (m) => m.StatefilterPage
       ),
   },
   {
-    path: "cityfilter",
+    path: 'cityfilter',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/cityfilter/cityfilter.page").then(
-        (m) => m.CityfilterPage,
+      import('./pages/cityfilter/cityfilter.page').then(
+        (m) => m.CityfilterPage
       ),
   },
   {
-    path: "blockfilter",
+    path: 'blockfilter',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/blockfilter/blockfilter.page").then(
-        (m) => m.BlockfilterPage,
+      import('./pages/blockfilter/blockfilter.page').then(
+        (m) => m.BlockfilterPage
       ),
   },
   {
-    path: "villagefilter",
+    path: 'villagefilter',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/villagefilter/villagefilter.page").then(
-        (m) => m.VillagefilterPage,
+      import('./pages/villagefilter/villagefilter.page').then(
+        (m) => m.VillagefilterPage
       ),
   },
   {
-    path: "program-view/:programId",
+    path: 'program-view/:programId',
     canActivate: [AuthGuard],
     loadComponent: () =>
-      import("./pages/program-view/program-view.page").then(
-        (m) => m.ProgramViewPage,
+      import('./pages/program-view/program-view.page').then(
+        (m) => m.ProgramViewPage
       ),
+  },
+  {
+    path: 'example',
+    component: FootertabComponent,
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./pages/notifications/notifications.page').then(
+            (m) => m.NotificationsPage
+          ),
+      },
+
+      {
+        path: '',
+        redirectTo: '/example/home',
+        pathMatch: 'full',
+      },
+    ],
   },
 
-  { path: "**", redirectTo: "home" },
+  { path: '**', redirectTo: 'home' },
+  {
+    path: 'message',
+    loadComponent: () => import('./pages/message/message.page').then( m => m.MessagePage)
+  },
+  {
+    path: 'news',
+    loadComponent: () => import('./pages/news/news.page').then( m => m.NewsPage)
+  },
 ];

@@ -1,16 +1,16 @@
-import { NavController, AlertController } from "@ionic/angular";
-import { Component, OnInit, Input } from "@angular/core";
-import { PubService } from "src/app/services/pub/pub.service";
-import { SHARED_IONIC_MODULES } from "src/app/shared/shared.ionic";
-import { UserService } from "src/app/services/user/user.service";
-import { ActivatedRoute, ParamMap } from "@angular/router";
-import { UploadService } from "src/app/services/upload/upload.service";
-import { RajeevhttpService } from "src/app/services/http/rajeevhttp.service";
+import { NavController, AlertController } from '@ionic/angular';
+import { Component, OnInit, Input } from '@angular/core';
+import { PubService } from 'src/app/services/pub/pub.service';
+import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
+import { UserService } from 'src/app/services/user/user.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { UploadService } from 'src/app/services/upload/upload.service';
+import { RajeevhttpService } from 'src/app/services/http/rajeevhttp.service';
 
 @Component({
-  selector: "app-new-group",
-  templateUrl: "./new-group.page.html",
-  styleUrls: ["./new-group.page.scss"],
+  selector: 'app-new-group',
+  templateUrl: './new-group.page.html',
+  styleUrls: ['./new-group.page.scss'],
   standalone: true,
   imports: [...SHARED_IONIC_MODULES],
 })
@@ -21,9 +21,9 @@ export class NewGroupPage implements OnInit {
   @Input()
   groupId: any;
   totalGroupPaidAmount: number = 0;
-  upiId = "yourupi@upi";
-  receiverName = "Sabka Vikas Jyoti";
-  utr: string = "";
+  upiId = 'yourupi@upi';
+  receiverName = 'Sabka Vikas Jyoti';
+  utr: string = '';
   paymentScreenshot!: File;
   paymentDone = false;
 
@@ -34,12 +34,12 @@ export class NewGroupPage implements OnInit {
     private userServ: UserService,
     private activatedRoute: ActivatedRoute,
     private uploadServ: UploadService,
-    public myhttp: RajeevhttpService,
+    public myhttp: RajeevhttpService
   ) {}
 
   async ngOnInit() {
     this.activatedRoute.paramMap.subscribe(async (queryParams: ParamMap) => {
-      this.groupId = queryParams.get("groupId");
+      this.groupId = queryParams.get('groupId');
 
       const profiledata = await this.userServ.getProfile();
       this.formData.ep_no = profiledata.volntr_ep_temp;
@@ -63,7 +63,7 @@ export class NewGroupPage implements OnInit {
     }
     if (count > this.members.length) {
       for (let i = this.members.length; i < count; i++) {
-        this.members.push({ name: "", mobile: "" });
+        this.members.push({ name: '', mobile: '' });
       }
     } else if (count < this.members.length) {
       this.members.splice(count);
@@ -79,11 +79,11 @@ export class NewGroupPage implements OnInit {
   }
   payNow() {
     if (this.totalGroupPaidAmount <= 0) {
-      this.showAlert("Invalid amount");
+      this.showAlert('Invalid amount');
       return;
     }
 
-    const note = `GROUP_${this.formData.group_name || "NEW"}`;
+    const note = `GROUP_${this.formData.group_name || 'NEW'}`;
 
     const upiUrl =
       `upi://pay?pa=${this.upiId}` +
@@ -96,11 +96,11 @@ export class NewGroupPage implements OnInit {
   }
 
   async selectImage(event: MouseEvent) {
-    const inFile = document.createElement("input");
-    inFile.setAttribute("type", "file");
+    const inFile = document.createElement('input');
+    inFile.setAttribute('type', 'file');
     inFile.click();
 
-    inFile.addEventListener("change", async (event) => {
+    inFile.addEventListener('change', async (event) => {
       await this.uploadimage(event);
     });
   }
@@ -114,14 +114,14 @@ export class NewGroupPage implements OnInit {
 
       const data = {
         file_upload: file,
-        upload_type: "misc",
+        upload_type: 'misc',
       };
 
       const uploadedFile = await this.uploadServ.uploadImage(data);
       if (uploadedFile) {
         this.formData.proofimage = uploadedFile.imgValue;
       } else {
-        await this.imageshowAlert("Error", "Image not uploaded.");
+        await this.imageshowAlert('Error', 'Image not uploaded.');
       }
     }
   }
@@ -129,50 +129,50 @@ export class NewGroupPage implements OnInit {
     const alert = await this.alertCtrl.create({
       header,
       message,
-      buttons: ["OK"],
+      buttons: ['OK'],
     });
     await alert.present();
   }
 
   async submitPaymentProof() {
     if (!this.utr || !this.paymentScreenshot) {
-      await this.showAlert("UTR number and screenshot are required");
+      await this.showAlert('UTR number and screenshot are required');
       return;
     }
 
     const fd = new FormData();
-    fd.append("group_name", this.formData.group_name);
-    fd.append("amount", this.totalGroupPaidAmount.toString());
-    fd.append("utr", this.utr);
-    fd.append("screenshot", this.paymentScreenshot);
+    fd.append('group_name', this.formData.group_name);
+    fd.append('amount', this.totalGroupPaidAmount.toString());
+    fd.append('utr', this.utr);
+    fd.append('screenshot', this.paymentScreenshot);
 
     const resp = await this.userServ.saveGroupPayment(fd);
 
     if (resp?.status) {
       this.paymentDone = true;
-      await this.showAlert("Payment submitted. Verification pending.");
+      await this.showAlert('Payment submitted. Verification pending.');
     } else {
-      await this.showAlert(resp?.msg || "Payment failed");
+      await this.showAlert(resp?.msg || 'Payment failed');
     }
   }
 
   async saveGroup() {
     if (!this.formData?.group_name) {
-      await this.showAlert("Group name is required");
+      await this.showAlert('Group name is required');
       return;
     }
     if (!this.formData?.program_id) {
-      await this.showAlert("Please select a Program.");
+      await this.showAlert('Please select a Program.');
       return;
     }
 
     if (!this.formData?.ep_no || !this.formData?.senior_ep_no) {
-      await this.showAlert("Please enter both EP No and Senior EP No.");
+      await this.showAlert('Please enter both EP No and Senior EP No.');
       return;
     }
     const totalMembers = Number(this.formData?.no_of_members ?? 0);
     if (totalMembers < 12) {
-      await this.showAlert("Please add at least 10 members.");
+      await this.showAlert('Please add at least 10 members.');
       return;
     }
     const membersArr = this.members ?? [];
@@ -186,14 +186,14 @@ export class NewGroupPage implements OnInit {
 
       if (!member?.mobile || !member.mobile.trim()) {
         await this.showAlert(
-          `Please enter a mobile number for member ${i + 1}.`,
+          `Please enter a mobile number for member ${i + 1}.`
         );
         return;
       }
       const mobilePattern = /^\d{10}$/;
       if (!mobilePattern.test(member.mobile)) {
         await this.showAlert(
-          `Mobile number for member ${i + 1} must be 10 digits.`,
+          `Mobile number for member ${i + 1} must be 10 digits.`
         );
         return;
       }
@@ -205,17 +205,17 @@ export class NewGroupPage implements OnInit {
     this.formData.members = JSON.stringify(membersArr);
     const resp = await this.userServ.createGroup(this.formData);
     if (resp?.status) {
-      this.navCtrl.navigateForward(["/groups"]);
+      this.navCtrl.navigateForward(['/groups']);
     } else {
-      await this.showAlert(resp?.msg || "Group creation failed.");
+      await this.showAlert(resp?.msg || 'Group creation failed.');
     }
   }
 
   async showAlert(message: string) {
     const alert = await this.alertCtrl.create({
-      header: "Notice",
+      header: 'Notice',
       message,
-      buttons: ["OK"],
+      buttons: ['OK'],
     });
     await alert.present();
   }
