@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Notifications</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true" class="ion-padding">
+  <h1 class="page-title">Your Notifications</h1>
+  <ion-card
+    *ngFor="let n of notifications; let i = index"
+    (click)="toggleDetail(i)"
+    [class.unread]="n.is_read === 0"
+    class="notification-card"
+  >
+    <ion-card-header>
+      <div class="card-header-row">
+        <ion-icon
+          [name]="expandedIndex === i
+          ? 'chevron-down-outline'
+          : 'chevron-forward-outline'"
+        >
+        </ion-icon>
+
+        <div class="title-box">
+          <ion-card-title>{{ n.nftn_title }}</ion-card-title>
+        </div>
+
+        <!--  New badge -->
+        <ion-badge *ngIf="n.is_read === 0" color="danger"> New </ion-badge>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="expandedIndex === i">
+      <p>{{ n.nftn_text }}</p>
+      <ion-note>{{ n.nftn_created }}</ion-note>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

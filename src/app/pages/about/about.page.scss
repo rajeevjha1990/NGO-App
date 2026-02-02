@@ -1,0 +1,409 @@
+$primary-blue: #1a4f8b;
+$accent-gold: #5ce463;
+$dark-grey: #2d3436;
+
+.about-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("/assets/SVJ-Images/ngo-mission.jpg") center/cover;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  border-radius: 0 0 40px 40px;
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+  }
+  p {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: $accent-gold;
+  }
+}
+
+.container {
+  padding: 40px 15px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-weight: 800;
+  color: $primary-blue;
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+.underline {
+  width: 60px;
+  height: 4px;
+  background: $accent-gold;
+  margin: 15px 0 25px;
+  border-radius: 5px;
+}
+
+.highlight-quote {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #444;
+  border-left: 4px solid $accent-gold;
+  padding-left: 20px;
+  line-height: 1.5;
+  margin: 25px 0;
+}
+
+.desc-text {
+  color: #555;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.reg-box {
+  background: #f8fafc;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px dashed $primary-blue;
+  ion-icon {
+    font-size: 50px;
+    color: $primary-blue;
+    margin-bottom: 10px;
+  }
+  h4 {
+    color: $primary-blue;
+    font-weight: 700;
+  }
+}
+
+// Mission & Vision Cards
+.mission-vision-wrapper {
+  margin: 50px 0;
+  .mv-card {
+    padding: 35px;
+    border-radius: 25px;
+    height: 100%;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+      ion-icon {
+        font-size: 35px;
+        color: $accent-gold;
+      }
+      h3 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.3rem;
+      }
+    }
+    p {
+      opacity: 0.9;
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
+  }
+  .mission {
+    background: $primary-blue;
+  }
+  .vision {
+    background: $dark-grey;
+  }
+}
+
+// Bihar Impact Card
+.bihar-impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+  border-radius: 25px;
+  padding: 40px;
+  margin: 60px 0;
+  border: 1px solid #e0e6ed;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+
+  .impact-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    ion-icon {
+      font-size: 30px;
+      color: #e74c3c;
+    }
+    h3 {
+      margin: 0;
+      font-weight: 800;
+      color: $primary-blue;
+      font-size: 1.5rem;
+    }
+  }
+
+  p {
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+
+  .district-tags {
+    margin-top: 20px;
+    span {
+      background: $primary-blue;
+      color: white;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-right: 10px;
+      display: inline-block;
+    }
+  }
+}
+
+// Focus Boxes
+.focus-box {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  height: 100%;
+  border: 1px solid #f0f0f0;
+  transition: 0.3s;
+  &:hover {
+    transform: translateY(-5px);
+    border-color: $accent-gold;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  }
+  ion-icon {
+    font-size: 35px;
+    color: $primary-blue;
+    margin-bottom: 12px;
+  }
+  h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+  }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+  h2 {
+    font-weight: 800;
+    color: $primary-blue;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-hero {
+    height: 280px;
+    border-radius: 0 0 25px 25px;
+    padding: 20px;
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      letter-spacing: 1px;
+    }
+
+    ion-badge {
+      font-size: 0.8rem;
+    }
+  }
+
+  .container {
+    padding: 25px 15px;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .underline {
+    width: 45px;
+    margin: 12px 0 20px;
+  }
+
+  .highlight-quote {
+    font-size: 1.1rem;
+    padding-left: 15px;
+    margin: 20px 0;
+  }
+
+  .desc-text {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .reg-box {
+    padding: 20px;
+    ion-icon {
+      font-size: 40px;
+    }
+    h4 {
+      font-size: 1.1rem;
+    }
+    p {
+      font-size: 0.95rem;
+    }
+  }
+
+  .mission-vision-wrapper {
+    margin: 35px 0;
+
+    .mv-card {
+      padding: 20px;
+      margin-bottom: 20px;
+
+      .card-head {
+        margin-bottom: 15px;
+
+        ion-icon {
+          font-size: 2rem;
+        }
+
+        h3 {
+          font-size: 1.3rem;
+        }
+      }
+
+      p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  .focus-box {
+    padding: 20px 15px;
+    margin-bottom: 15px;
+
+    ion-icon {
+      font-size: 30px;
+    }
+
+    h4 {
+      font-size: 0.9rem;
+    }
+  }
+
+  .section-header {
+    margin-bottom: 30px;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .about-hero {
+    height: 240px;
+    padding: 15px;
+
+    h1 {
+      font-size: 1.7rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .container {
+    padding: 20px 12px;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .highlight-quote {
+    font-size: 1rem;
+    padding-left: 12px;
+  }
+
+  .reg-box {
+    padding: 15px;
+    ion-icon {
+      font-size: 35px;
+    }
+    h4 {
+      font-size: 1rem;
+    }
+  }
+
+  .mission-vision-wrapper {
+    margin: 25px 0;
+
+    .mv-card {
+      padding: 15px;
+
+      .card-head {
+        ion-icon {
+          font-size: 1.8rem;
+        }
+
+        h3 {
+          font-size: 1.2rem;
+        }
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .focus-box {
+    padding: 15px 12px;
+
+    ion-icon {
+      font-size: 28px;
+    }
+  }
+
+  .section-header h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* Tablet responsive */
+@media (max-width: 991px) and (min-width: 769px) {
+  .about-hero {
+    height: 320px;
+
+    h1 {
+      font-size: 2.4rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+
+  .container {
+    padding: 35px 20px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .reg-box {
+    padding: 25px;
+  }
+
+  .mission-vision-wrapper .mv-card {
+    padding: 25px;
+  }
+}

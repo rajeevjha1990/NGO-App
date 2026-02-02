@@ -5,40 +5,59 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-
-  <h1 style="text-align: center;">Distributed Saintries</h1>
+  <h1 style="text-align: center">Distributed Saintries</h1>
   <ion-list *ngIf="distributedsaintries.length > 0; else noData">
-    <ion-card *ngFor="let item of distributedsaintries; trackBy: trackById"
-      [ngClass]="{'due-today': item.is_due_today}">
-
+    <ion-card
+      *ngFor="let item of distributedsaintries; trackBy: trackById"
+      [ngClass]="{'due-today': item.is_due_today}"
+    >
       <ion-card-header>
         <ion-card-title>
           {{ item.member_name }} ({{ item.mobile }})
-
           <ion-badge color="danger" *ngIf="item.is_due_today">
             Due Now
           </ion-badge>
         </ion-card-title>
-
         <ion-card-subtitle>
           Last Issue: {{ item.issue_date | date:'mediumDate' }}
         </ion-card-subtitle>
 
-        <ion-button color="warning" size="small" expand="block" *ngIf="item.is_due_today" (click)="reIssue(item)">
-          Re-Issue Pad
-        </ion-button>
+        <ion-item lines="none" class="button-row">
+          <ion-button
+            color="warning"
+            size="small"
+            expand="block"
+            *ngIf="item.is_due_today"
+            (click)="reIssue(item)"
+          >
+            Re-Issue Pad
+          </ion-button>
 
+          <ion-button
+            class="edit-button"
+            color="primary"
+            size="small"
+            fill="outline"
+            routerLink="/edit-distribution/{{item.id}}"
+          >
+            Edit
+          </ion-button>
+        </ion-item>
       </ion-card-header>
     </ion-card>
-
   </ion-list>
 
   <!-- Infinite scroll -->
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="hasMoreData">
-
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more records...">
+  <ion-infinite-scroll
+    threshold="100px"
+    (ionInfinite)="loadData($event)"
+    *ngIf="hasMoreData"
+  >
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more records..."
+    >
     </ion-infinite-scroll-content>
-
   </ion-infinite-scroll>
 
   <ng-template #noData>
@@ -48,10 +67,14 @@
   </ng-template>
 
   <!-- Add New -->
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed" routerLink="/new-distribution">
+  <ion-fab
+    horizontal="end"
+    vertical="bottom"
+    slot="fixed"
+    routerLink="/new-distribution"
+  >
     <ion-fab-button color="success">
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
 </ion-content>

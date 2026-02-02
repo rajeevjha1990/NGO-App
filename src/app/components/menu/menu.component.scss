@@ -1,15 +1,14 @@
-
 .menu-header-box {
   display: flex;
   align-items: center;
   gap: 12px;
-  .m-logo {
-    width: 32px;
-    height: 32px;
-    background: white;
-    border-radius: 6px;
-    padding: 2px;
-  }
+  // .m-logo {
+  //   width: 32px;
+  //   height: 32px;
+  //   background: white;
+  //   border-radius: 6px;
+  //   padding: 2px;
+  // }
 }
 
 .menu-list-container {
@@ -22,7 +21,7 @@
     margin-bottom: 4px;
     font-size: 15px;
     font-weight: 500;
-    
+
     ion-icon {
       color: var(--ion-color-primary);
       font-size: 22px;
@@ -40,23 +39,49 @@
     font-size: 14px;
     --padding-start: 24px;
     --min-height: 42px;
-    ion-icon { font-size: 18px; opacity: 0.8; }
+    ion-icon {
+      font-size: 18px;
+      opacity: 0.8;
+    }
   }
 
   .m-footer {
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #eee;
-    
+
     .logout-red {
       color: #eb445a;
-      ion-icon { color: #eb445a; }
+      ion-icon {
+        color: #eb445a;
+      }
     }
   }
 }
 
-// Accordion का डिफ़ॉल्ट बॉर्डर हटाने के लिए
+// Accordion Styles
 ion-accordion-group {
   background: transparent;
-  ion-accordion { background: transparent; }
+  ion-accordion {
+    background: transparent;
+  }
+}
+.footer-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 10px;
+}
+.main-app-title {
+  font-size: 23px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
 }

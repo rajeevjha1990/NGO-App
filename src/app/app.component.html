@@ -2,4 +2,5 @@
   <app-header *ngIf="user?.loggedIn"></app-header>
   <app-menu menuId="main-menu" *ngIf="user?.loggedIn"></app-menu>
   <ion-router-outlet id="main-content"></ion-router-outlet>
+  <app-footertab *ngIf="user?.loggedIn"></app-footertab>
 </ion-app>

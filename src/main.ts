@@ -51,7 +51,9 @@ import {
   schoolOutline,
   briefcaseOutline,
   laptopOutline,
-  cogOutline
+  cogOutline,
+  notificationsOutline,
+  mailOutline,
 } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -83,7 +85,7 @@ addIcons({
   'call-outline': callOutline,
   'document-text-outline': documentTextOutline,
   'location-outline': locateOutline,
-  'pin': locateOutline,
+  pin: locateOutline,
   'ticket-outline': ticketOutline,
   'card-outline': cardOutline,
   'wallet-outline': walletOutline,
@@ -108,7 +110,11 @@ addIcons({
   'briefcase-outline': briefcaseOutline,
   'laptop-outline': laptopOutline,
   'cog-outline': cogOutline,
+  'notifications-outline': notificationsOutline,
+  'mail-outline': mailOutline,
+  'newspaper-outline': libraryOutline,
 });
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, appConfig).catch((err) =>
+  console.error(err)
+);

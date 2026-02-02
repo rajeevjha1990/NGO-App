@@ -1,5 +1,10 @@
 import { AlertController } from '@ionic/angular';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
@@ -11,10 +16,9 @@ import { PubService } from 'src/app/services/pub/pub.service';
   styleUrls: ['./distributed-saintries.page.scss'],
   standalone: true,
   imports: [CommonModule, ...SHARED_IONIC_MODULES],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DistributedSaintriesPage implements OnInit {
-
   distributedsaintries: any[] = [];
   dueTodayCount = 0;
 
@@ -29,16 +33,13 @@ export class DistributedSaintriesPage implements OnInit {
     private alertCtrl: AlertController,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
+  ) {}
 
-  ) { }
-
-  ngOnInit() { }
-
-  // 🔥 THIS FIXES YOUR REFRESH ISSUE (runs every time page opens)
+  ngOnInit() {}
+  //THIS FIXES YOUR REFRESH ISSUE (runs every time page opens)
   async ionViewWillEnter() {
     await this.resetAndLoad();
     this.cdr.markForCheck();
-
   }
 
   // Reset + load
@@ -123,7 +124,6 @@ export class DistributedSaintriesPage implements OnInit {
         {
           text: 'Yes, Re-Issue',
           handler: async () => {
-
             const today = new Date().toISOString().slice(0, 10);
             const payload = {
               id: item.id,
@@ -140,7 +140,7 @@ export class DistributedSaintriesPage implements OnInit {
               pincode: item.pincode,
               aadhar: item.aadhar,
               mobile: item.mobile,
-              membership_amount: item.membership_amount
+              membership_amount: item.membership_amount,
             };
 
             const res: any = await this.pubServ.reIssuePad(payload);
@@ -151,13 +151,13 @@ export class DistributedSaintriesPage implements OnInit {
               const successAlert = await this.alertCtrl.create({
                 header: 'Success',
                 message: 'Re-Issue Successful',
-                buttons: ['OK']
+                buttons: ['OK'],
               });
               await successAlert.present();
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await confirmAlert.present();

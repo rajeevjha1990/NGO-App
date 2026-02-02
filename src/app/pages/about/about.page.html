@@ -1,0 +1,124 @@
+<ion-header class="ion-no-border">
+  <app-header></app-header>
+</ion-header>
+
+<ion-content class="home-page">
+  <!-- Hero Section -->
+  <div class="about-hero">
+    <div class="hero-overlay">
+      <ion-badge color="warning" mode="ios" class="ion-margin-bottom"
+        >स्थापना: 2022</ion-badge
+      >
+      <h1>सबका विकास ज्यति</h1>
+      <p>गाँव-गाँव खुशी, देश खुशहाल</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Foundational Philosophy -->
+    <section class="intro-section">
+      <ion-row class="ion-align-items-center">
+        <ion-col size-xs="12" size-md="7">
+          <div class="text-content">
+            <h2 class="section-title">हमारा विचार और उद्देश्य</h2>
+            <div class="underline"></div>
+            <p class="highlight-quote">
+              "कल्याण और विकास कार्यक्रमों को लागू करना केवल सरकार की जिम्मेदारी
+              नहीं, बल्कि प्रत्येक नागरिक का कर्तव्य है।"
+            </p>
+            <p class="desc-text">
+              इसी संकल्प के साथ 2022 में <strong>“सबका विकास ज्यति”</strong> की
+              स्थापना की गई। हमारी संस्था बिहार सरकार के साथ विधिवत रूप से
+              पंजीकृत है और उन समुदायों की सहायता के लिए निरंतर प्रयासरत है जो
+              सामाजिक और आर्थिक रूप से पिछड़े हैं।
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size-xs="12" size-md="5">
+          <div class="reg-box">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <h4>पंजीकृत संस्था</h4>
+            <p>
+              सोसायटी पंजीकरण अधिनियम, 1860 के अंतर्गत बिहार सरकार द्वारा
+              मान्यता प्राप्त।
+            </p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </section>
+
+    <!-- Mission & Vision (New Section) -->
+    <section class="mission-vision-wrapper">
+      <ion-row>
+        <ion-col size-xs="12" size-md="6">
+          <div class="mv-card mission">
+            <div class="card-head">
+              <ion-icon name="rocket-outline"></ion-icon>
+              <h3>हमारा मिशन (Our Mission)</h3>
+            </div>
+            <p>
+              प्रत्येक गाँव को विकास की मुख्यधारा से जोड़ना और युवाओं को रोजगार,
+              शिक्षा और स्वास्थ्य सुविधाओं के माध्यम से सशक्त बनाना। साथ ही
+              पर्यावरणीय संतुलन, सामाजिक जागरूकता और स्वावलंबन को बढ़ावा देना।
+            </p>
+          </div>
+        </ion-col>
+        <ion-col size-xs="12" size-md="6">
+          <div class="mv-card vision">
+            <div class="card-head">
+              <ion-icon name="eye-outline"></ion-icon>
+              <h3>हमारी दृष्टि (Our Vision)</h3>
+            </div>
+            <p>
+              एक ऐसे समाज का निर्माण करना जो समानता, न्याय और मानव अधिकारों पर
+              आधारित हो। हम एक ऐसी संस्था बनने के प्रति समर्पित हैं जो ज्ञान,
+              नवाचार और संवेदनशीलता के माध्यम से बदलती सामाजिक आवश्यकताओं को
+              पूरा करे।
+            </p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </section>
+
+    <!-- Impact in Bihar (Updated Statement) -->
+    <div class="bihar-impact-card">
+      <div class="impact-content">
+        <div class="impact-header">
+          <ion-icon name="location-outline"></ion-icon>
+          <h3>बिहार में हमारा बढ़ता प्रभाव</h3>
+        </div>
+        <p>
+          वर्तमान में <strong>सबका विकास ज्यति </strong>
+          <strong>समस्तीपुर </strong> ,<strong>बेगूसराय</strong> सहित बिहार के
+          विभिन्न ज़िलों, ब्लॉकों और गाँवों में सक्रिय रूप से कार्यरत है। हमारा
+          उद्देश्य बिहार के सुदूर ग्रामीण क्षेत्रों में सकारात्मक परिवर्तन लाना
+          और स्थानीय आजीविका को मजबूत करना है।
+        </p>
+
+        <div class="district-tags">
+          <span>समस्तीपुर</span>
+          <span>पटना</span>
+          <span>और अन्य ज़िले...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core Areas -->
+    <section class="focus-grid-section">
+      <div class="section-header">
+        <h2>हमारे कार्य क्षेत्र</h2>
+        <p>
+          एकीकृत रणनीतियों के माध्यम से हम इन क्षेत्रों में बदलाव ला रहे हैं
+        </p>
+      </div>
+      <ion-row>
+        <ion-col size-xs="6" size-md="4" size-lg="3" *ngFor="let val of values">
+          <div class="focus-box">
+            <ion-icon [name]="val.icon"></ion-icon>
+            <h4>{{ val.title }}</h4>
+          </div>
+        </ion-col>
+      </ion-row>
+    </section>
+  </div>
+</ion-content>

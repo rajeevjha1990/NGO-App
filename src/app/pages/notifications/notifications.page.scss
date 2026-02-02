@@ -1,0 +1,52 @@
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.notification-card {
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.notification-card.unread {
+  border-left: 4px solid #6a1b9a;
+  background: #f3e5f5;
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header-row ion-icon {
+  font-size: 20px;
+  color: #6a1b9a;
+}
+
+.title-box {
+  flex: 1;
+}
+
+ion-card-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+ion-card-subtitle {
+  font-size: 13px;
+  color: #666;
+}
+
+ion-card-content {
+  font-size: 14px;
+  border-top: 1px solid #eee;
+}
+
+ion-note {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  color: #888;
+}

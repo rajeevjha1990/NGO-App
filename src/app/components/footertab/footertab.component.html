@@ -1,0 +1,27 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="notifications" routerLink="/notifications">
+      <ion-icon name="notifications-outline"></ion-icon>
+      Notification
+      <ion-badge color="danger" class="footer-badge">{{
+        notificationCount
+      }}</ion-badge>
+    </ion-tab-button>
+    <ion-tab-button tab="messages" routerLink="/messages">
+      <ion-icon name="mail-outline"></ion-icon>
+      Message
+      <ion-badge color="danger" class="footer-badge">{{
+        messagecount
+      }}</ion-badge>
+    </ion-tab-button>
+    <ion-tab-button tab="news" routerLink="/news">
+      <ion-icon name="newspaper-outline"></ion-icon>
+      News
+      <ion-badge color="primary" class="footer-badge">2</ion-badge>
+    </ion-tab-button>
+    <ion-tab-button tab="home" routerLink="/home">
+      <ion-icon name="home-outline"></ion-icon>
+      Home
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

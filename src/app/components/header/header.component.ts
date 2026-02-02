@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { UserService } from 'src/app/services/user/user.service';
-import { NavController, ModalController, PopoverController } from '@ionic/angular';
+import {
+  NavController,
+  ModalController,
+  PopoverController,
+} from '@ionic/angular';
 import { Volenteer } from 'src/app/data-types/volenteer';
 import { LoginPage } from 'src/app/pages/login/login.page';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
@@ -13,31 +17,29 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [
-    ...SHARED_IONIC_MODULES, RouterLink],
+  imports: [...SHARED_IONIC_MODULES, RouterLink],
 })
-
 export class HeaderComponent {
   user: Volenteer = new Volenteer();
+
   constructor(
     private userServ: UserService,
     private navCtrl: NavController,
     private modalCtrl: ModalController,
     private popoverCtrl: PopoverController,
     private cdr: ChangeDetectorRef,
-    public myhttp: RajeevhttpService,
+    public myhttp: RajeevhttpService
   ) {
-    this.userServ.volenteer.subscribe(async u => {
+    this.userServ.volenteer.subscribe(async (u) => {
       this.user = u;
     });
   }
   async ionViewDidEnter() {
     await this.userServ.getVolenteerProfileFromServer();
-    this.userServ.volenteer.subscribe(v => {
+    this.userServ.volenteer.subscribe((v) => {
       this.user = { ...v };
       this.cdr.detectChanges();
     });
-
   }
 
   async logout() {
@@ -59,9 +61,8 @@ export class HeaderComponent {
     const popover = await this.popoverCtrl.create({
       component: HeaderPopoverComponent,
       event: ev,
-      translucent: true
+      translucent: true,
     });
     await popover.present();
   }
 }
-

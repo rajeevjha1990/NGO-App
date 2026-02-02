@@ -5,22 +5,15 @@ import { Volenteer } from 'src/app/data-types/volenteer';
 import { UserService } from 'src/app/services/user/user.service';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 
-
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
-  imports: [
-    ...SHARED_IONIC_MODULES,
-
-
-  ]
-
+  imports: [...SHARED_IONIC_MODULES],
 })
 export class MenuComponent implements OnInit {
   menuType: string = 'overlay';
   volenteer: Volenteer = new Volenteer();
-
   constructor(
     private navCtrl: NavController,
     private menuCtrl: MenuController,
@@ -28,23 +21,20 @@ export class MenuComponent implements OnInit {
     private routers: Router,
     private router: NavController,
     private alertCtrl: AlertController
-
   ) {
     this.routers.events.subscribe(() => {
       this.menuCtrl.close('main-menu');
     });
-
   }
 
   ngOnInit() {
-    this.userServ.volenteer.subscribe(u => {
+    this.userServ.volenteer.subscribe((u) => {
       this.volenteer = u;
     });
-
   }
   async logout() {
     await this.userServ.logout();
-    const menuOpen: any = document.getElementsByClassName('menu-content-open')
+    const menuOpen: any = document.getElementsByClassName('menu-content-open');
     setTimeout(() => {
       this.navCtrl.navigateRoot('/onboarding');
     }, 1000);
@@ -68,14 +58,12 @@ export class MenuComponent implements OnInit {
     }
   }
 
-
   async showAlert(header: string, message: string) {
     const alert = await this.alertCtrl.create({
       header,
       message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }
-
 }

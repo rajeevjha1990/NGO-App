@@ -34,34 +34,65 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
 
 /* Default: show desktop menu */
 .desktop-only {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .mobile-only {
-    display: none;
+  display: none;
 }
 
 /* Mobile view adjustments */
 @media (max-width: 768px) {
-    .desktop-only {
-        display: none !important;
-    }
+  .desktop-only {
+    display: none !important;
+  }
 
-    .mobile-only {
-        display: inline-block !important;
-    }
+  .mobile-only {
+    display: inline-block !important;
+  }
 }
 
 :root {
-    --ion-background-color: #EDFFF0;
-    --ion-item-background: #EDFFF0;
+  --ion-background-color: #edfff0;
+  --ion-item-background: #edfff0;
 }
 
 ion-content {
-    --background: var(--ion-background-color);
+  --background: var(--ion-background-color);
+}
+.example-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.purple {
+  color: #6a1b9a;
+}
+
+.green {
+  color: #2e7d32;
+}
+.main-app-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.app-slogan-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin: 2px 0 0 0;
+  letter-spacing: 0.5px;
+}
+.header-logo {
+  height: 45px !important;
 }
