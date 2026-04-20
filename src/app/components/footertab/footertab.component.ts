@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -23,12 +24,16 @@ import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 export class FootertabComponent implements OnInit {
   notificationCount: number = 0;
   messagecount: any = 0;
-  constructor(private pubService: PubService) {}
+  constructor(private pubService: PubService, private router: Router) {}
 
   ngOnInit() {
     this.pubService.unreadCountObservable().subscribe((count) => {
       this.notificationCount = count;
     });
     this.pubService.unreadNotificationCount();
+  }
+
+  navigate(path: string) {
+    this.router.navigateByUrl(path);
   }
 }

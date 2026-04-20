@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="ion-margin">
+    <ion-card-header>
+      <ion-card-subtitle>Secure Checkout</ion-card-subtitle>
+      <ion-card-title>Complete Your Payment</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Reference ID:</strong> {{ distributionId || '-' }}</p>
+      <p><strong>Type:</strong> {{ paymentType }}</p>
+      <p><strong>Amount:</strong> ₹{{ amount }}</p>
+
+      <ion-item lines="none" class="ion-margin-top">
+        <ion-label position="stacked">Customer Payment Mode</ion-label>
+        <ion-select [(ngModel)]="customerPaymentMode" interface="popover">
+          <ion-select-option value="CASH">Cash</ion-select-option>
+          <ion-select-option value="TRANSFER">Transfer</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item
+        *ngIf="customerPaymentMode === 'TRANSFER'"
+        lines="none"
+        class="ion-margin-top"
+      >
+        <ion-input
+          label="Transfer Reference"
+          labelPlacement="stacked"
+          fill="outline"
+          placeholder="UTR / Transaction reference"
+          [(ngModel)]="customerPaymentRef"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="ion-margin-top">
+        <ion-label position="stacked">Company Payment Mode</ion-label>
+        <ion-select [(ngModel)]="paymentMode" interface="popover">
+          <ion-select-option value="CASH">Cash</ion-select-option>
+          <ion-select-option value="UPI">UPI</ion-select-option>
+          <ion-select-option value="CARD">Card</ion-select-option>
+          <ion-select-option value="NETBANKING">Net Banking</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-note color="medium">
+        Associate customer se alag mode me payment le sakta hai. Yahan selected
+        mode company payment ke liye save hoga.
+      </ion-note>
+
+      <ion-button
+        expand="block"
+        class="ion-margin-top"
+        [disabled]="isLoading"
+        (click)="proceedPayment()"
+      >
+        <ion-spinner
+          *ngIf="isLoading"
+          name="crescent"
+          class="ion-margin-end"
+        ></ion-spinner>
+        {{ paymentMode === 'CASH' ? 'Submit Cash Payment' : 'Pay with Razorpay'
+        }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

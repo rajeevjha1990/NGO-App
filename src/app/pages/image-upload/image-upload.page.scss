@@ -1,0 +1,16 @@
+.page {
+  padding: 16px;
+}
+
+.preview {
+  margin-top: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--ion-color-step-200, #e0e0e0);
+}
+
+ion-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

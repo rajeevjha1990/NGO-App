@@ -1,8 +1,22 @@
 <app-header></app-header>
+
 <ion-content class="ion-padding">
-  <ion-grid class="ion-padding">
-    <h1 style="margin-top: 15px">Our Programs.</h1>
-    <ion-row>
+  <ion-grid class="ion-padding programs-section">
+    <div class="section-header">
+      <div>
+        <h1>Programs</h1>
+        <p class="section-subtitle">
+          समाज के हर वर्ग के लिए समर्पित पहलें — सही कार्यक्रम चुनें।
+        </p>
+      </div>
+
+      <ion-chip color="primary" class="chip">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        <ion-label>Updated</ion-label>
+      </ion-chip>
+    </div>
+
+    <ion-row class="programs-grid">
       <ion-col
         size-md="3"
         size-sm="6"
@@ -10,13 +24,47 @@
         *ngFor="let prog of programs"
       >
         <ion-card
-          routerLink="/program-view/{{prog.id}}"
-          class="program-card ion-text-center"
-          [ngClass]="{'highlighted': highlightPrograms.includes(prog.name)}"
+          class="program-card"
+          [ngClass]="{'highlighted': isHighlighted(prog)}"
         >
-          <ion-icon [name]="prog.icon" class="program-icon"></ion-icon>
           <ion-card-content>
-            <strong> {{prog.name}} </strong>
+            <!-- TOP -->
+            <div class="program-top">
+              <div class="icon-wrap">
+                <ion-icon [name]="prog.icon" class="program-icon"></ion-icon>
+              </div>
+
+              <ion-badge
+                *ngIf="isHighlighted(prog)"
+                color="success"
+                class="featured-badge"
+              >
+                Featured
+              </ion-badge>
+            </div>
+
+            <!-- INFO -->
+            <div class="program-info">
+              <h3>{{ prog.name }}</h3>
+              <p>प्रोग्राम डिटेल देखने के लिए टैप करें</p>
+            </div>
+
+            <!-- 🔥 BUTTONS -->
+            <div class="program-actions">
+              <!-- VIEW BUTTON -->
+              <ion-button size="small" fill="outline" (click)="goToView(prog)">
+                View
+              </ion-button>
+
+              <!-- ENTRY BUTTON -->
+              <ion-button
+                size="small"
+                color="primary"
+                (click)="goToEntry(prog)"
+              >
+                Entry
+              </ion-button>
+            </div>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/message"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title || 'Conversation' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="chat-wrapper">
+    <ion-progress-bar *ngIf="loading" type="indeterminate"> </ion-progress-bar>
+
+    <div *ngIf="!loading && messages.length === 0" class="empty">
+      No conversation yet.
+    </div>
+
+    <div
+      *ngFor="let msg of messages; trackBy: trackById"
+      class="message-row"
+      [class.mine]="msg.sender === 'user'"
+    >
+      <div class="bubble">
+        <div class="text">{{ msg.message }}</div>
+        <div class="time">{{ formatTime(msg.createdAt) }}</div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="composer">
+    <ion-textarea
+      autoGrow="true"
+      rows="1"
+      placeholder="Reply to admin..."
+      [(ngModel)]="newMessage"
+      [disabled]="sending"
+    >
+    </ion-textarea>
+
+    <ion-button
+      [disabled]="sending || !newMessage.trim()"
+      (click)="sendMessage()"
+    >
+      Send
+    </ion-button>
+  </div>
+</ion-footer>

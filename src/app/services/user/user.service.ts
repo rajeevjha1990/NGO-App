@@ -250,4 +250,41 @@ export class UserService {
     const apiResp = await this.svjHttp.post(url, data);
     return apiResp;
   }
+
+  async createDistributionPaymentOrder(data: {
+    distribution_id: string;
+    amount: number;
+    type: string;
+    program_id?: string;
+    user_details?: any;
+    payment_details?: any;
+    [key: string]: any;
+  }) {
+    const url = Constants.COMMON_API_PATH + 'create_distribution_payment_order';
+    const apiResp = await this.svjHttp.post(url, data);
+    return apiResp;
+  }
+
+  async verifyDistributionPayment(data: {
+    distribution_id: string;
+    amount: number;
+    type: string;
+    program_id?: string;
+    user_details?: any;
+    payment_details?: any;
+    razorpay_payment_id?: string;
+    razorpay_order_id?: string;
+    razorpay_signature?: string;
+    payment_status?: string;
+    payment_mode?: string;
+    transaction_id?: string;
+    customer_payment_mode?: string;
+    customer_payment_ref?: string;
+    razorpay_response?: any;
+    [key: string]: any;
+  }) {
+    const url = Constants.COMMON_API_PATH + 'verify_distribution_payment';
+    const apiResp = await this.svjHttp.post(url, data);
+    return apiResp;
+  }
 }

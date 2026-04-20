@@ -1,0 +1,86 @@
+/* CHAT AREA */
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  padding-bottom: 80px;
+  gap: 8px;
+}
+
+/* EMPTY STATE */
+.empty {
+  text-align: center;
+  color: #888;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+/* MESSAGE ROW */
+.message-row {
+  display: flex;
+  width: 100%;
+}
+
+/* USER RIGHT SIDE */
+.message-row.mine {
+  justify-content: flex-end;
+}
+
+/* ADMIN LEFT SIDE */
+.message-row:not(.mine) {
+  justify-content: flex-start;
+}
+
+/* BUBBLE */
+.bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+/* USER STYLE */
+.message-row.mine .bubble {
+  background: #2563eb;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+/* ADMIN STYLE */
+.message-row:not(.mine) .bubble {
+  background: #f1f5f9;
+  color: #111;
+  border-bottom-left-radius: 4px;
+}
+
+/* MESSAGE TEXT */
+.text {
+  white-space: pre-wrap;
+}
+
+/* TIME */
+.time {
+  font-size: 11px;
+  margin-top: 4px;
+  opacity: 0.7;
+  text-align: right;
+}
+
+/* FOOTER */
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.composer ion-textarea {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 6px 10px;
+}

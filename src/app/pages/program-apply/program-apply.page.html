@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Program Entry</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card class="program-summary">
+    <ion-card-content>
+      <div class="summary-row">
+        <div>
+          <p class="label">Program</p>
+          <h2>{{ programName || 'Program' }}</h2>
+        </div>
+        <ion-badge color="primary">ID: {{ programId }}</ion-badge>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Entry Form</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ng-container *ngFor="let field of formFields">
+        <ion-input
+          *ngIf="field.type !== 'textarea'"
+          class="ion-margin-top"
+          labelPlacement="floating"
+          [label]="field.label"
+          [(ngModel)]="formData[field.key]"
+          fill="outline"
+          [type]="field.type"
+        ></ion-input>
+
+        <ion-textarea
+          *ngIf="field.type === 'textarea'"
+          class="ion-margin-top"
+          labelPlacement="floating"
+          [label]="field.label"
+          [(ngModel)]="formData[field.key]"
+          fill="outline"
+          rows="3"
+        ></ion-textarea>
+      </ng-container>
+
+      <ion-button expand="block" class="ion-margin-top" (click)="submit()">
+        Submit
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,26 @@
+/* Amount Card */
+.amount-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 12px;
+}
+
+.amount-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calc-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.total-amount {
+  margin: 0;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}

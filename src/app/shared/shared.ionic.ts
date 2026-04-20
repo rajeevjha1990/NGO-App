@@ -55,6 +55,8 @@ import {
   IonMenuToggle,
   IonItemDivider,
   IonImg,
+  IonBackButton,
+  IonSpinner,
 } from '@ionic/angular/standalone';
 
 export const SHARED_IONIC_MODULES = [
@@ -115,4 +117,6 @@ export const SHARED_IONIC_MODULES = [
   IonItemDivider,
   RouterLink,
   IonImg,
+  IonBackButton,
+  IonSpinner,
 ];

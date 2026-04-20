@@ -27,13 +27,18 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewDistributionPage implements OnInit {
-  formData: any = { membership_amount: 300 };
+  registrationAmount = 300;
+  formData: any = { membership_amount: this.registrationAmount };
   states: any = [];
   districts: any = [];
   blocks: any = [];
   villages: any = [];
   distributionId: any;
-
+  programId: any;
+  stateObj: any = {};
+  districtObj: any = {};
+  blockObj: any = {};
+  villageObj: any = {};
   constructor(
     private alertCtrl: AlertController,
     private navCtrl: NavController,
@@ -44,56 +49,118 @@ export class NewDistributionPage implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  async ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(async (params: ParamMap) => {
-      this.distributionId = params.get('id');
-      await this.loadFormDataForEdit();
-    });
+  async ngOnInit() {}
+  async ionViewDidEnter() {
+    try {
+      // ✅ STEP 1: ROUTE PARAMS
+      this.activatedRoute.paramMap.subscribe(async (params: ParamMap) => {
+        this.programId = params.get('programId');
+        this.distributionId = params.get('distributionId');
 
-    this.states = await this.pubServ.allStates();
-    this.cdr.markForCheck();
+        // हमेशा program_id set करो
+        this.formData.program_id = this.programId;
+
+        // ✅ STEP 2: STATES LOAD FIRST
+        this.states = await this.pubServ.allStates();
+
+        // ✅ STEP 3: EDIT CASE
+        if (this.distributionId) {
+          await this.loadFormDataForEdit();
+        }
+
+        this.cdr.markForCheck();
+      });
+
+      // ✅ STEP 4: AMOUNT (optional query param)
+      this.activatedRoute.queryParamMap.subscribe((params) => {
+        const amount = Number(params.get('amount'));
+
+        if (Number.isFinite(amount) && amount > 0) {
+          this.registrationAmount = amount;
+        }
+
+        this.formData.membership_amount = this.registrationAmount;
+        this.cdr.markForCheck();
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  // 🔹 Load data for edit
+  // =========================================
+  // 🔥 EDIT DATA LOAD (SAFE VERSION)
+  // =========================================
+  // 🔥 EDIT DATA LOAD (SAFE VERSION)
   async loadFormDataForEdit() {
     if (!this.distributionId) return;
 
-    this.formData = await this.pubServ.getsainnetri(this.distributionId);
-    console.log('Loaded Data:', this.formData);
+    const data = await this.pubServ.getsainnetri(this.distributionId);
+    if (!data) return;
 
-    if (!this.formData) return;
-
-    // Convert IDs to proper names for display
+    this.formData = {
+      ...data,
+      program_id: this.programId,
+    };
+    // ✅ ================= STATE FIX =================
     if (this.formData.state) {
-      const stateObj = await this.pubServ.getStateById(this.formData.state);
-      this.formData.state_id = stateObj.state_id;
-      this.formData.state = stateObj.state_name;
-      this.districts = await this.pubServ.districtByState(
-        this.formData.state_id
+      const stateId = Number(this.formData.state_id || this.formData.state);
+
+      // 🔥 API call हटाकर direct array से find
+      this.stateObj = this.states.find(
+        (s: any) => Number(s.state_id) === stateId
       );
+
+      if (this.stateObj) {
+        this.formData.state_id = this.stateObj.state_id;
+        this.formData.state = this.stateObj.state_name;
+
+        // districts load
+        this.districts = await this.pubServ.districtByState(
+          this.formData.state_id
+        );
+      } else {
+        console.error('❌ State not found for ID:', stateId);
+      }
     }
 
+    // ✅ DISTRICT SAFE CHECK
     if (this.formData.district) {
-      const districtObj = await this.pubServ.getDistrictById(
-        this.formData.district
+      const districtId = Number(this.formData.district);
+
+      const districtObj = this.districts.find(
+        (d: any) => Number(d.district_id) === districtId
       );
-      this.formData.district_id = districtObj.district_id;
-      this.formData.district = districtObj.district_name;
-      this.blocks = await this.pubServ.blockByDistrict(
-        this.formData.district_id
-      );
+
+      if (districtObj) {
+        this.formData.district_id = districtObj.district_id;
+        this.formData.district = districtObj.district_name;
+
+        this.blocks = await this.pubServ.blockByDistrict(
+          this.formData.district_id
+        );
+      }
     }
 
+    // ✅ BLOCK SAFE CHECK
     if (this.formData.block) {
-      const blockObj = await this.pubServ.getBlockById(this.formData.block);
-      this.formData.block_id = blockObj.block_id;
-      this.formData.block = blockObj.block_name;
-      // this.villages = await this.pubServ.villageByBlock(this.formData.block_id);
+      const blockId = Number(this.formData.block);
+
+      const blockObj = this.blocks.find(
+        (b: any) => Number(b.block_id) === blockId
+      );
+
+      if (blockObj) {
+        this.formData.block_id = blockObj.block_id;
+        this.formData.block = blockObj.block_name;
+
+        this.villages = await this.pubServ.villageByBlock(
+          this.formData.block_id
+        );
+      }
     }
 
     this.cdr.markForCheck();
   }
-
   // ⭐ STATE LIST MODAL
   async StateList() {
     const modal = await this.modalCtrl.create({
@@ -214,14 +281,14 @@ export class NewDistributionPage implements OnInit {
     }
   }
 
-  // ⭐ Save
+  // Save
   async saveData() {
     const f = this.formData;
 
+    // ================= VALIDATIONS =================
     if (!f.member_name?.trim()) return this.showAlert('Please enter Name');
     if (!f.guardian?.trim())
       return this.showAlert('Please enter Guardian name');
-
     if (!f.state_id) return this.showAlert('Please select a state');
     if (!f.district_id) return this.showAlert('Please select a district');
     if (!f.block_id) return this.showAlert('Please select a block');
@@ -235,17 +302,41 @@ export class NewDistributionPage implements OnInit {
     if (!f.membership_amount || f.membership_amount < 300)
       return this.showAlert('Membership amount must be at least ₹300');
 
-    console.log('Sending to API:', this.formData);
+    // ================= FINAL FLAT PAYLOAD =================
+    const payload = {
+      distribution_id: this.distributionId || `TMP-DIST-${Date.now()}`,
+      amount: f.membership_amount,
+      program_id: f.program_id,
+      type: 'distribution',
 
-    const resp = await this.userServ.saintriDistribution(this.formData);
+      // 👇 FLAT FIELDS ONLY
+      member_name: f.member_name,
+      guardian: f.guardian,
+      mobile: f.mobile,
+      pincode: f.pincode,
+      state_id: f.state_id,
+      district_id: f.district_id,
+      block_id: f.block_id,
+      village_id: f.village_id || '',
+    };
 
-    if (resp?.status) {
-      this.navCtrl.navigateForward(['/distributed-saintries']);
+    const resp = await this.userServ.saintriDistribution(payload);
+    if (resp?.status === 200 || resp?.status === true) {
+      const orderId = resp.order_id || resp.id || payload.distribution_id;
+
+      // 👉 PAYMENT PAGE OPEN
+      await this.navCtrl.navigateForward(['/payment'], {
+        queryParams: {
+          order_id: orderId,
+          distribution_id: payload.distribution_id,
+          program_id: f.program_id,
+          amount: f.membership_amount,
+        },
+      });
     } else {
-      this.showAlert(resp?.msg || 'Submission failed');
+      this.showAlert(resp?.msg || 'Order creation failed');
     }
   }
-
   async showAlert(msg: string) {
     const alert = await this.alertCtrl.create({
       header: 'Notice',
@@ -256,11 +347,10 @@ export class NewDistributionPage implements OnInit {
   }
 
   checkAmount() {
-    const amt = Number(this.formData.membership_amount);
-
-    if (!amt || amt < 300) {
+    // Sirf tab reset karein jab amount 300 se kam ho
+    if (this.formData.membership_amount < 300) {
       this.formData.membership_amount = 300;
-      this.cdr.markForCheck();
     }
+    this.cdr.markForCheck();
   }
 }

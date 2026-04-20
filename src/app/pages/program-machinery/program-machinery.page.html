@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>किसान मशीनरी योजना वृक्षारोपण पर्यावरण</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card class="amount-card">
+    <ion-card-content>
+      <div class="amount-header">
+        <h2>Registration Amount</h2>
+      </div>
+      <div class="calc-box">
+        <div class="right">
+          <p>Total Amount:</p>
+          <h2 class="total-amount">₹ {{ registrationAmount }}</h2>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Entry Form</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input
+        labelPlacement="floating"
+        label="Full Name"
+        [(ngModel)]="formData.full_name"
+        fill="outline"
+      ></ion-input>
+
+      <ion-input
+        class="ion-margin-top"
+        labelPlacement="floating"
+        label="Mobile"
+        [(ngModel)]="formData.mobile"
+        fill="outline"
+        type="tel"
+        maxlength="10"
+      ></ion-input>
+
+      <ion-input
+        class="ion-margin-top"
+        labelPlacement="floating"
+        label="Village"
+        [(ngModel)]="formData.village"
+        fill="outline"
+      ></ion-input>
+
+      <ion-input
+        class="ion-margin-top"
+        labelPlacement="floating"
+        label="Machinery Need"
+        [(ngModel)]="formData.machinery_need"
+        fill="outline"
+      ></ion-input>
+
+      <ion-textarea
+        class="ion-margin-top"
+        labelPlacement="floating"
+        label="Notes"
+        [(ngModel)]="formData.notes"
+        fill="outline"
+        rows="3"
+      ></ion-textarea>
+
+      <ion-button expand="block" class="ion-margin-top" (click)="submit()">
+        Submit
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import * as Constants from '../../constant/app.constatnt'
+import * as Constants from '../../constant/app.constatnt';
 import { RajeevhttpService } from '../http/rajeevhttp.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UploadService {
-
-  constructor(
-    private myhttp: RajeevhttpService
-  ) { }
+  constructor(private myhttp: RajeevhttpService) {}
   async uploadImage(data: any) {
     const url = Constants.UPLOAD_API_PATH + 'upload';
     const apiResp = await this.myhttp.post(url, data, {}, true, 'multipart');
@@ -17,8 +14,17 @@ export class UploadService {
       return {
         path: this.myhttp.UPLOADS + apiResp.file_upload,
         imgValue: apiResp.file_upload,
-        id: apiResp.file_id
-      }
+        id: apiResp.file_id,
+      };
+    } else {
+      return false;
+    }
+  }
+  async galleryLists() {
+    const url = Constants.UPLOAD_API_PATH + 'galleryList';
+    const apiResp = await this.myhttp.post(url, {}, true);
+    if (apiResp.galleries) {
+      return apiResp.galleries;
     } else {
       return false;
     }

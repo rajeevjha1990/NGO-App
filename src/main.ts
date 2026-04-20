@@ -113,6 +113,8 @@ addIcons({
   'notifications-outline': notificationsOutline,
   'mail-outline': mailOutline,
   'newspaper-outline': libraryOutline,
+  'scan-outline': flashOutline,
+  'images-outline': tvOutline,
 });
 
 bootstrapApplication(AppComponent, appConfig).catch((err) =>

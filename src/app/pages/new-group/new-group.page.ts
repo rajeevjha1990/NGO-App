@@ -5,7 +5,6 @@ import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
 import { UserService } from 'src/app/services/user/user.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { UploadService } from 'src/app/services/upload/upload.service';
-import { RajeevhttpService } from 'src/app/services/http/rajeevhttp.service';
 
 @Component({
   selector: 'app-new-group',
@@ -18,14 +17,14 @@ export class NewGroupPage implements OnInit {
   formData: any = {};
   programs: any = [];
   members: any[] = [];
-  @Input()
-  groupId: any;
+
+  @Input() groupId: any;
+  programId: any;
+
   totalGroupPaidAmount: number = 0;
-  upiId = 'yourupi@upi';
-  receiverName = 'Sabka Vikas Jyoti';
-  utr: string = '';
-  paymentScreenshot!: File;
-  paymentDone = false;
+  programAmount: number = 225;
+
+  // Payment
 
   constructor(
     private pubServ: PubService,
@@ -33,18 +32,26 @@ export class NewGroupPage implements OnInit {
     private alertCtrl: AlertController,
     private userServ: UserService,
     private activatedRoute: ActivatedRoute,
-    private uploadServ: UploadService,
-    public myhttp: RajeevhttpService
+    private uploadServ: UploadService
   ) {}
 
   async ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(async (queryParams: ParamMap) => {
-      this.groupId = queryParams.get('groupId');
+    this.activatedRoute.paramMap.subscribe(async (params: ParamMap) => {
+      this.groupId = params.get('groupId');
+      this.programId = params.get('programId');
 
-      const profiledata = await this.userServ.getProfile();
-      this.formData.ep_no = profiledata.volntr_ep_temp;
+      const profile = await this.userServ.getProfile();
+      this.formData.ep_no = profile?.volntr_ep_temp;
+
       this.programs = await this.pubServ.getPrograms();
 
+      if (this.programId) {
+        this.formData.program_id = Number(this.programId);
+      }
+
+      this.syncProgramAmount();
+
+      // Edit mode
       if (this.groupId) {
         const groupResp = await this.pubServ.getGroup(this.groupId);
 
@@ -52,165 +59,132 @@ export class NewGroupPage implements OnInit {
           this.formData = groupResp.groupdata || {};
           this.members = groupResp.members || [];
           this.formData.no_of_members = this.members.length;
+          this.syncProgramAmount();
         }
       }
     });
   }
+
+  // ✅ Program amount resolver
+  private resolveProgramAmount(program: any): number {
+    const raw =
+      program?.amount || program?.fee || program?.registration_amount || 225;
+
+    const val = Number(raw);
+    return Number.isFinite(val) && val > 0 ? val : 225;
+  }
+
+  // ✅ Sync amount
+  syncProgramAmount() {
+    const program = this.programs.find(
+      (p: any) => String(p.id) === String(this.formData.program_id)
+    );
+
+    this.programAmount = this.resolveProgramAmount(program);
+
+    this.totalGroupPaidAmount =
+      (this.formData?.no_of_members || 0) * this.programAmount;
+  }
+
+  onProgramChange() {
+    this.syncProgramAmount();
+  }
+
+  // ✅ Member handling
   onNoOfMembersChange() {
     const count = Number(this.formData?.no_of_members) || 0;
-    if (!this.members) {
-      this.members = [];
-    }
+
     if (count > this.members.length) {
       for (let i = this.members.length; i < count; i++) {
         this.members.push({ name: '', mobile: '' });
       }
-    } else if (count < this.members.length) {
+    } else {
       this.members.splice(count);
     }
-    this.totalGroupPaidAmount = (this.formData?.no_of_members || 0) * 225;
+
+    this.syncProgramAmount();
   }
 
-  onFileChange(event: any) {
-    const file = event.target?.files && event.target.files[0];
-    if (file) {
-      this.paymentScreenshot = file;
-    }
-  }
-  payNow() {
-    if (this.totalGroupPaidAmount <= 0) {
-      this.showAlert('Invalid amount');
-      return;
-    }
-
-    const note = `GROUP_${this.formData.group_name || 'NEW'}`;
-
-    const upiUrl =
-      `upi://pay?pa=${this.upiId}` +
-      `&pn=${encodeURIComponent(this.receiverName)}` +
-      `&am=${this.totalGroupPaidAmount}` +
-      `&cu=INR` +
-      `&tn=${encodeURIComponent(note)}`;
-
-    window.location.href = upiUrl;
-  }
-
-  async selectImage(event: MouseEvent) {
-    const inFile = document.createElement('input');
-    inFile.setAttribute('type', 'file');
-    inFile.click();
-
-    inFile.addEventListener('change', async (event) => {
-      await this.uploadimage(event);
-    });
-  }
-
-  async uploadimage(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const files = inputElement.files;
-    if (!files || files.length === 0) return;
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      const data = {
-        file_upload: file,
-        upload_type: 'misc',
-      };
-
-      const uploadedFile = await this.uploadServ.uploadImage(data);
-      if (uploadedFile) {
-        this.formData.proofimage = uploadedFile.imgValue;
-      } else {
-        await this.imageshowAlert('Error', 'Image not uploaded.');
-      }
-    }
-  }
-  async imageshowAlert(header: string, message: string) {
-    const alert = await this.alertCtrl.create({
-      header,
-      message,
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
-
-  async submitPaymentProof() {
-    if (!this.utr || !this.paymentScreenshot) {
-      await this.showAlert('UTR number and screenshot are required');
-      return;
-    }
-
-    const fd = new FormData();
-    fd.append('group_name', this.formData.group_name);
-    fd.append('amount', this.totalGroupPaidAmount.toString());
-    fd.append('utr', this.utr);
-    fd.append('screenshot', this.paymentScreenshot);
-
-    const resp = await this.userServ.saveGroupPayment(fd);
-
-    if (resp?.status) {
-      this.paymentDone = true;
-      await this.showAlert('Payment submitted. Verification pending.');
-    } else {
-      await this.showAlert(resp?.msg || 'Payment failed');
-    }
-  }
-
+  // ✅ MAIN FUNCTION (FIXED)
   async saveGroup() {
     if (!this.formData?.group_name) {
-      await this.showAlert('Group name is required');
-      return;
-    }
-    if (!this.formData?.program_id) {
-      await this.showAlert('Please select a Program.');
+      await this.showAlert('Group name required');
       return;
     }
 
     if (!this.formData?.ep_no || !this.formData?.senior_ep_no) {
-      await this.showAlert('Please enter both EP No and Senior EP No.');
+      await this.showAlert('Enter EP No & Senior EP No');
       return;
     }
-    const totalMembers = Number(this.formData?.no_of_members ?? 0);
-    if (totalMembers < 12) {
-      await this.showAlert('Please add at least 10 members.');
+
+    const count = Number(this.formData?.no_of_members || 0);
+
+    if (count < 2) {
+      await this.showAlert('Minimum 2 members required');
       return;
     }
-    const membersArr = this.members ?? [];
-    for (let i = 0; i < membersArr.length; i++) {
-      const member = membersArr[i];
 
-      if (!member?.name || !member.name.trim()) {
-        await this.showAlert(`Please enter a name for member ${i + 1}.`);
+    // Validate members
+    const mobiles: string[] = [];
+
+    for (let i = 0; i < this.members.length; i++) {
+      const m = this.members[i];
+
+      if (!m.name?.trim()) {
+        await this.showAlert(`Enter name for member ${i + 1}`);
         return;
       }
 
-      if (!member?.mobile || !member.mobile.trim()) {
-        await this.showAlert(
-          `Please enter a mobile number for member ${i + 1}.`
-        );
+      if (!/^\d{10}$/.test(m.mobile)) {
+        await this.showAlert(`Invalid mobile for member ${i + 1}`);
         return;
       }
-      const mobilePattern = /^\d{10}$/;
-      if (!mobilePattern.test(member.mobile)) {
-        await this.showAlert(
-          `Mobile number for member ${i + 1} must be 10 digits.`
-        );
-        return;
-      }
-    }
-    if (this.groupId) {
-      this.formData.group_id = this.groupId;
+
+      mobiles.push(m.mobile);
     }
 
-    this.formData.members = JSON.stringify(membersArr);
-    const resp = await this.userServ.createGroup(this.formData);
+    // Duplicate check
+    if (new Set(mobiles).size !== mobiles.length) {
+      await this.showAlert('Duplicate mobile numbers not allowed');
+      return;
+    }
+
+    // ✅ FINAL PAYLOAD
+    const payload: any = {
+      groupId: this.groupId || `TMP-GROUP-${Date.now()}`,
+      type: 'group',
+
+      group_name: this.formData.group_name,
+      ep_no: this.formData.ep_no,
+      senior_ep_no: this.formData.senior_ep_no,
+      group_start_date: this.formData.group_start_date,
+      program_id: this.formData.program_id,
+      no_of_members: this.members.length,
+      members: JSON.stringify(this.members),
+      amount: this.totalGroupPaidAmount,
+    };
+
+    if (this.groupId && this.groupId !== 'null') {
+      payload.group_id = this.groupId;
+    }
+
+    const resp = await this.userServ.createGroup(payload);
     if (resp?.status) {
-      this.navCtrl.navigateForward(['/groups']);
+      const groupId = resp.group_id || resp.id;
+
+      await this.navCtrl.navigateForward(['/payment'], {
+        queryParams: {
+          group_id: groupId,
+          program_id: this.formData.program_id,
+          amount: this.totalGroupPaidAmount,
+        },
+      });
     } else {
-      await this.showAlert(resp?.msg || 'Group creation failed.');
+      await this.showAlert(resp?.msg || 'Group creation failed');
     }
   }
 
+  // ✅ Alert
   async showAlert(message: string) {
     const alert = await this.alertCtrl.create({
       header: 'Notice',

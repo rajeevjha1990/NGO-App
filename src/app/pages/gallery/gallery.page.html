@@ -1,0 +1,93 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>gallery</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">gallery</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-segment
+    class="view-toggle"
+    [value]="viewMode"
+    (ionChange)="onViewModeChange($event)"
+  >
+    <ion-segment-button value="grid">
+      <ion-label>Card View</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="list">
+      <ion-label>List View</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Gallery Grid -->
+  <div
+    *ngIf="!loading && galleryList.length > 0 && viewMode === 'grid'"
+    class="gallery-grid"
+  >
+    <div *ngFor="let item of galleryList" class="gallery-item">
+      <img
+        [src]="getImageSrc(item)"
+        [alt]="item.title || 'Gallery Image'"
+        (click)="openImage(item)"
+      />
+      <div *ngIf="item.title" class="gallery-title">{{ item.title }}</div>
+    </div>
+  </div>
+
+  <!-- Gallery List -->
+  <div
+    *ngIf="!loading && galleryList.length > 0 && viewMode === 'list'"
+    class="gallery-list"
+  >
+    <div *ngFor="let item of galleryList" class="list-item">
+      <img
+        [src]="getImageSrc(item)"
+        [alt]="item.title || 'Gallery Image'"
+        (click)="openImage(item)"
+      />
+      <div class="list-content">
+        <div class="list-title">{{ item.title || 'Gallery Image' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedImage" class="image-modal" (click)="closeImage()">
+    <div class="image-wrapper" (click)="$event.stopPropagation()">
+      <img [src]="getImageSrc(selectedImage)" alt="Zoomed Image" />
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && galleryList.length === 0" class="empty-state">
+    <p>No images in gallery yet</p>
+  </div>
+
+  <!-- Add Image Button -->
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button routerLink="/image-upload">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Refresh Button -->
+  <ion-fab
+    horizontal="end"
+    vertical="bottom"
+    slot="fixed"
+    style="margin-bottom: 80px"
+  >
+    <ion-fab-button (click)="doRefresh()">
+      <ion-icon name="refresh-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

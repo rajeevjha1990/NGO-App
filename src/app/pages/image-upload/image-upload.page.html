@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Image Upload</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Image Upload</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="page">
+    <div class="preview" *ngIf="imageDataUrl">
+      <ion-img [src]="imageDataUrl" alt="Selected image"></ion-img>
+    </div>
+
+    <ion-text color="medium" *ngIf="uploadMessage">
+      <p>{{ uploadMessage }}</p>
+    </ion-text>
+  </div>
+
+  <ion-action-sheet
+    [isOpen]="isActionSheetOpen"
+    header="Upload Image"
+    (didDismiss)="setActionSheetOpen(false)"
+    [buttons]="actionSheetButtons"
+  ></ion-action-sheet>
+  <ion-button
+    expand="block"
+    (click)="openSourcePicker()"
+    [disabled]="isLoading"
+  >
+    Choose Image
+  </ion-button>
+  <ion-button
+    expand="block"
+    color="primary"
+    (click)="submitImage()"
+    [disabled]="isLoading || !imageDataUrl"
+  >
+    Upload Image
+  </ion-button>
+</ion-content>

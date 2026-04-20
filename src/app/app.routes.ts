@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth-guard';
+// import { AuthGuard } from './guards/auth-guard';
 import { FootertabComponent } from './components/footertab/footertab.component';
 
 export const routes: Routes = [
@@ -40,13 +40,13 @@ export const routes: Routes = [
   // 🛡️ Protected Routes (AuthGuard ke saath)
   {
     path: 'profile',
-    canActivate: [AuthGuard],
+    //////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/profile/profile.page').then((m) => m.ProfilePage),
   },
   {
     path: 'personal-info',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/personal-info/personal-info.page').then(
         (m) => m.PersonalInfoPage
@@ -54,58 +54,105 @@ export const routes: Routes = [
   },
   {
     path: 'groups',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/groups/groups.page').then((m) => m.GroupsPage),
   },
   {
     path: 'about',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/about/about.page').then((m) => m.AboutPage),
   },
   {
-    path: 'new-group',
-    canActivate: [AuthGuard],
+    path: 'new-group/:programId',
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/new-group/new-group.page').then((m) => m.NewGroupPage),
   },
   {
     path: 'edit-group/:groupId',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/new-group/new-group.page').then((m) => m.NewGroupPage),
   },
   {
     path: 'members/:groupId',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/members/members.page').then((m) => m.MembersPage),
   },
   {
     path: 'distributed-saintries',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/distributed-saintries/distributed-saintries.page').then(
         (m) => m.DistributedSaintriesPage
       ),
   },
   {
-    path: 'new-distribution',
-    canActivate: [AuthGuard],
+    path: 'new-distribution/:programId',
     loadComponent: () =>
       import('./pages/new-distribution/new-distribution.page').then(
         (m) => m.NewDistributionPage
       ),
   },
   {
-    path: 'edit-distribution/:id',
-    canActivate: [AuthGuard],
+    path: 'edit-distribution/:distributionId',
     loadComponent: () =>
       import('./pages/new-distribution/new-distribution.page').then(
         (m) => m.NewDistributionPage
       ),
   },
+  {
+    path: 'program-vermi',
+    ////canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/program-vermi/program-vermi.page').then(
+        (m) => m.ProgramVermiPage
+      ),
+  },
+  {
+    path: 'program-seed',
+    ////canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/program-seed/program-seed.page').then(
+        (m) => m.ProgramSeedPage
+      ),
+  },
+  {
+    path: 'program-skill',
+    ////canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/program-skill/program-skill.page').then(
+        (m) => m.ProgramSkillPage
+      ),
+  },
+  {
+    path: 'program-employment',
+    ////canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/program-employment/program-employment.page').then(
+        (m) => m.ProgramEmploymentPage
+      ),
+  },
+  {
+    path: 'program-dmit',
+    ////canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/program-dmit/program-dmit.page').then(
+        (m) => m.ProgramDmitPage
+      ),
+  },
+  {
+    path: 'program-machinery',
+    ////canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./pages/program-machinery/program-machinery.page').then(
+        (m) => m.ProgramMachineryPage
+      ),
+  },
+
   {
     path: 'notifications',
     loadComponent: () =>
@@ -113,9 +160,44 @@ export const routes: Routes = [
         (m) => m.NotificationsPage
       ),
   },
+
+  {
+    path: 'message',
+    loadComponent: () =>
+      import('./pages/message/message.page').then((m) => m.MessagePage),
+  },
+  {
+    path: 'conversactions/:threadId',
+    loadComponent: () =>
+      import('./pages/conversactions/conversactions.page').then(
+        (m) => m.ConversactionsPage
+      ),
+  },
+  {
+    path: 'news',
+    loadComponent: () =>
+      import('./pages/news/news.page').then((m) => m.NewsPage),
+  },
+  {
+    path: 'gallery',
+    loadComponent: () =>
+      import('./pages/gallery/gallery.page').then((m) => m.GalleryPage),
+  },
+  {
+    path: 'image-upload',
+    loadComponent: () =>
+      import('./pages/image-upload/image-upload.page').then(
+        (m) => m.ImageUploadPage
+      ),
+  },
+  {
+    path: 'scaner',
+    loadComponent: () =>
+      import('./pages/scaner/scaner.page').then((m) => m.ScanerPage),
+  },
   {
     path: 'assigned-orders',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/assigned-orders/assigned-orders.page').then(
         (m) => m.AssignedOrdersPage
@@ -125,7 +207,7 @@ export const routes: Routes = [
   // 🔍 Filter Routes
   {
     path: 'statefilter',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/statefilter/statefilter.page').then(
         (m) => m.StatefilterPage
@@ -133,7 +215,7 @@ export const routes: Routes = [
   },
   {
     path: 'cityfilter',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/cityfilter/cityfilter.page').then(
         (m) => m.CityfilterPage
@@ -141,7 +223,7 @@ export const routes: Routes = [
   },
   {
     path: 'blockfilter',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/blockfilter/blockfilter.page').then(
         (m) => m.BlockfilterPage
@@ -149,7 +231,7 @@ export const routes: Routes = [
   },
   {
     path: 'villagefilter',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/villagefilter/villagefilter.page').then(
         (m) => m.VillagefilterPage
@@ -157,7 +239,7 @@ export const routes: Routes = [
   },
   {
     path: 'program-view/:programId',
-    canActivate: [AuthGuard],
+    ////canActivate: [AuthGuard],
     loadComponent: () =>
       import('./pages/program-view/program-view.page').then(
         (m) => m.ProgramViewPage
@@ -183,13 +265,10 @@ export const routes: Routes = [
     ],
   },
 
+  {
+    path: 'payment',
+    loadComponent: () =>
+      import('./pages/payment/payment.page').then((m) => m.PaymentPage),
+  },
   { path: '**', redirectTo: 'home' },
-  {
-    path: 'message',
-    loadComponent: () => import('./pages/message/message.page').then( m => m.MessagePage)
-  },
-  {
-    path: 'news',
-    loadComponent: () => import('./pages/news/news.page').then( m => m.NewsPage)
-  },
 ];

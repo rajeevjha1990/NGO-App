@@ -21,12 +21,27 @@ export class PubService {
   }
   async getPrograms() {
     const url = Constants.COMMON_API_PATH + 'getPrograms';
-    const respData = await this.svjHttp.post(url, {});
-    if (respData) {
-      return respData.programs;
-    } else {
+    try {
+      const respData = await this.svjHttp.post(url, {});
+      if (respData?.status && respData.status !== 200) {
+        console.warn('getPrograms failed:', respData);
+        return [];
+      }
+      const programs = respData?.programs ?? [];
+      return this.normalizePrograms(programs);
+    } catch (err) {
+      console.error('getPrograms error:', err);
       return [];
     }
+  }
+  private normalizePrograms(programs: any[]) {
+    if (!Array.isArray(programs)) return [];
+    return programs.map((p: any, i: number) => {
+      const id = p?.id ?? p?.program_id ?? i + 1;
+      const name = p?.name ?? p?.program_name ?? p?.title ?? '';
+      const icon = p?.icon ?? p?.program_icon ?? 'apps-outline';
+      return { ...p, id, name, icon };
+    });
   }
   async groupmembers(groupId: any) {
     const data = {

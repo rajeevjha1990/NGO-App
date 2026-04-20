@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Scanner</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="scaner-page">
+  <div class="scaner-hero">
+    <img
+      src="assets/SVJ-Images/scaner.jpeg"
+      alt="UPI scanner"
+      class="scaner-image"
+    />
+  </div>
+
+  <div class="scaner-content">
+    <h2 class="scaner-title">Scan & Pay</h2>
+    <p class="scaner-subtitle">Use the scanner to pay quickly and securely.</p>
+
+    <ol class="scaner-steps">
+      <li>Open your camera and keep the QR code inside the frame.</li>
+      <li>Hold steady until the code is detected.</li>
+      <li>Confirm the name and amount before paying.</li>
+      <li>Tap Pay to complete the transaction.</li>
+    </ol>
+
+    <div class="scaner-tip">
+      Tip: Make sure there is enough light and the QR is not blurred.
+    </div>
+
+    <ion-button
+      expand="block"
+      color="primary"
+      class="scaner-button"
+      (click)="startScan()"
+    >
+      Start Scan
+    </ion-button>
+  </div>
+</ion-content>

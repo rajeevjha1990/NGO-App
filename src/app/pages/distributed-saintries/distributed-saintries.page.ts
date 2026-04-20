@@ -52,26 +52,38 @@ export class DistributedSaintriesPage implements OnInit {
 
   // Load paginated data
   async loadData(event?: any) {
-    if (this.loading || !this.hasMoreData) return;
+    if (this.loading || !this.hasMoreData) {
+      if (event) event.target.complete();
+      return;
+    }
 
     this.loading = true;
 
-    const res: any[] = await this.pubServ.allDistributedSaintri(
-      this.page,
-      this.limit
-    );
+    try {
+      const res: any[] = await this.pubServ.allDistributedSaintri(
+        this.page,
+        this.limit
+      );
 
-    if (res.length < this.limit) {
-      this.hasMoreData = false;
+      if (!res || res.length < this.limit) {
+        this.hasMoreData = false;
+      }
+
+      if (res && res.length > 0) {
+        // Create a new array reference so ChangeDetectionStrategy.OnPush detects the change
+        this.distributedsaintries = [...this.distributedsaintries, ...res];
+        this.calculateTodayDue();
+        this.page++;
+      }
+    } catch (error) {
+      console.error('Error loading infinite scroll data:', error);
+    } finally {
+      this.loading = false;
+      if (event) event.target.complete();
+
+      // Manually trigger change detection for the async update
+      this.cdr.markForCheck();
     }
-
-    this.distributedsaintries.push(...res);
-    this.calculateTodayDue();
-
-    this.page++;
-    this.loading = false;
-
-    if (event) event.target.complete();
   }
 
   trackById(index: number, item: any) {

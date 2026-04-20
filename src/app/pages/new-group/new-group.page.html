@@ -8,7 +8,7 @@
   <ion-card class="amount-card">
     <ion-card-content>
       <div class="amount-header">
-        <h2>Registration Amount</h2>
+        <h2>Helping Amount</h2>
         <span class="per-member">₹ 225 / Member</span>
       </div>
 
@@ -25,43 +25,10 @@
       </div>
     </ion-card-content>
   </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Payment Proof</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-input
-        labelPlacement="floating"
-        label="UTR Number"
-        [(ngModel)]="utr"
-        fill="outline"
-      ></ion-input>
-
-      <ion-input
-        type="file"
-        accept="image/*"
-        fill="outline"
-        class="ion-margin-top"
-        (change)="onFileChange($event)"
-      >
-      </ion-input>
-
-      <ion-button
-        expand="block"
-        class="ion-margin-top"
-        (click)="submitPaymentProof()"
-      >
-        Submit Payment Proof
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Create New Group</ion-card-title>
     </ion-card-header>
-
     <ion-card-content>
       <ion-grid>
         <ion-row>
@@ -73,22 +40,6 @@
               fill="outline"
               type="text"
             ></ion-input>
-          </ion-col>
-
-          <ion-col size="12">
-            <ion-select
-              labelPlacement="floating"
-              label="Program"
-              [(ngModel)]="formData.program_id"
-              fill="outline"
-            >
-              <ion-select-option
-                *ngFor="let program of programs"
-                [value]="program.id"
-              >
-                {{program.name}}
-              </ion-select-option>
-            </ion-select>
           </ion-col>
 
           <ion-col size="12">

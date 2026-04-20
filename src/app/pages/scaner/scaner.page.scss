@@ -1,0 +1,81 @@
+.scaner-page {
+  --padding-top: 12px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-bottom: 24px;
+  --background: #f8fafc;
+}
+
+.scaner-hero {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 12px;
+}
+
+.scaner-image {
+  width: min(320px, 92%);
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.scaner-content {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+.scaner-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+
+.scaner-subtitle {
+  font-size: 14px;
+  color: #667085;
+  margin: 0 0 12px;
+}
+
+.scaner-steps {
+  text-align: left;
+  padding-left: 20px;
+  margin: 0 0 14px;
+  color: #344054;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.scaner-steps li {
+  margin-bottom: 8px;
+}
+
+.scaner-tip {
+  background: #f2f4f7;
+  color: #475467;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.scaner-button {
+  font-weight: 600;
+  height: 44px;
+}
+
+@media (min-width: 768px) {
+  .scaner-page {
+    --background: #ffffff;
+  }
+
+  .scaner-content {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+}

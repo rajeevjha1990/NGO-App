@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AlertController, LoadingController, NavController, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  LoadingController,
+  NavController,
+  Platform,
+} from '@ionic/angular';
 import { AuthService } from '../auth/auth.service';
 import * as Constants from '../../constant/app.constatnt';
 import { saveAs } from 'file-saver';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RajeevhttpService {
   BASE_URL = '';
@@ -24,7 +29,11 @@ export class RajeevhttpService {
     private navCtrl: NavController,
     private authServ: AuthService
   ) {
-    if (window.location.href.indexOf('localhost') < 0 || this.plt.is('android') || this.plt.is('ios')) {
+    if (
+      window.location.href.indexOf('localhost') < 0 ||
+      this.plt.is('android') ||
+      this.plt.is('ios')
+    ) {
       this.BASE_URL = Constants.EXT_API_URL;
     } else {
       this.BASE_URL = Constants.INT_API_URL;
@@ -38,7 +47,13 @@ export class RajeevhttpService {
     this.authkey = await this.authServ.getAuthkey();
   }
 
-  async post(url: string, data: any, options: any = {}, showLoading = true, datatype = "urlencoded") {
+  async post(
+    url: string,
+    data: any,
+    options: any = {},
+    showLoading = true,
+    datatype = 'urlencoded'
+  ) {
     this.i++;
     const li = this.i;
 
@@ -59,9 +74,14 @@ export class RajeevhttpService {
         break;
       case 'multipart':
         contentType = ''; // Let browser set it automatically
-        const formData = new FormData();
-        Object.entries(data).forEach(([k, v]: any) => formData.append(k, v));
-        params = formData;
+        // If data is already FormData, use it directly
+        if (data instanceof FormData) {
+          params = data;
+        } else {
+          const formData = new FormData();
+          Object.entries(data).forEach(([k, v]: any) => formData.append(k, v));
+          params = formData;
+        }
         break;
       case 'json':
         contentType = 'application/json';
@@ -75,9 +95,9 @@ export class RajeevhttpService {
     }
     let token = localStorage.getItem('auth_token') || '';
     let headers = new HttpHeaders({
-      'Source': 'app',
-      'Authorization': `Bearer ${token}`,
-      'VeronAuthkey': this.authkey || ''
+      Source: 'app',
+      Authorization: `Bearer ${token}`,
+      VeronAuthkey: this.authkey || '',
     });
 
     if (contentType) {
@@ -86,14 +106,16 @@ export class RajeevhttpService {
 
     const httpOptions = {
       headers: headers,
-      observe: 'response' as const // Full response including headers & status
+      observe: 'response' as const, // Full response including headers & status
     };
 
     let resp: any = {};
 
     try {
       // API call kare
-      const httpResp: any = await this.http.post(url, params, httpOptions).toPromise();
+      const httpResp: any = await this.http
+        .post(url, params, httpOptions)
+        .toPromise();
 
       if (httpResp.status === 200) {
         const respBody: any = httpResp.body;
@@ -115,7 +137,6 @@ export class RajeevhttpService {
         resp = httpResp.body || {};
         resp.status = httpResp.status;
       }
-
     } catch (httpErrResp: any) {
       const status = httpErrResp.status;
       console.log(status);
@@ -123,7 +144,7 @@ export class RajeevhttpService {
       let error = 'Unidentified error, contact to admin.';
       try {
         error = httpErrResp.error?.err || httpErrResp.error?.msg || error;
-      } catch { }
+      } catch {}
 
       if (typeof error === 'object') {
         error = Object.values(error).join('\n');
@@ -138,15 +159,19 @@ export class RajeevhttpService {
           this.presentAlert('API Not Found');
           break;
         case 401:
-          this.presentAlert('Authorization Error', 'Mobile number not registered');
+          this.presentAlert(
+            'Authorization Error',
+            'Mobile number not registered'
+          );
           this.authServ.clear();
           this.navCtrl.navigateRoot('/');
           break;
         default:
           let defaultErr = 'Unidentified error,contact  to admin.';
           try {
-            defaultErr = httpErrResp.error?.err || httpErrResp.error?.msg || defaultErr;
-          } catch { }
+            defaultErr =
+              httpErrResp.error?.err || httpErrResp.error?.msg || defaultErr;
+          } catch {}
 
           if (typeof defaultErr === 'object') {
             defaultErr = Object.values(defaultErr).join('\n');
@@ -172,11 +197,16 @@ export class RajeevhttpService {
   async presentLoading(i: number) {
     this.loadingElements[i] = await this.loadingCtrl.create({
       message: 'Please wait...',
-      spinner: 'crescent'
+      spinner: 'crescent',
     });
     await this.loadingElements[i].present();
   }
-  async presentAlert(status: string = '', msg = '', title?: string, btns: any = ['Ok']) {
+  async presentAlert(
+    status: string = '',
+    msg = '',
+    title?: string,
+    btns: any = ['Ok']
+  ) {
     if (!title) {
       const lcMsg = (msg || status).toLowerCase();
       if (lcMsg.includes('not available')) {
@@ -198,7 +228,7 @@ export class RajeevhttpService {
       header: title,
       subHeader: status,
       message: msg,
-      buttons: btns
+      buttons: btns,
     });
 
     await alert.present();
@@ -210,20 +240,26 @@ export class RajeevhttpService {
 
   async downloadFile(url: string, data: any = {}) {
     if (!navigator.onLine) {
-      this.presentAlert('No Internet Connection', 'Please check your internet connection and try again.');
+      this.presentAlert(
+        'No Internet Connection',
+        'Please check your internet connection and try again.'
+      );
       return;
     }
 
     const headers = new HttpHeaders().set('VeronAuthkey', this.authkey);
     const params = new HttpParams({ fromObject: data });
 
-    this.http.get(this.BASE_API_URL + url, { headers, params, responseType: 'blob' }).subscribe(
-      (response: any) => {
+    this.http
+      .get(this.BASE_API_URL + url, { headers, params, responseType: 'blob' })
+      .subscribe((response: any) => {
         let dataType = response.type;
         let binaryData = [];
         binaryData.push(response);
         let downloadLink = document.createElement('a');
-        downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: dataType }));
+        downloadLink.href = window.URL.createObjectURL(
+          new Blob(binaryData, { type: dataType })
+        );
         const urlparts = url.split('/');
         const filename = urlparts[urlparts.length - 1];
         saveAs(response, filename);
@@ -231,8 +267,6 @@ export class RajeevhttpService {
         downloadLink.setAttribute('target', '_blank');
         document.body.appendChild(downloadLink);
         downloadLink.click();
-      }
-    );
+      });
   }
-
 }
