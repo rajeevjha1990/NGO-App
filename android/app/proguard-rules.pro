@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Razorpay ProGuard Rules
+-keepclassmembers class com.razorpay.** {*;}
+-keep class com.razorpay.** {*;}
+-dontwarn com.razorpay.**
+
+# Capacitor Specific Rules
+-keep class com.getcapacitor.** { *; }
+-keep  class **.R$* {
+    <fields>;
+}
+-keepattributes *Annotation*
+-keepattributes EnclosingMethod
