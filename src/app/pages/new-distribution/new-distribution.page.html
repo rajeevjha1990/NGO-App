@@ -29,6 +29,16 @@
           <ion-col size="12">
             <ion-input
               labelPlacement="floating"
+              label="Issue Date"
+              [(ngModel)]="formData.issue_date"
+              fill="outline"
+              type="date"
+            >
+            </ion-input>
+          </ion-col>
+          <ion-col size="12">
+            <ion-input
+              labelPlacement="floating"
               label="Name"
               [(ngModel)]="formData.member_name"
               fill="outline"

@@ -4,7 +4,10 @@ import { AlertController, NavController } from '@ionic/angular/standalone';
 import { UserService } from 'src/app/services/user/user.service';
 import { environment } from 'src/environments/environment';
 import { SHARED_IONIC_MODULES } from 'src/app/shared/shared.ionic';
+import { Checkout } from 'capacitor-razorpay';
+import { Capacitor } from '@capacitor/core';
 
+// Interfaces for structured data
 interface RazorpayOrderResponse {
   status?: number;
   order_id: string;
@@ -24,45 +27,13 @@ interface RazorpayOrderResponse {
   theme?: {
     color?: string;
   };
+  msg?: string;
 }
 
 interface RazorpayHandlerResponse {
   razorpay_payment_id: string;
   razorpay_order_id: string;
   razorpay_signature: string;
-}
-
-interface RazorpayOptions {
-  key: string;
-  amount: number;
-  currency: string;
-  name: string;
-  description: string;
-  image?: string;
-  order_id: string;
-  prefill?: {
-    name?: string;
-    email?: string;
-    contact?: string;
-  };
-  theme?: {
-    color?: string;
-  };
-  modal?: {
-    ondismiss?: () => void;
-  };
-  handler: (response: RazorpayHandlerResponse) => void;
-}
-
-interface RazorpayInstance {
-  open: () => void;
-  on: (event: string, callback: (response: any) => void) => void;
-}
-
-declare global {
-  interface Window {
-    Razorpay?: new (options: RazorpayOptions) => RazorpayInstance;
-  }
 }
 
 @Component({
@@ -83,7 +54,6 @@ export class PaymentPage implements OnInit, OnDestroy {
   paymentMode: 'CASH' | 'UPI' | 'CARD' | 'NETBANKING' = 'UPI';
   isLoading = false;
 
-  private readonly razorpayScriptId = 'razorpay-checkout-js';
   private readonly forceOneRupeeForTesting = false;
 
   constructor(
@@ -114,12 +84,6 @@ export class PaymentPage implements OnInit, OnDestroy {
         '';
 
       this.userDetails = this.readUserDetailsFromStorage();
-
-      // if (this.forceOneRupeeForTesting) {
-      //   this.amount = 1;
-      //   localStorage.setItem('pending_distribution_payment_amount', '1');
-      // }
-
       this.paymentType = params.get('type') || 'distribution';
     });
   }
@@ -158,15 +122,12 @@ export class PaymentPage implements OnInit, OnDestroy {
     this.isLoading = true;
 
     try {
-      this.amount = this.getEffectiveAmountInRupees();
-
       if (this.paymentMode === 'CASH') {
         await this.submitCashPayment();
         return;
       }
 
-      await this.loadRazorpayScript();
-
+      // 1. Create Order via Backend API
       const orderResp = await this.userServ.createDistributionPaymentOrder({
         distribution_id: this.distributionId,
         amount: this.getEffectiveAmountInRupees(),
@@ -183,15 +144,14 @@ export class PaymentPage implements OnInit, OnDestroy {
         type: this.paymentType,
       });
 
-      const resolvedOrderId =
-        orderResp?.order_id || orderResp?.razorpay_order_id || orderResp?.id;
-      const isSuccess = orderResp?.status === 200 && !!resolvedOrderId;
+      const isSuccess = orderResp?.status === 200;
 
       if (!isSuccess) {
         await this.showAlert(orderResp?.msg || 'Unable to initiate payment.');
         return;
       }
 
+      // 2. Open Native Razorpay Checkout
       await this.openCheckout(orderResp as RazorpayOrderResponse);
     } catch (error) {
       console.error('Payment initiation failed:', error);
@@ -201,58 +161,83 @@ export class PaymentPage implements OnInit, OnDestroy {
     }
   }
 
-  private async openCheckout(order: RazorpayOrderResponse) {
-    const RazorpayCtor = window.Razorpay;
-    if (!RazorpayCtor) {
-      await this.showAlert('Payment SDK failed to load.');
-      return;
-    }
-
+  private async openCheckout(order: any) {
+    const isNative = Capacitor.isNativePlatform();
     const resolvedOrderId =
       order.order_id || order.razorpay_order_id || order.id || '';
-    const resolvedAmount = this.forceOneRupeeForTesting
-      ? this.getEffectiveAmountInPaise()
-      : Number(order.amount) || this.getEffectiveAmountInPaise();
 
-    const options: RazorpayOptions = {
-      key:
-        order.key || environment.razorpayKeyId || environment.razorpayKey || '',
-      amount: resolvedAmount,
-      currency: order.currency || 'INR',
-      name: order.name || 'SVJ',
-      description: order.description || 'Distribution Payment',
-      image: order.image,
-      order_id: resolvedOrderId,
-      prefill: order.prefill,
-      theme: order.theme || { color: '#2f855a' },
-      handler: async (response: RazorpayHandlerResponse) => {
-        await this.verifyPayment(response);
+    // Key ID preference: API response -> Environment -> Empty
+    const keyId = order.key || environment.razorpayKeyId || '';
+
+    const options: any = {
+      key: keyId,
+      amount: order.amount.toString(),
+      currency: 'INR',
+      name: 'SVJ (Sabka Vikas Jyati)',
+      description: 'Distribution Payment',
+      order_id: order.order_id || order.id,
+      prefill: {
+        name: this.userDetails?.name || '',
+        email: this.userDetails?.email || '',
+        contact: this.userDetails?.phone || '',
+        method: 'upi', // UPI ko default select rakhega
       },
-      modal: {
-        ondismiss: async () => {
-          await this.showAlert('Payment cancelled.');
+      // 🔥 YEH BLOCK UPI ID BOX KO FORCE KAREGA
+      method: 'upi',
+      config: {
+        display: {
+          blocks: {
+            upi: {
+              name: 'Pay via UPI ID / Mobile Number',
+              instruments: [
+                {
+                  method: 'upi',
+                  protocols: ['vpa'], // 'vpa' matlab UPI ID input box
+                },
+              ],
+            },
+          },
+          sequence: ['block.upi'], // Sabse pehle UPI ID wala block dikhayega
+          preferences: {
+            show_default_blocks: true,
+          },
+          readonly: {
+            method: 'upi',
+            contact: true,
+            email: true,
+          },
         },
       },
+      theme: { color: '#2f855a' },
     };
+    if (isNative) {
+      // --- MOBILE (APK) FLOW ---
+      try {
+        const response: any = await Checkout.open(options);
+        await this.verifyPayment(response);
+      } catch (error: any) {
+        console.error('Native Checkout Error:', error);
+        await this.showAlert('Payment Cancelled or Failed');
+      }
+    } else {
+      // --- WEB (BROWSER) FLOW ---
+      const RazorpayCtor = (window as any).Razorpay;
+      if (!RazorpayCtor) {
+        await this.showAlert('Razorpay SDK not loaded. Check index.html');
+        return;
+      }
 
-    if (!options.key) {
-      await this.showAlert('Razorpay key is missing. Configure it first.');
-      return;
+      options.handler = (response: any) => {
+        this.verifyPayment(response);
+      };
+
+      const rzp = new RazorpayCtor(options);
+      rzp.on('payment.failed', (resp: any) => {
+        this.showAlert(resp.error.description);
+      });
+      rzp.open();
     }
-
-    const instance = new RazorpayCtor(options);
-
-    instance.on('payment.failed', async (failure: any) => {
-      const msg =
-        failure?.error?.description ||
-        failure?.error?.reason ||
-        'Payment failed. Please retry.';
-      await this.showAlert(msg);
-    });
-
-    instance.open();
   }
-
   private getEffectiveAmountInRupees(): number {
     return this.forceOneRupeeForTesting ? 1 : Number(this.amount);
   }
@@ -280,17 +265,12 @@ export class PaymentPage implements OnInit, OnDestroy {
         payment_status: 'paid',
         payment_mode: this.paymentMode,
         transaction_id: response.razorpay_payment_id,
-        customer_payment_mode: this.customerPaymentMode,
-        customer_payment_ref: this.customerPaymentRef.trim(),
         razorpay_response: response,
         ...response,
       });
 
       if (verifyResp?.status === 200) {
-        localStorage.removeItem('pending_distribution_payment_id');
-        localStorage.removeItem('pending_distribution_payment_amount');
-        localStorage.removeItem('pending_distribution_program_id');
-        localStorage.removeItem('pending_distribution_user_details');
+        this.clearLocalData();
         await this.showAlert(verifyResp?.msg || 'Payment successful.', true);
         await this.navCtrl.navigateRoot(['/home']);
       } else {
@@ -322,59 +302,25 @@ export class PaymentPage implements OnInit, OnDestroy {
         type: this.paymentType,
         payment_status: 'pending',
         payment_mode: 'CASH',
-        transaction_id: '',
-        customer_payment_mode: this.customerPaymentMode,
-        customer_payment_ref: this.customerPaymentRef.trim(),
       });
 
       if (resp?.status === 200) {
-        localStorage.removeItem('pending_distribution_payment_id');
-        localStorage.removeItem('pending_distribution_payment_amount');
-        localStorage.removeItem('pending_distribution_program_id');
-        localStorage.removeItem('pending_distribution_user_details');
-        await this.showAlert(
-          resp?.msg || 'Cash payment request submitted for confirmation.',
-          true
-        );
+        this.clearLocalData();
+        await this.showAlert(resp?.msg || 'Cash payment submitted.', true);
         await this.navCtrl.navigateRoot(['/home']);
       } else {
         await this.showAlert(resp?.msg || 'Unable to submit cash payment.');
       }
     } catch (error) {
-      console.error('Cash payment submission failed:', error);
-      await this.showAlert('Cash payment submission failed. Please try again.');
+      console.error('Cash payment failed:', error);
+      await this.showAlert('Cash payment submission failed.');
     }
   }
 
-  private loadRazorpayScript(): Promise<void> {
-    if (window.Razorpay) {
-      return Promise.resolve();
-    }
-
-    const existingScript = document.getElementById(this.razorpayScriptId);
-    if (existingScript) {
-      return new Promise((resolve, reject) => {
-        existingScript.addEventListener('load', () => resolve(), {
-          once: true,
-        });
-        existingScript.addEventListener(
-          'error',
-          () => reject(new Error('Failed to load Razorpay script')),
-          { once: true }
-        );
-      });
-    }
-
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.id = this.razorpayScriptId;
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.async = true;
-      script.onload = () => resolve();
-      script.onerror = () =>
-        reject(new Error('Failed to load Razorpay script'));
-      document.body.appendChild(script);
-    });
+  private clearLocalData() {
+    localStorage.removeItem('pending_distribution_payment_id');
+    localStorage.removeItem('pending_distribution_payment_amount');
+    localStorage.removeItem('pending_distribution_program_id');
   }
 
   private readUserDetailsFromStorage() {

@@ -1,6 +1,6 @@
 import {
   registerPlugin
-} from "./chunk-QLACERGN.js";
+} from "./chunk-ILLWETPA.js";
 import "./chunk-EAE2VPRF.js";
 
 // node_modules/@capacitor/status-bar/dist/esm/definitions.js

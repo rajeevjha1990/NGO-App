@@ -1,4 +1,8 @@
 import {
+  Swiper,
+  defaults
+} from "./chunk-CTHDOI7P.js";
+import {
   A11y,
   Autoplay,
   Controller,
@@ -23,10 +27,6 @@ import {
   Zoom,
   freeMode
 } from "./chunk-JEZXL7JT.js";
-import {
-  Swiper,
-  defaults
-} from "./chunk-CTHDOI7P.js";
 import {
   setInnerHTML
 } from "./chunk-XRMVAW54.js";

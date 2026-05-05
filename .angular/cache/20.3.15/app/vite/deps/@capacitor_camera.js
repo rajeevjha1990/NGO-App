@@ -2,7 +2,7 @@ import {
   CapacitorException,
   WebPlugin,
   registerPlugin
-} from "./chunk-QLACERGN.js";
+} from "./chunk-ILLWETPA.js";
 import {
   __async
 } from "./chunk-EAE2VPRF.js";

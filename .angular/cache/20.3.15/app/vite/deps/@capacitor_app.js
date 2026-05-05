@@ -1,11 +1,11 @@
 import {
   registerPlugin
-} from "./chunk-QLACERGN.js";
+} from "./chunk-ILLWETPA.js";
 import "./chunk-EAE2VPRF.js";
 
 // node_modules/@capacitor/app/dist/esm/index.js
 var App = registerPlugin("App", {
-  web: () => import("./web-7WKG2DVT.js").then((m) => new m.AppWeb())
+  web: () => import("./web-KDJG54NZ.js").then((m) => new m.AppWeb())
 });
 export {
   App

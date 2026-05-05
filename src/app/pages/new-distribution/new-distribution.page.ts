@@ -286,7 +286,9 @@ export class NewDistributionPage implements OnInit {
     const f = this.formData;
 
     // ================= VALIDATIONS =================
-    if (!f.member_name?.trim()) return this.showAlert('Please enter Name');
+    if (!f.issue_date?.trim()) return this.showAlert('Please enter Issue Date');
+    if (!f.member_name?.trim())
+      return this.showAlert('Please enter Member Name');
     if (!f.guardian?.trim())
       return this.showAlert('Please enter Guardian name');
     if (!f.state_id) return this.showAlert('Please select a state');
