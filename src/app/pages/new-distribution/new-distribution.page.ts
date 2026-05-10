@@ -308,14 +308,18 @@ export class NewDistributionPage implements OnInit {
     const payload = {
       distribution_id: this.distributionId || `TMP-DIST-${Date.now()}`,
       amount: f.membership_amount,
+      membership_amount: f.membership_amount,
+
       program_id: f.program_id,
       type: 'distribution',
 
-      // 👇 FLAT FIELDS ONLY
+      issue_date: f.issue_date,
+
       member_name: f.member_name,
       guardian: f.guardian,
       mobile: f.mobile,
       pincode: f.pincode,
+
       state_id: f.state_id,
       district_id: f.district_id,
       block_id: f.block_id,
